@@ -57,19 +57,6 @@ function bp_links_dtheme_add_js() {
 }
 add_action( 'wp_print_scripts', 'bp_links_dtheme_add_js');
 
-function bp_links_dtheme_header_nav_setup() {
-	global $bp;
-
-	if ( !bp_links_is_default_theme() )
-		return false;
-
-	$selected = ( bp_is_page( BP_LINKS_SLUG ) ) ? ' class="selected"' : '';
-	$title = __( 'Links', 'buddypress-links' );
-
-	echo sprintf('<li%s><a href="%s/%s" title="%s">%s</a></li>', $selected, get_option('home'), BP_LINKS_SLUG, $title, $title );
-}
-add_action( 'bp_nav_items', 'bp_links_dtheme_header_nav_setup');
-
 function bp_links_dtheme_activity_type_tabs_setup() {
 	global $bp;
 
