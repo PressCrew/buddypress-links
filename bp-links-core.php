@@ -322,7 +322,7 @@ function bp_links_setup_nav() {
 		$bp->links->current_link = &new BP_Links_Link( $link_id );
 
 		/* Using "item" not "link" for generic support in other components. */
-		if ( is_site_admin() ) {
+		if ( is_super_admin() ) {
 			$bp->is_item_admin = 1;
 		} else {
 			$bp->is_item_admin = ( $bp->loggedin_user->id == $bp->links->current_link->user_id ) ? true : false;
@@ -488,7 +488,7 @@ function bp_links_setup_adminbar_menu() {
 		return false;
 
 	/* Don't show this menu to non site admins or if you're viewing your own profile */
-	if ( !is_site_admin() )
+	if ( !is_super_admin() )
 		return false;
 	?>
 	<li id="bp-adminbar-adminoptions-menu">
@@ -583,7 +583,7 @@ add_action( 'bp_template_content', 'bp_links_screen_personal_links_template_cont
 function bp_links_screen_personal_links_activity() {
 	global $bp;
 
-	if ( !is_site_admin() )
+	if ( !is_super_admin() )
 		$bp->is_item_admin = false;
 
 	do_action( 'bp_links_screen_personal_links_activity' );
@@ -768,7 +768,7 @@ add_action( 'wp', 'bp_links_screen_link_admin_avatar', 4 );
 function bp_links_screen_link_admin_delete_link() {
 	global $bp;
 
-	if ( !$bp->is_item_admin && !is_site_admin() ) {
+	if ( !$bp->is_item_admin && !is_super_admin() ) {
 		return false;
 	}
 
@@ -1273,7 +1273,7 @@ function bp_links_delete_link( $link_id ) {
 	global $bp;
 	
 	// Check the user is the link admin.
-	if ( !$bp->is_item_admin && !is_site_admin())
+	if ( !$bp->is_item_admin && !is_super_admin())
 		return false;
 	
 	// Get the link object

@@ -17,7 +17,7 @@ add_action( 'admin_print_styles', 'bp_links_admin_menu_css' );
 function bp_links_add_admin_menu() {
 	global $wpdb, $bp, $menu;
 
-	if ( !is_site_admin() )
+	if ( !is_super_admin() )
 		return false;
 
 	add_menu_page( __( 'BuddyPress Links', 'buddypress-links'), __( 'BP Links', 'buddypress-links' ), 'manage_options', 'buddypress-links-admin', 'bp_links_admin_index' );
