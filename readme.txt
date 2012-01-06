@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: wpmu, buddypress, social, networking, links, rich media, embed, youtube, flickr, metacafe
 Requires at least: PHP 5.2, WordPress 3.x, BuddyPress 1.2.6
 Tested up to: PHP 5.2.x, WordPress 3.x, BuddyPress 1.2.6
-Stable tag: 0.5
+Stable tag: 0.6
 
 BuddyPress Links is a drop in link and rich media sharing component for BuddyPress 1.2.x
 
@@ -55,6 +55,7 @@ Other features include:
 
 == Installation ==
 
+* BuddyPress Links 0.6.x requires WordPress 3.2 or higher with BuddyPress 1.5 or higher installed.
 * BuddyPress Links 0.5.x requires WordPress 3.0 or higher with BuddyPress 1.2.6 or higher installed.
 * BuddyPress Links 0.4.x requires WordPress 2.9.2 or higher with BuddyPress 1.2.x installed.
 * BuddyPress Links 0.3.x requires WordPress 2.9.1 or higher with BuddyPress 1.2.x installed.
@@ -79,6 +80,10 @@ The links data from the 0.2.x branch is compatible with 0.3.x and higher, except
 
 == Upgrade Notice ==
 
+= 0.6 =
+
+No changes that affect data were made, however it is always a good idea to back up your data just in case!
+
 = 0.5 =
 
 No changes that affect data were made, however it is always a good idea to back up your data just in case!
@@ -96,6 +101,15 @@ DO NOT attempt to install version 0.3 or higher on BP 1.1.X!  DO NOT try to use 
 This version contains the first support for rich media embedding. *Please make sure that you update the "links" directory in your theme (see Installation).*
 
 == Changelog ==
+
+= 0.6 =
+
+* Upgraded to latest version of colorbox
+* Fixed issue with videos not playing
+* Fixed double link in global navigation
+* Fixed link home sub-navigation not displaying
+* Fixed avatars not displaying properly
+* Moved dashboard menu to its own top level spot
 
 = 0.5 =
 
