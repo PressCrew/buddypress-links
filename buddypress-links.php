@@ -138,7 +138,7 @@ define( 'BP_LINKS_ADMIN_THEME_URL_INC', BP_LINKS_ADMIN_THEME_URL . '/_inc' );
  * @return boolean
  */
 function bp_links_is_groups_enabled() {
-	return ( function_exists('groups_install') && BP_LINKS_ENABLE_GROUPS_INTEGRATION );
+	return ( class_exists( 'BP_Groups_Component' ) && BP_LINKS_ENABLE_GROUPS_INTEGRATION );
 }
 
 /**
@@ -147,7 +147,7 @@ function bp_links_is_groups_enabled() {
  * @return boolean
  */
 function bp_links_is_activity_enabled() {
-	return ( function_exists('bp_activity_install') );
+	return ( class_exists( 'BP_Activity_Component', false ) );
 }
 
 //

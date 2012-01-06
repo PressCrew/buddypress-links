@@ -330,14 +330,41 @@ function bp_links_setup_nav() {
 	}
 
 	/* Add 'Links' to the main navigation */
-	$nav_item_name = sprintf( apply_filters( 'bp_links_nav_item_name', __( 'Links <span>(%d)</span>', 'buddypress-links' ) ), bp_links_total_links_for_user() );
-	bp_core_new_nav_item( array( 'name' => $nav_item_name, 'slug' => $bp->links->slug, 'position' => BP_LINKS_NAV_POSITION, 'screen_function' => 'bp_links_screen_personal_links', 'default_subnav_slug' => 'my-links', 'item_css_id' => $bp->links->id ) );
+	$nav_item_name = sprintf(
+		apply_filters(
+			'bp_links_nav_item_name',
+			__( 'Links <span>(%d)</span>', 'buddypress-links' )
+		),
+		bp_links_total_links_for_user()
+	);
+
+	bp_core_new_nav_item( array(
+		'name' => $nav_item_name,
+		'slug' => $bp->links->slug,
+		'position' => BP_LINKS_NAV_POSITION,
+		'screen_function' => 'bp_links_screen_personal_links',
+		'default_subnav_slug' => 'my-links',
+		'item_css_id' => $bp->links->id
+	));
 
 	$links_link = $bp->loggedin_user->domain . $bp->links->slug . '/';
 	
 	/* Add the subnav items to the links nav item */
-	$subnav_name_mylinks = apply_filters( 'bp_links_subnav_item_name_mylinks', __( 'My Links', 'buddypress-links' ) );
-	bp_core_new_subnav_item( array( 'name' => $subnav_name_mylinks, 'slug' => 'my-links', 'parent_url' => $links_link, 'parent_slug' => $bp->links->slug, 'screen_function' => 'bp_links_screen_personal_links', 'position' => 10, 'item_css_id' => 'links-my-links' ) );
+	$subnav_name_mylinks =
+		apply_filters(
+			'bp_links_subnav_item_name_mylinks',
+			__( 'My Links', 'buddypress-links' )
+		);
+
+	bp_core_new_subnav_item( array(
+		'name' => $subnav_name_mylinks,
+		'slug' => 'my-links',
+		'parent_url' => $links_link,
+		'parent_slug' => $bp->links->slug,
+		'screen_function' => 'bp_links_screen_personal_links',
+		'position' => 10,
+		'item_css_id' => 'links-my-links'
+	));
 
 	if ( $bp->current_component == $bp->links->slug ) {
 		
@@ -345,8 +372,20 @@ function bp_links_setup_nav() {
 			
 			$bp->bp_options_title = __( 'My Links', 'buddypress-links' );
 
-			$subnav_name_create = apply_filters( 'bp_links_subnav_item_name_create', __( 'Create', 'buddypress-links' ) );
-			bp_core_new_subnav_item( array( 'name' => $subnav_name_create, 'slug' => 'create', 'parent_url' => $links_link, 'parent_slug' => $bp->links->slug, 'screen_function' => 'bp_links_screen_personal_links', 'position' => 20, 'item_css_id' => 'links-create' ) );
+			$subnav_name_create = apply_filters(
+				'bp_links_subnav_item_name_create',
+				__( 'Create', 'buddypress-links'
+			));
+
+			bp_core_new_subnav_item( array(
+				'name' => $subnav_name_create,
+				'slug' => 'create',
+				'parent_url' => $links_link,
+				'parent_slug' => $bp->links->slug,
+				'screen_function' => 'bp_links_screen_personal_links',
+				'position' => 20,
+				'item_css_id' => 'links-create'
+			));
 
 		} else if ( !bp_is_my_profile() && !$bp->is_single_item ) {
 
@@ -359,10 +398,10 @@ function bp_links_setup_nav() {
 			
 			/* When in a single link, the first action is bumped down one because of the
 			   link name, so we need to adjust this and set the link name to current_item. */
-			$bp->current_item = $bp->current_action;
+			$bp->current_item = $bp->links->slug;
 			$bp->current_action = $bp->action_variables[0];
 			array_shift($bp->action_variables);
-									
+
 			$bp->bp_options_title = $bp->links->current_link->name;
 
 			$bp->bp_options_avatar = bp_links_fetch_avatar( array( 'type' => 'thumb' ), $bp->links->current_link );
@@ -370,19 +409,47 @@ function bp_links_setup_nav() {
 			$link_link = $bp->root_domain . '/' . $bp->links->slug . '/' . $bp->links->current_link->slug . '/';
 
 			/* Reset the existing subnav items */
-			bp_core_reset_subnav_items($bp->links->slug);
+			bp_core_reset_subnav_items( $bp->links->slug );
 			
 			/* Add a new default subnav item for when the links nav is selected. */
-			bp_core_new_nav_default( array( 'parent_slug' => $bp->links->slug, 'screen_function' => 'bp_links_screen_link_home', 'subnav_slug' => 'home' ) );
+			bp_core_new_nav_default( array(
+				'parent_slug' => $bp->links->slug,
+				'screen_function' => 'bp_links_screen_link_home',
+				'subnav_slug' => 'home'
+			));
 			
 			/* Add the "Home" subnav item, as this will always be present */
-			$subnav_name_home = apply_filters( 'bp_links_subnav_item_name_home', __( 'Home', 'buddypress-links' ) );
-			bp_core_new_subnav_item( array( 'name' => $subnav_name_home, 'slug' => 'home', 'parent_url' => $link_link, 'parent_slug' => $bp->links->slug, 'screen_function' => 'bp_links_screen_link_home', 'position' => 10, 'item_css_id' => 'link-home' ) );
+			$subnav_name_home = apply_filters(
+				'bp_links_subnav_item_name_home',
+				__( 'Home', 'buddypress-links' )
+			);
+
+			bp_core_new_subnav_item( array(
+				'name' => $subnav_name_home,
+				'slug' => 'home',
+				'parent_url' => $link_link,
+				'parent_slug' => $bp->links->slug,
+				'screen_function' => 'bp_links_screen_link_home',
+				'position' => 10,
+				'item_css_id' => 'link-home'
+			));
 
 			/* If the user is a link mod or more, then show the link admin nav item */
 			if ( $bp->is_item_admin ) {
-				$subnav_name_admin = apply_filters( 'bp_links_subnav_item_name_admin', __( 'Admin', 'buddypress-links' ) );
-				bp_core_new_subnav_item( array( 'name' => $subnav_name_admin, 'slug' => 'admin', 'parent_url' => $link_link, 'parent_slug' => $bp->links->slug, 'screen_function' => 'bp_links_screen_link_admin', 'position' => 20, 'user_has_access' => $bp->is_item_admin, 'item_css_id' => 'link-admin' ) );
+				$subnav_name_admin = apply_filters(
+					'bp_links_subnav_item_name_admin',
+					__( 'Admin', 'buddypress-links' )
+				);
+				bp_core_new_subnav_item( array(
+					'name' => $subnav_name_admin,
+					'slug' => 'admin',
+					'parent_url' => $link_link,
+					'parent_slug' => $bp->links->slug,
+					'screen_function' => 'bp_links_screen_link_admin',
+					'position' => 20,
+					'user_has_access' => $bp->is_item_admin,
+					'item_css_id' => 'link-admin'
+				));
 			}
 
 		}
@@ -1273,7 +1340,7 @@ function bp_links_is_link_visibile( $link_id_or_obj, $user_id = null ) {
 		case BP_Links_Link::STATUS_HIDDEN:
 			return false;
 		case BP_Links_Link::STATUS_FRIENDS:
-			return ( $user_id && function_exists( 'friends_install' ) ) ? friends_check_friendship( $user_id, $link->user_id ) : false;
+			return ( $user_id && class_exists( 'BP_Friends_Component' ) ) ? friends_check_friendship( $user_id, $link->user_id ) : false;
 		default:
 			return false;
 	}
@@ -1600,6 +1667,16 @@ function bp_links_fetch_avatar( $args = '', $link = false ) {
 		return apply_filters( 'bp_links_fetch_avatar_not_found', sprintf( '<img src="%s" alt="%s" id="%s" class="%s"%s%s />', $avatar_url, $alt, $css_id, $class, $attr_width, $attr_height ), $args );
 	}
 }
+
+function bp_links_fetch_avatar_no_default( $string, $params )
+{
+	if ( $params['object'] == 'link' && $params['no_grav'] ) {
+		return false;
+	} else {
+		return $string;
+	}
+}
+add_action( 'bp_core_fetch_avatar', 'bp_links_fetch_avatar_no_default', 10, 2 );
 
 function bp_links_avatar_upload_dir( $link_id = false ) {
 	global $bp;
