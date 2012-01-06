@@ -20,9 +20,10 @@ function bp_links_add_admin_menu() {
 	if ( !is_site_admin() )
 		return false;
 
-	add_submenu_page( 'bp-general-settings', __( 'BuddyPress Links', 'buddypress-links'), '<span class="buddypress-links-admin-menu-header">' . __( 'BuddyPress Links', 'buddypress-links' ) . '&nbsp;&nbsp;&nbsp;</span>', 'manage_options', 'buddypress-links-admin', 'bp_links_admin_index' );
-	add_submenu_page( 'bp-general-settings', __( 'Manage Links', 'buddypress-links'), '<span class="buddypress-links-admin-menu-item">&middot; ' . __( 'Manage Links', 'buddypress-links' ) . '</span>', 'manage_options', 'buddypress-links-admin-links', 'bp_links_admin_manage_links' );
-	add_submenu_page( 'bp-general-settings', __( 'Manage Categories', 'buddypress-links'), '<span class="buddypress-links-admin-menu-item">&middot; ' . __( 'Edit Categories', 'buddypress-links' ) . '</span>', 'manage_options', 'buddypress-links-admin-cats', 'bp_links_admin_manage_categories' );
+	add_menu_page( __( 'BuddyPress Links', 'buddypress-links'), __( 'BP Links', 'buddypress-links' ), 'manage_options', 'buddypress-links-admin', 'bp_links_admin_index' );
+	add_submenu_page( 'buddypress-links-admin', __( 'General Info', 'buddypress-links'), __( 'General Info', 'buddypress-links' ), 'manage_options', 'buddypress-links-admin', 'bp_links_admin_index' );
+	add_submenu_page( 'buddypress-links-admin', __( 'Manage Links', 'buddypress-links'), __( 'Manage Links', 'buddypress-links' ), 'manage_options', 'buddypress-links-admin-links', 'bp_links_admin_manage_links' );
+	add_submenu_page( 'buddypress-links-admin', __( 'Manage Categories', 'buddypress-links'), __( 'Edit Categories', 'buddypress-links' ), 'manage_options', 'buddypress-links-admin-cats', 'bp_links_admin_manage_categories' );
 }
 add_action( 'admin_menu', 'bp_links_add_admin_menu', 12 );
 
