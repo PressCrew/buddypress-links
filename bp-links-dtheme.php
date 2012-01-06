@@ -38,7 +38,7 @@ function bp_links_dtheme_add_css() {
 		bp_links_dtheme_enqueue_styles();
 	}
 }
-add_action( 'wp_print_styles', 'bp_links_dtheme_add_css' );
+add_action( 'wp_enqueue_scripts', 'bp_links_dtheme_add_css' );
 
 function bp_links_dtheme_add_js() {
 	global $bp;
