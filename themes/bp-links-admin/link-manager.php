@@ -16,9 +16,12 @@
 
 	<h2><?php _e( 'Manage Links', 'buddypress-links' ) ?></h2>
 
-	<form id="wpmu-search" method="post" action="">
-		<input type="text" size="17" value="<?php echo attribute_escape( stripslashes( $_REQUEST['s'] ) ); ?>" name="s" />
-		<input id="post-query-submit" class="button" type="submit" value="<?php _e( 'Search Links', 'buddypress-links' ) ?>" />
+	<form id="buddypress-links-search" method="post" action="">
+		<p class="search-box">
+			<label class="screen-reader-text" for="s"><?php _e( 'Search Links', 'buddypress-links' ) ?>:</label>
+			<input type="text" id="s" name="s" value="<?php _admin_search_query(); ?>" />
+			<?php submit_button( __( 'Search Links', 'buddypress-links' ), 'button', false, false, array('id' => 'search-submit') ); ?>
+		</p>
 	</form>
 
 	<?php if ( bp_has_links( 'type=active&per_page=10' ) ) : ?>
