@@ -367,9 +367,9 @@ function bp_links_setup_nav() {
 	));
 
 	if ( $bp->current_component == $bp->links->slug ) {
-		
+
 		if ( bp_is_my_profile() && !$bp->is_single_item ) {
-			
+
 			$bp->bp_options_title = __( 'My Links', 'buddypress-links' );
 
 			$subnav_name_create = apply_filters(
@@ -472,14 +472,14 @@ add_action( 'bp_activity_setup_nav', 'bp_links_setup_activity_nav' );
 function bp_links_directory_links_setup() {
 	global $bp;
 
-	if ( ( $bp->current_component ) && $bp->current_component == $bp->links->slug && empty( $bp->current_action ) && empty( $bp->current_item ) ) {
-		$bp->is_directory = true;
-
+	if ( bp_is_current_component( 'links') && !bp_current_action() && !bp_current_item() ) {
+		bp_update_is_directory( true, 'links' );
+		
 		do_action( 'bp_links_directory_links_setup' );
 		bp_links_load_template( 'index' );
 	}
 }
-add_action( 'wp', 'bp_links_directory_links_setup', 2 );
+add_action( 'bp_screens', 'bp_links_directory_links_setup', 2 );
 
 function bp_links_setup_adminbar_menu() {
 	global $bp;
@@ -548,7 +548,7 @@ function bp_links_screen_personal_links() {
 	//bp_core_delete_notifications_for_user_by_type( $bp->loggedin_user->id, $bp->links->slug, 'link_example_notification' );
 
 	do_action( 'bp_links_screen_personal_links' );
-	
+
 	bp_core_load_template( apply_filters( 'bp_links_template_personal_links', 'members/single/plugins' ) );
 }
 
@@ -688,7 +688,7 @@ function bp_links_screen_link_admin_edit_details() {
 	bp_links_load_template( 'single/home' );
 
 }
-add_action( 'wp', 'bp_links_screen_link_admin_edit_details', 4 );
+add_action( 'bp_screens', 'bp_links_screen_link_admin_edit_details' );
 
 /**
  * Load Link home page edit avatar template, handle form if submitted
@@ -740,7 +740,7 @@ function bp_links_screen_link_admin_avatar() {
 			$bp->avatar_admin->step = 'crop-image';
 
 			// Make sure we include the jQuery jCrop file for image cropping
-			add_action( 'wp', 'bp_core_add_jquery_cropper' );
+			add_action( 'wp_enqueue_scripts', 'bp_core_add_jquery_cropper' );
 
 		} elseif ( isset( $_POST['upload'] ) && !empty( $_FILES ) ) {
 
@@ -751,7 +751,7 @@ function bp_links_screen_link_admin_avatar() {
 				$bp->avatar_admin->step = 'crop-image';
 
 				// Make sure we include the jQuery jCrop file for image cropping
-				add_action( 'wp', 'bp_core_add_jquery_cropper' );
+				add_action( 'wp_enqueue_scripts', 'bp_core_add_jquery_cropper' );
 			}
 		}
 	}
@@ -760,7 +760,7 @@ function bp_links_screen_link_admin_avatar() {
 
 	bp_links_load_template( 'single/home' );
 }
-add_action( 'wp', 'bp_links_screen_link_admin_avatar', 4 );
+add_action( 'bp_screens', 'bp_links_screen_link_admin_avatar' );
 
 /**
  * Load Link home page delete link template, handle form if submitted
@@ -799,7 +799,7 @@ function bp_links_screen_link_admin_delete_link() {
 
 	bp_links_load_template( 'single/home' );
 }
-add_action( 'wp', 'bp_links_screen_link_admin_delete_link', 4 );
+add_action( 'bp_screens', 'bp_links_screen_link_admin_delete_link' );
 
 /**
  * Validate new/udpate link form data and format errors
@@ -996,10 +996,14 @@ function bp_links_action_create_link() {
 	// only load the template for native links component.
 	// the group plugin will load the correct template for us.
 	if ( $bp->links->id == $load_template ) {
-		bp_links_load_template( apply_filters( 'bp_links_template_create_link', 'create' ) );
+		if ( bp_displayed_user_id() ) {
+			bp_links_screen_personal_links();
+		} else {
+			bp_links_load_template( apply_filters( 'bp_links_template_create_link', 'create' ) );
+		}
 	}
 }
-add_action( 'wp', 'bp_links_action_create_link', 3 );
+add_action( 'bp_screens', 'bp_links_action_create_link' );
 
 function bp_links_action_redirect_to_random_link() {
 	global $bp, $wpdb;
@@ -1011,7 +1015,7 @@ function bp_links_action_redirect_to_random_link() {
 		bp_core_redirect( $bp->root_domain . '/' . $bp->links->slug . '/' . $link['links'][0]->slug );
 	}
 }
-add_action( 'wp', 'bp_links_action_redirect_to_random_link', 6 );
+add_action( 'bp_screens', 'bp_links_action_redirect_to_random_link' );
 
 function bp_links_action_link_feed() {
 	global $bp, $wp_query;
@@ -1668,9 +1672,9 @@ function bp_links_fetch_avatar( $args = '', $link = false ) {
 	}
 }
 
-function bp_links_fetch_avatar_no_default( $string, $params )
+function bp_links_fetch_avatar_no_default( $string, $params  )
 {
-	if ( $params['object'] == 'link' && $params['no_grav'] ) {
+	if ( $params['object'] == 'link' && $params['no_grav'] && strpos( $string, 'mystery-man' ) ) {
 		return false;
 	} else {
 		return $string;
@@ -1685,8 +1689,8 @@ function bp_links_avatar_upload_dir( $link_id = false ) {
 		$link_id = $bp->links->current_link->id;
 
 	$subdir = '/link-avatars/' . $link_id;
-	$path = BP_AVATAR_UPLOAD_PATH . $subdir;
-	$url = str_replace( BP_AVATAR_UPLOAD_PATH, BP_AVATAR_URL, $path );
+	$path = bp_core_avatar_upload_path() . $subdir;
+	$url = str_replace( bp_core_avatar_upload_path(), bp_core_avatar_url(), $path );
 
 	if ( !file_exists( $path ) )
 		@wp_mkdir_p( $path );
