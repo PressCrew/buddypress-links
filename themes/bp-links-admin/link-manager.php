@@ -11,8 +11,10 @@
 <?php } ?>
 
 <div class="wrap buddypress-links-admin-content" style="position: relative">
-	<div id="icon-link-manager" class="icon32"><br /></div>
-	<h2><?php _e( 'BuddyPress Links', 'buddypress-links' ) ?>: <?php _e( 'Manage Links', 'buddypress-links' ) ?></h2>
+
+	<div><img src="<?php echo BP_LINKS_ADMIN_THEME_URL ?>/images/logo-48.png"></div>
+
+	<h2><?php _e( 'Manage Links', 'buddypress-links' ) ?></h2>
 
 	<form id="wpmu-search" method="post" action="">
 		<input type="text" size="17" value="<?php echo attribute_escape( stripslashes( $_REQUEST['s'] ) ); ?>" name="s" />

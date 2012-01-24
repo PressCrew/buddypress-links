@@ -5,8 +5,10 @@
 ?>
 
 <div class="wrap nosubsub buddypress-links-admin-content">
-	<div id="icon-edit" class="icon32"><br /></div>
-	<h2><?php _e( 'BuddyPress Links', 'buddypress-links' ) ?>: <?php echo $heading_text ?></h2>
+
+	<div><img src="<?php echo BP_LINKS_ADMIN_THEME_URL ?>/images/logo-48.png"></div>
+	
+	<h2><?php echo $heading_text ?></h2>
 
 <?php echo $heading ?>
 
