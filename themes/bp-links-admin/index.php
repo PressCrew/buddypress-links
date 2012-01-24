@@ -5,8 +5,8 @@
 ?>
 
 <div class="wrap nosubsub buddypress-links-admin-content" style="position: relative">
-
-	<div><img src="<?php echo BP_LINKS_ADMIN_THEME_URL ?>/images/logo-48.png"></div>
+	<div id="icon-link-manager" class="icon32"><br /></div>
+	<h2><?php _e( 'BuddyPress Links', 'buddypress-links' ) ?></h2>
 
 	<h3><?php _e( 'Thank you for installing BuddyPress Links!', 'buddypress-links' ) ?></h3>
 
@@ -27,14 +27,6 @@
 	<ul>
 		<li><a href="http://marshallsorenson.com/" target="_blank">Marshall Sorenson's Blog</a></li>
 		<li><a href="http://buddypress.org/community/members/MrMaz/" target="_blank">MrMaz on BuddyPress.org</a></li>
-	</ul>
-
-	<p><?php _e( 'Credits:', 'buddypress-links' ) ?></p>
-	<ul>
-		<li>
-			Logo Elements:
-			&quot;Approve&quot; and &quot;Disapprove&quot; symbols by The Noun Project, &quot;Chain&quot; symbol by Plinio Fernandes, from <a href="http://thenounproject.com" target="_blank">The Noun Project</a> collection.
-		</li>
 	</ul>
 
 </div>

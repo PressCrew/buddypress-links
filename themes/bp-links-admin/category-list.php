@@ -12,10 +12,8 @@
 
 
 <div class="wrap nosubsub buddypress-links-admin-content" style="position: relative">
-
-	<div><img src="<?php echo BP_LINKS_ADMIN_THEME_URL ?>/images/logo-48.png"></div>
-
-	<h2><?php _e( 'Edit Categories', 'buddypress-links' ) ?></h2>
+	<div id="icon-edit" class="icon32"><br /></div>
+	<h2><?php _e( 'BuddyPress Links', 'buddypress-links' ) ?>: <?php _e( 'Edit Categories', 'buddypress-links' ) ?></h2>
 
 	<form id="search-form" method="post" action="">
 		<p class="search-box">
