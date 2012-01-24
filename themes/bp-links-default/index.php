@@ -14,10 +14,10 @@
 
 			<div class="item-list-tabs">
 				<ul>
-					<li class="selected" id="links-all"><a href="<?php bp_root_domain() ?>"><?php printf( __( 'All Links (%s)', 'buddypress-links' ), bp_get_links_total_link_count() ) ?></a></li>
+					<li class="selected" id="links-all"><a href="<?php bp_root_domain() ?>"><?php _e( 'All Links', 'buddypress-links' ) ?> <span><?php echo bp_get_links_total_link_count() ?></span></a></li>
 
 					<?php if ( is_user_logged_in() && bp_links_total_links_for_user( bp_loggedin_user_id() ) ) : ?>
-						<li id="links-mylinks"><a href="<?php echo bp_loggedin_user_domain() . BP_LINKS_SLUG . '/my-links/' ?>"><?php printf( __( 'My Links (%s)', 'buddypress-links' ), bp_links_total_links_for_user( bp_loggedin_user_id() ) ) ?></a></li>
+						<li id="links-mylinks"><a href="<?php echo bp_loggedin_user_domain() . BP_LINKS_SLUG . '/my-links/' ?>"><?php _e( 'My Links', 'buddypress-links' ) ?> <?php echo bp_links_total_links_for_user( bp_loggedin_user_id() ) ?></a></li>
 					<?php endif; ?>
 
 					<?php do_action( 'bp_links_directory_link_types' ) ?>

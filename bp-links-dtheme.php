@@ -68,10 +68,8 @@ function bp_links_dtheme_activity_type_tabs_setup() {
 			'<li id="activity-links"><a href="%s" title="%s">%s</a></li>',
 			bp_loggedin_user_domain() . BP_ACTIVITY_SLUG . '/' . BP_LINKS_SLUG . '/',
 			__( 'The activity of links I created.', 'buddypress-links' ),
-			sprintf(
-				__( 'My Links (%s)', 'buddypress-links' ),
-				bp_links_total_links_for_user( bp_loggedin_user_id() )
-			)
+			__( 'My Links', 'buddypress-links' ) .
+			sprintf( ' <span>%s</span>', bp_links_total_links_for_user( bp_loggedin_user_id() ) )
 		);
 	}
 }

@@ -333,7 +333,7 @@ function bp_links_setup_nav() {
 	$nav_item_name = sprintf(
 		apply_filters(
 			'bp_links_nav_item_name',
-			__( 'Links <span>(%d)</span>', 'buddypress-links' )
+			__( 'Links', 'buddypress-links' ) . '  <span>%d</span>'
 		),
 		bp_links_total_links_for_user()
 	);

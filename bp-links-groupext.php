@@ -6,7 +6,7 @@ class BP_Links_Group_Extension extends BP_Group_Extension {
 
 	function  __construct() {
 		// required
-		$this->name = sprintf( __( 'Links (%d)', 'buddypress-links' ), bp_links_total_links_for_group() );
+		$this->name = __( 'Links', 'buddypress-links' ) . sprintf( ' <span>%d</span>', bp_links_total_links_for_group() );
 		$this->slug = BP_LINKS_SLUG;
 		// optional
 		$this->visibility  = 'private';
