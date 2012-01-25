@@ -29,4 +29,12 @@
 		<li><a href="http://buddypress.org/community/members/MrMaz/" target="_blank">MrMaz on BuddyPress.org</a></li>
 	</ul>
 
+	<p><?php _e( 'Credits:', 'buddypress-links' ) ?></p>
+	<ul>
+		<li>
+			Logo Elements:
+			&quot;Share&quot; symbol by The Noun Project, from <a href="http://thenounproject.com" target="_blank">The Noun Project</a> collection.</p>
+		</li>
+	</ul>
+
 </div>
