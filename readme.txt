@@ -1,18 +1,17 @@
 === Plugin Name ===
 Contributors: MrMaz
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8591311
 Tags: wpmu, buddypress, social, networking, links, rich media, embed, youtube, flickr, metacafe
-Requires at least: PHP 5.2, WordPress 3.x, BuddyPress 1.2.6
-Tested up to: PHP 5.2.x, WordPress 3.x, BuddyPress 1.2.6
+Requires at least: PHP 5.2.4, WordPress 3.1.x, BuddyPress 1.5.x
+Tested up to: PHP 5.3.9, WordPress 3.3.x, BuddyPress 1.5.3.1
 Stable tag: 0.6
 
-BuddyPress Links is a drop in link and rich media sharing component for BuddyPress 1.2.x
+BuddyPress Links is a drop in link and rich media sharing component for BuddyPress 1.5.x
 
 == Description ==
 
 #### What is BuddyPress Links?
 
-BuddyPress Links is a drop in link and rich media sharing component for BuddyPress 1.2.x
+BuddyPress Links is a drop in link and rich media sharing component for BuddyPress 1.5.x
 
 It supports complete integration with...
 
@@ -31,7 +30,7 @@ Members can:
 * Embed a PicApp.com or Fotoglif.com image and use as the avatar
 * Vote on other member's links
 * Comment on other member's links
-* @mentions support added in version 0.3
+* @mentions support
 
 Administrators can:
 
@@ -105,11 +104,15 @@ This version contains the first support for rich media embedding. *Please make s
 = 0.6 =
 
 * Upgraded to latest version of colorbox
+* Moved dashboard menu to its own top level spot
+* Fixed navigation menu formatting
+* Fixed create/edit form errors not displaying
 * Fixed issue with videos not playing
 * Fixed double link in global navigation
 * Fixed link home sub-navigation not displaying
 * Fixed avatars not displaying properly
-* Moved dashboard menu to its own top level spot
+* Fixed broken custom avatar uploading
+* Many additional minor BuddyPress 1.5 compatibility fixes
 
 = 0.5 =
 
