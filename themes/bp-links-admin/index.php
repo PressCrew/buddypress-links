@@ -5,7 +5,7 @@
 ?>
 
 <div class="wrap nosubsub buddypress-links-admin-content" style="position: relative">
-	<div id="icon-link-manager" class="icon32"><br /></div>
+	<div id="icon-buddypress-links" class="icon32"></div>
 	<h2><?php _e( 'BuddyPress Links', 'buddypress-links' ) ?></h2>
 
 	<h3><?php _e( 'Thank you for installing BuddyPress Links!', 'buddypress-links' ) ?></h3>

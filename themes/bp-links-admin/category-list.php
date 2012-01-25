@@ -12,8 +12,8 @@
 
 
 <div class="wrap nosubsub buddypress-links-admin-content" style="position: relative">
-	<div id="icon-edit" class="icon32"><br /></div>
-	<h2><?php _e( 'BuddyPress Links', 'buddypress-links' ) ?>: <?php _e( 'Edit Categories', 'buddypress-links' ) ?></h2>
+	<div id="icon-buddypress-links" class="icon32"></div>
+	<h2><?php _e( 'Edit Categories', 'buddypress-links' ) ?></h2>
 
 	<form id="search-form" method="post" action="">
 		<p class="search-box">

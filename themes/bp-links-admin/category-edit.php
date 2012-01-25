@@ -5,8 +5,8 @@
 ?>
 
 <div class="wrap nosubsub buddypress-links-admin-content">
-	<div id="icon-edit" class="icon32"><br /></div>
-	<h2><?php _e( 'BuddyPress Links', 'buddypress-links' ) ?>: <?php echo $heading_text ?></h2>
+	<div id="icon-buddypress-links" class="icon32"></div>
+	<h2><?php echo $heading_text ?></h2>
 
 <?php echo $heading ?>
 

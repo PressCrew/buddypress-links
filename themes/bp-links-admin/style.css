@@ -2,6 +2,14 @@
  * Admin Styles
  */
 
+/* Icons */
+#icon-buddypress-links.icon {
+	background: transparent url('images/logo-icon16.png') no-repeat;
+}
+#icon-buddypress-links.icon32 {
+	background: transparent url('images/logo-icon32.png') no-repeat;
+}
+
 /* Menu */
 span.buddypress-links-admin-menu-header {
 	font-weight: bold;
