@@ -285,12 +285,12 @@ function bp_links_load_textdomain() {
 	// if we found a locale, try to load .mo file
 	if ( !empty( $locale ) ) {
 		// default .mo file path
-		$mofile_default = sprintf( '%s/languages/%s-%s.mo', BP_LINKS_PLUGIN_DIR, BP_LINKS_PLUGIN_NAME, $locale );
+		$mofile_default = sprintf( '%s/languages/%s-%s.mo', BP_LINKS_PLUGIN_DIR, BP_LINKS_PLUGIN_TEXTDOMAIN, $locale );
 		// final filtered file path
 		$mofile = apply_filters( 'bp_links_load_textdomain_mofile', $mofile_default );
 		// make sure file exists, and load it
 		if ( file_exists( $mofile ) ) {
-			load_textdomain( BP_LINKS_PLUGIN_NAME, $mofile );
+			load_textdomain( BP_LINKS_PLUGIN_TEXTDOMAIN, $mofile );
 		}
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: BuddyPress Links
+Plugin Name: BuddyPress Links Pro
 Plugin URI: http://wordpress.org/extend/plugins/buddypress-links/
 Description: BuddyPress Links is a link sharing component for BuddyPress.
 Author: Marshall Sorenson (MrMaz)
@@ -106,7 +106,8 @@ if ( !defined( 'BP_LINKS_EMBED_FOTOGLIF_PUBID' ) )
 // Configuration
 define( 'BP_LINKS_VERSION', '0.6' );
 define( 'BP_LINKS_DB_VERSION', '7' );
-define( 'BP_LINKS_PLUGIN_NAME', 'buddypress-links' );
+define( 'BP_LINKS_PLUGIN_NAME', 'buddypress-links-pro' );
+define( 'BP_LINKS_PLUGIN_TEXTDOMAIN', 'buddypress-links' );
 define( 'BP_LINKS_THEMES_PATH', 'themes' );
 define( 'BP_LINKS_DEFAULT_THEME', 'bp-links-default' );
 define( 'BP_LINKS_ADMIN_THEME', 'bp-links-admin' );
