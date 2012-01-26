@@ -192,8 +192,15 @@ function bp_links_setup_globals() {
  * Handle special BP initialization
  */
 function bp_links_init() {
-	// If we ever need to execute BP code outside of
-	// any WP action or filter scope, it should go here!
+
+	// setup actions
+	add_action( 'bp_setup_root_components', 'bp_links_setup_root_component' );
+	add_action( 'bp_setup_globals', 'bp_links_setup_globals' );
+
+	// load core
+	require_once 'bp-links-core.php';
+
+	// optionally load groups extension
 	if ( bp_links_is_groups_enabled() ) {
 		require_once 'bp-links-groupext.php';
 	}
@@ -202,19 +209,6 @@ function bp_links_init() {
 //
 // Hook into BuddyPress!
 //
-if ( defined( 'BP_VERSION' ) ) {
-	bp_links_setup_root_component();
-	bp_links_setup_globals();
-	bp_links_init();
-} else {
-	add_action( 'bp_setup_root_components', 'bp_links_setup_root_component' );
-	add_action( 'bp_setup_globals', 'bp_links_setup_globals' );
-	add_action( 'bp_init', 'bp_links_init' );
-}
-
-//
-// Load everything
-//
-require_once 'bp-links-core.php';
+add_action( 'bp_include', 'bp_links_init' );
 
 ?>
