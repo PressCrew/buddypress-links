@@ -23,7 +23,6 @@
 
 		<label for="link-url">
 			<?php _e('URL', 'buddypress-links') ?>&nbsp;
-			<span class="ajax-loader"></span>
 		</label>
 		<input type="text" name="link-url" id="link-url" value="<?php bp_link_details_form_url() ?>"<?php if ( bp_get_link_details_form_link_url_readonly() ): ?> readonly="readonly"<?php endif; ?>/>
 
