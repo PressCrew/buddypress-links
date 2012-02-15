@@ -123,7 +123,7 @@ function bp_links_dtheme_creation_tabs() {
 function bp_links_dtheme_link_order_options_list() { ?>
 	<li id="links-order-select" class="last filter">
 		<?php _e( 'Order By:', 'buddypress' ) ?>
-		<select id="links-all">
+		<select id="links-order-by">
 			<?php bp_links_link_order_options() ?>
 			<?php do_action( 'bp_links_dtheme_link_order_options_list' ) ?>
 		</select>
@@ -131,7 +131,7 @@ function bp_links_dtheme_link_order_options_list() { ?>
 }
 
 function bp_links_dtheme_link_category_filter_options_list() { ?>
-		<li id="links-category-filter-select" class="last">
+		<li id="links-category-select" class="last">
 			<?php _e( 'Category:', 'buddypress-links' ) ?>
 			<select id="links-category-filter">
 				<option value="-1"><?php _e( 'All', 'buddypress' ) ?></option>

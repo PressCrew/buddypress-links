@@ -2,7 +2,7 @@
 
 <?php if ( bp_has_links( bp_ajax_querystring( 'links' ) ) ) : ?>
 
-	<div class="pagination">
+	<div class="pagination no-ajax">
 
 		<div class="pag-count" id="link-dir-count">
 			<?php bp_links_pagination_count() ?>
