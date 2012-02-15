@@ -149,9 +149,7 @@ jQuery(document).ready( function() {
 		var pid = button.attr('id').split('-');
 		var link_id = pid[1];
 		
-		var loader = bpl_get_loader('link-share-loader-' + link_id);
-
-		loader.toggle();
+		j(this).addClass('loading');
 
 		var nonce = j(this).attr('href').split('?_wpnonce=');
 		nonce = nonce[1].split('&');
@@ -281,7 +279,7 @@ jQuery(document).ready( function() {
 				bpl_list_item_msg(link_id, 'error', rs[1]);
 			}
 
-			loader.toggle();
+			j(this).removeClass('loading');
 		});
 		return false;
 	} );

@@ -162,7 +162,6 @@ function bp_links_dtheme_share_button( $link = false, $group = false ) {
 
 		printf(
 			'<div class="generic-button link-share-button" id="linksharebutton-%1$d">
-				<span class="ajax-loader" id="link-share-loader-%1$d"></span>
 				<a class="link-share" id="linkshare-%5$s-%6$d" href="%2$s">%3$s%4$s</a>
 			</div>',
 			$link->id, // arg 1
