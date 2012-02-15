@@ -148,6 +148,16 @@ jQuery(document).ready( function() {
 		});
 	}
 
+	// fix url
+	function fixUrl()
+	{
+		var url = e_url.val();
+
+		if ( !url.match(/^(ht|f)tps?:[/]{2}/) ) {
+			e_url.val( 'http://' + url.replace( /^[a-z]*[:/]+/, '' ) );
+		}
+	}
+
 	// detect if url is embeddable
 	function detectUrl()
 	{
@@ -177,6 +187,8 @@ jQuery(document).ready( function() {
 	e_url.blur( function()
 	{
 		e_loader.toggle();
+
+		fixUrl();
 
 		if (detectUrl()) {
 			e_url.attr("readonly", "readonly");
