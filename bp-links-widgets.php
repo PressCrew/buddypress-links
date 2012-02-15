@@ -4,7 +4,7 @@
 function bp_links_register_widgets() {
 	add_action('widgets_init', create_function('', 'return register_widget("BP_Links_Widget");') );
 }
-add_action( 'bp_init', 'bp_links_register_widgets', 11 );
+add_action( 'bp_loaded', 'bp_links_register_widgets' );
 
 /*** LINKS WIDGET *****************/
 
