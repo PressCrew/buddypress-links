@@ -8,7 +8,9 @@ function bp_links_is_default_theme() {
 }
 
 function bp_links_dtheme_enqueue_styles() {
-	wp_enqueue_style( 'bp-links-screen', BP_LINKS_THEME_URL . '/style.css' );
+	wp_enqueue_style( 'bp-links-default', BP_LINKS_THEME_URL . '/_inc/css/default.css' );
+	wp_enqueue_style( 'bp-links-forms', BP_LINKS_THEME_URL . '/_inc/css/forms.css' );
+	wp_enqueue_style( 'colorbox', BP_LINKS_THEME_URL . '/_inc/css/colorbox/colorbox.css' );
 }
 
 function bp_links_dtheme_enqueue_scripts( $forms = false ) {
@@ -55,7 +57,7 @@ function bp_links_dtheme_add_js() {
 		bp_links_dtheme_enqueue_scripts( ( $bp->action_variables[0] == 'create' ) );
 	}
 }
-add_action( 'wp_print_scripts', 'bp_links_dtheme_add_js');
+add_action( 'wp_enqueue_scripts', 'bp_links_dtheme_add_js' );
 
 function bp_links_dtheme_activity_type_tabs_setup() {
 	global $bp;
