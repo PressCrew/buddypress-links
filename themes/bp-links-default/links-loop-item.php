@@ -21,7 +21,7 @@
 		<?php do_action( 'bp_before_links_list_item_title' ) ?>
 		<div class="item-title">
 			<?php do_action( 'bp_before_links_list_item_title_content' ) ?>
-			<?php bp_link_list_item_category_name() ?>: <a href="<?php bp_link_list_item_url() ?>"<?php bp_link_list_item_url_target() ?><?php bp_link_list_item_url_rel() ?>><?php bp_link_list_item_name() ?></a>
+			<span class="item-category"><?php bp_link_list_item_category_name() ?>:</span> <a href="<?php bp_link_list_item_url() ?>"<?php bp_link_list_item_url_target() ?><?php bp_link_list_item_url_rel() ?>><?php bp_link_list_item_name() ?></a>
 			<a class="link-external" href="<?php bp_link_list_item_external_url() ?>" title="<?php bp_link_list_item_external() ?>"<?php bp_link_list_item_external_url_target() ?><?php bp_link_list_item_external_url_rel() ?>></a>
 			<?php do_action( 'bp_after_links_list_item_title_content' ) ?>
 		</div>
