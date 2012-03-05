@@ -39,6 +39,11 @@ if ( !defined( 'BP_LINKS_CUSTOM_THEME' ) )
 if ( !defined( 'BP_LINKS_LIST_AVATAR_SIZE' ) )
 	define( 'BP_LINKS_LIST_AVATAR_SIZE', 100 );
 
+// The default behavior is to link the "title link" to the "local" links page when
+// a link is clicked, set this to false to send them directly to the external url
+if ( !defined( 'BP_LINKS_LIST_ITEM_URL_LOCAL' ) )
+	define( 'BP_LINKS_LIST_ITEM_URL_LOCAL', true );
+
 // The default behavior is to allow members to change their vote.
 // Override this constant and set to false to prevent vote changing.
 if ( !defined( 'BP_LINKS_VOTE_ALLOW_CHANGE' ) )

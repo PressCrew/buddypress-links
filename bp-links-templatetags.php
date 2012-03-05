@@ -1689,7 +1689,12 @@ function bp_link_list_item_url() {
 	echo bp_get_link_list_item_url();
 }
 	function bp_get_link_list_item_url() {
-		return apply_filters( 'bp_get_link_list_item_url', bp_link_permalink() );
+		if ( BP_LINKS_LIST_ITEM_URL_LOCAL == true ) {
+			$url = bp_link_permalink();
+		} else {
+			$url = bp_get_link_url();
+		}
+		return apply_filters( 'bp_get_link_list_item_url', $url );
 	}
 
 function bp_link_list_item_url_domain() {
