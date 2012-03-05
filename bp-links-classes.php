@@ -121,7 +121,7 @@ class BP_Links_Link {
 
 		$this->_is_new = false;
 
-		$prlink_user_id = ( bp_is_member() ) ? $bp->displayed_user->id : $bp->loggedin_user->id;
+		$prlink_user_id = ( bp_is_user() ) ? $bp->displayed_user->id : $bp->loggedin_user->id;
 		
 		$sql = $wpdb->prepare( "SELECT l.*, sp.user_id AS prlink_user_id, sp.date_created AS prlink_date_created, sp.date_updated AS prlink_date_updated FROM {$bp->links->table_name} AS l LEFT JOIN {$bp->links->table_name_share_prlink} sp ON l.id = sp.link_id and sp.user_id = %d WHERE id = %d", $prlink_user_id, $this->id );
 		$link = $wpdb->get_row($sql);

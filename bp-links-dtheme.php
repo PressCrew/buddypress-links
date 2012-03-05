@@ -257,12 +257,12 @@ function bp_links_dtheme_ajax_querystring_directory_filter( $query_string, $obje
 	if ( $bp->links->slug == $bp->current_component ) {
 		// must be my links action or scope
 		if ( 'mylinks' == $scope || 'my-links' == $bp->current_action ) {
-
+			
 			$args = array();
 			parse_str( $query_string, $args );
 
 			// inject user id
-			$args['user_id'] = ( bp_is_member() ) ? $bp->displayed_user->id : $bp->loggedin_user->id;
+			$args['user_id'] = ( bp_is_user() ) ? $bp->displayed_user->id : $bp->loggedin_user->id;
 
 			return http_build_query( $args );
 		}
@@ -286,7 +286,7 @@ function bp_links_dtheme_ajax_querystring_group_filter( $query_string ) {
 
 	// look for groups component and links action
 	if ( $bp->groups->slug == $bp->current_component && $bp->current_action == $bp->links->slug ) {
-
+		
 		$args = array();
 		parse_str( $query_string, $args );
 
@@ -330,7 +330,7 @@ function bp_links_dtheme_ajax_querystring_activity_filter( $query_string, $objec
 
 		if ( bp_links_is_groups_enabled() && bp_is_group_home() ) {
 			$do_filter = 'group';
-		} elseif ( bp_is_member() ) {
+		} elseif ( bp_is_user() ) {
 			// handle filtering for profile pages
 			// this nav does not use AJAX so don't rely on $scope
 			if ( $bp->activity->id == $bp->current_component && $bp->links->slug == $bp->current_action ) {
