@@ -165,7 +165,7 @@ function bp_links_is_activity_enabled() {
  */
 function bp_links_setup_root_component() {
 	// Register 'links' as a root component
-	bp_core_add_root_component( BP_LINKS_SLUG );
+	bp_core_add_root_component( 'links' );
 }
 
 /**
@@ -176,6 +176,8 @@ function bp_links_setup_globals() {
 
 	/* For internal identification NEVER, EVER, CHANGE THIS */
 	$bp->links->id = 'links';
+	$bp->links->slug = BP_LINKS_SLUG;
+	$bp->links->root_slug = BP_LINKS_SLUG;
 
 	$bp->links->table_name = $wpdb->base_prefix . 'bp_links';
 	$bp->links->table_name_categories = $wpdb->base_prefix . 'bp_links_categories';
@@ -184,7 +186,6 @@ function bp_links_setup_globals() {
 	$bp->links->table_name_share_grlink = $wpdb->base_prefix . 'bp_links_share_grlink';
 	$bp->links->table_name_linkmeta = $wpdb->base_prefix . 'bp_links_linkmeta';
 	$bp->links->format_notification_function = 'bp_links_format_notifications';
-	$bp->links->slug = BP_LINKS_SLUG;
 
 	/* Register this in the active components array */
 	$bp->active_components[$bp->links->slug] = $bp->links->id;

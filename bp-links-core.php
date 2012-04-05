@@ -151,6 +151,21 @@ function bp_links_add_cron_schedules() {
 add_filter( 'cron_schedules', 'bp_links_add_cron_schedules' );
 
 /**
+ * Returns true if links is the current component
+ * @return boolean
+ * @return type
+ */
+function bp_is_links_component()
+{
+	global $bp;
+
+	return (
+		$bp->current_component == $bp->links->id ||
+		$bp->current_component == $bp->links->slug
+	);
+}
+
+/**
  * Filter located template from bp_core_load_template
  *
  * @see bp_core_load_template()
@@ -166,7 +181,7 @@ function bp_links_filter_template( $located_template, $template_names ) {
 		return $located_template;
 
 	// only filter for our component
-	if ( $bp->current_component == $bp->links->slug ) {
+	if ( bp_is_links_component() ) {
 		return bp_links_locate_theme_template( $template_names );
 	}
 
@@ -366,7 +381,7 @@ function bp_links_setup_nav() {
 		'item_css_id' => 'links-my-links'
 	));
 
-	if ( $bp->current_component == $bp->links->slug ) {
+	if ( bp_is_links_component() ) {
 
 		if ( bp_is_my_profile() && !$bp->is_single_item ) {
 
@@ -398,9 +413,9 @@ function bp_links_setup_nav() {
 			
 			/* When in a single link, the first action is bumped down one because of the
 			   link name, so we need to adjust this and set the link name to current_item. */
-			$bp->current_item = $bp->links->slug;
-			$bp->current_action = $bp->action_variables[0];
-			array_shift($bp->action_variables);
+			$bp->current_item = bp_current_action();
+			$bp->current_action = bp_action_variable( 0 );
+			array_shift( $bp->action_variables );
 
 			$bp->bp_options_title = $bp->links->current_link->name;
 
@@ -408,27 +423,30 @@ function bp_links_setup_nav() {
 			
 			$link_link = $bp->root_domain . '/' . $bp->links->slug . '/' . $bp->links->current_link->slug . '/';
 
-			/* Reset the existing subnav items */
-			bp_core_reset_subnav_items( $bp->links->slug );
-			
-			/* Add a new default subnav item for when the links nav is selected. */
-			bp_core_new_nav_default( array(
-				'parent_slug' => $bp->links->slug,
+			/* New HIDDEN nav item */
+			$nav_name_single = apply_filters(
+				'bp_links_nav_item_name_single',
+				__( 'Links', 'buddypress-links' )
+			);
+			bp_core_new_nav_item( array(
+				'name' => $nav_name_single,
+				'slug' => $bp->links->current_link->slug,
+				'position' => -1,
 				'screen_function' => 'bp_links_screen_link_home',
-				'subnav_slug' => 'home'
+				'default_subnav_slug' => 'home',
+				'item_css_id' => $bp->links->id
 			));
-			
+
 			/* Add the "Home" subnav item, as this will always be present */
 			$subnav_name_home = apply_filters(
 				'bp_links_subnav_item_name_home',
 				__( 'Home', 'buddypress-links' )
 			);
-
 			bp_core_new_subnav_item( array(
 				'name' => $subnav_name_home,
 				'slug' => 'home',
 				'parent_url' => $link_link,
-				'parent_slug' => $bp->links->slug,
+				'parent_slug' => $bp->links->current_link->slug,
 				'screen_function' => 'bp_links_screen_link_home',
 				'position' => 10,
 				'item_css_id' => 'link-home'
@@ -444,7 +462,7 @@ function bp_links_setup_nav() {
 					'name' => $subnav_name_admin,
 					'slug' => 'admin',
 					'parent_url' => $link_link,
-					'parent_slug' => $bp->links->slug,
+					'parent_slug' => $bp->links->current_link->slug,
 					'screen_function' => 'bp_links_screen_link_admin',
 					'position' => 20,
 					'user_has_access' => $bp->is_item_admin,
@@ -541,7 +559,7 @@ add_action( 'wp_head', 'bp_links_add_meta' );
 function bp_links_screen_personal_links() {
 	global $bp;
 
-	if ( BP_LINKS_SLUG != $bp->current_component )
+	if ( !bp_is_links_component() )
 		return false;
 	
 	// format for deleting notifications if we ever add any
@@ -558,7 +576,7 @@ function bp_links_screen_personal_links() {
 function bp_links_screen_personal_links_template_content() {
 	global $bp;
 
-	if ( BP_LINKS_SLUG != $bp->current_component )
+	if ( !bp_is_links_component() )
 		return false;
 
 	do_action( 'bp_links_screen_personal_links_template_content' );
@@ -614,10 +632,10 @@ function bp_links_screen_link_home() {
  */
 function bp_links_screen_link_admin() {
 	global $bp;
-	
-	if ( $bp->current_component != BP_LINKS_SLUG || 'admin' != $bp->current_action )
+
+	if ( !bp_is_current_component( 'links' ) || 'admin' != $bp->current_action )
 		return false;
-	
+
 	if ( !empty( $bp->action_variables[0] ) )
 		return false;
 	
@@ -792,7 +810,7 @@ function bp_links_screen_link_admin_delete_link() {
 			bp_core_add_message( __( 'There was an error deleting the link, please try again.', 'buddypress-links' ), 'error' );
 		}
 
-		bp_core_redirect( $bp->loggedin_user->domain . $bp->current_component );
+		bp_core_redirect( $bp->loggedin_user->domain . $bp->links->root_slug );
 	}
 
 	do_action( 'bp_links_screen_link_admin_delete_link', $bp->links->current_link->id );
@@ -912,9 +930,10 @@ function bp_links_validate_create_form_input() {
 function bp_links_action_create_link() {
 	global $bp;
 
-	switch ( $bp->current_component ) {
+	switch ( bp_current_component() ) {
 
 		// Are we at domain.org/links/create ???
+		case $bp->links->id:
 		case $bp->links->slug:
 			if ( 'create' == $bp->current_action ) {
 				$load_template = $bp->links->id;
@@ -1008,8 +1027,8 @@ add_action( 'bp_screens', 'bp_links_action_create_link' );
 function bp_links_action_redirect_to_random_link() {
 	global $bp, $wpdb;
 
-	if ( $bp->current_component == $bp->links->slug && isset( $_GET['random-link'] ) ) {
-		
+	if ( bp_is_links_component() && isset( $_GET['random-link'] ) ) {
+	
 		$link = bp_links_get_random();
 
 		bp_core_redirect( $bp->root_domain . '/' . $bp->links->slug . '/' . $link['links'][0]->slug );
@@ -1020,7 +1039,7 @@ add_action( 'bp_screens', 'bp_links_action_redirect_to_random_link' );
 function bp_links_action_link_feed() {
 	global $bp, $wp_query;
 
-	if ( $bp->current_component != $bp->links->slug || !$bp->links->current_link || $bp->current_action != 'feed' )
+	if ( !bp_is_links_component() || !$bp->links->current_link || $bp->current_action != 'feed' )
 		return false;
 
 	$wp_query->is_404 = false;
@@ -1038,7 +1057,7 @@ add_action( 'bp_init', 'bp_links_action_link_feed', 6 );
 function bp_links_action_personal_links_feed() {
 	global $bp, $wp_query;
 
-	if ( $bp->current_component != $bp->activity->slug || !$bp->displayed_user->id || $bp->current_action != 'my-links' || $bp->action_variables[0] != 'feed' )
+	if ( !bp_is_activity_component() || !$bp->displayed_user->id || $bp->current_action != 'my-links' || $bp->action_variables[0] != 'feed' )
 		return false;
 
 	$wp_query->is_404 = false;
@@ -1052,7 +1071,7 @@ add_action( 'bp_init', 'bp_links_action_personal_links_feed', 6 );
 function bp_links_action_directory_feed() {
 	global $bp, $wp_query;
 
-	if ( $bp->current_component != $bp->links->slug || $bp->current_action != 'feed' )
+	if ( !bp_is_links_component() || $bp->current_action != 'feed' )
 		return false;
 
 	$wp_query->is_404 = false;
@@ -1302,7 +1321,7 @@ function bp_links_delete_link( $link_id ) {
 function bp_links_admin_current_action_variable() {
 	global $bp;
 
-	if ( $bp->current_component == BP_LINKS_SLUG && 'admin' == $bp->current_action ) {
+	if ( bp_is_links_component() && 'admin' == $bp->current_action ) {
 		return $bp->action_variables[0];
 	} else {
 		return false;

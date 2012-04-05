@@ -808,8 +808,9 @@ function bp_link_details_form_action() {
 		if ( bp_links_current_link_exists() ) {
 			$form_action = bp_get_link_admin_form_action();
 		} else {
-			switch ( $bp->current_component ) {
+			switch ( bp_current_component() ) {
 				default:
+				case $bp->links->id:
 				case $bp->links->slug:
 					$form_action = $bp->loggedin_user->domain . $bp->links->slug . '/create';
 					break;
@@ -828,7 +829,7 @@ function bp_link_details_form_link_group_id() {
 	function bp_get_link_details_form_link_group_id() {
 		global $bp;
 
-		return ( $bp->groups->slug == $bp->current_component ) ? bp_get_group_id() : null;
+		return ( bp_is_groups_component() ) ? bp_get_group_id() : null;
 	}
 
 function bp_link_details_form_link_url_readonly() {

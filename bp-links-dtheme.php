@@ -34,9 +34,9 @@ function bp_links_dtheme_add_css() {
 	if ( !bp_links_is_default_theme() )
 		return false;
 	
-	if ( $bp->current_component == $bp->links->slug ) {
+	if ( bp_is_links_component() ) {
 		bp_links_dtheme_enqueue_styles();
-	} else if ( $bp->current_component == $bp->groups->slug && $bp->current_action == $bp->links->slug ) {
+	} else if ( bp_is_groups_component() && $bp->current_action == $bp->links->slug ) {
 		bp_links_dtheme_enqueue_styles();
 	}
 }
@@ -49,11 +49,11 @@ function bp_links_dtheme_add_js() {
 		return false;
 
 	// leaving this debug code here on purpose
-	//var_dump( $bp->current_component, $bp->current_action, $bp->action_variables );
+	//var_dump( bp_current_component(), bp_current_action(), $bp->action_variables );
 
-	if ( $bp->current_component == $bp->links->slug ) {
+	if ( bp_is_links_component() ) {
 		bp_links_dtheme_enqueue_scripts( ( $bp->current_action == 'create' ) );
-	} else if ( $bp->current_component == $bp->groups->slug && $bp->current_action == $bp->links->slug ) {
+	} else if ( bp_is_groups_component() && $bp->current_action == $bp->links->slug ) {
 		bp_links_dtheme_enqueue_scripts( ( $bp->action_variables[0] == 'create' ) );
 	}
 }
@@ -224,7 +224,7 @@ function bp_links_dtheme_selected_category() {
 function bp_links_dtheme_ajax_querystring_category_filter( $query_string, $object ) {
 	global $bp;
 
-	if ( ( $bp->links->slug == $bp->current_component || 'links' == $object ) || ( $bp->groups->slug == $bp->current_component && $bp->current_action == $bp->links->slug ) ) {
+	if ( ( bp_is_links_component() || 'links' == $object ) || ( bp_is_groups_component() && $bp->current_action == $bp->links->slug ) ) {
 
 		$selected_category = bp_links_dtheme_selected_category();
 
@@ -254,7 +254,7 @@ function bp_links_dtheme_ajax_querystring_directory_filter( $query_string, $obje
 	global $bp;
 
 	// look for links component
-	if ( $bp->links->slug == $bp->current_component ) {
+	if ( bp_is_links_component() ) {
 		// must be my links action or scope
 		if ( 'mylinks' == $scope || 'my-links' == $bp->current_action ) {
 			
@@ -285,7 +285,7 @@ function bp_links_dtheme_ajax_querystring_group_filter( $query_string ) {
 		return $query_string;
 
 	// look for groups component and links action
-	if ( $bp->groups->slug == $bp->current_component && $bp->current_action == $bp->links->slug ) {
+	if ( bp_is_groups_component() && $bp->current_action == $bp->links->slug ) {
 		
 		$args = array();
 		parse_str( $query_string, $args );
@@ -333,17 +333,17 @@ function bp_links_dtheme_ajax_querystring_activity_filter( $query_string, $objec
 		} elseif ( bp_is_user() ) {
 			// handle filtering for profile pages
 			// this nav does not use AJAX so don't rely on $scope
-			if ( $bp->activity->id == $bp->current_component && $bp->links->slug == $bp->current_action ) {
+			if ( bp_is_activity_component() && $bp->links->slug == $bp->current_action ) {
 				$do_filter = 'user';
 			}
 		} else {
 			// handle filtering for all non-profile, non-links pages
-			if ( empty( $bp->current_component ) || $bp->activity->id == $bp->current_component ) {
+			if ( !bp_current_component() || bp_is_activity_component() ) {
 				// filter under 'activity' component with 'links' scope
 				if ( $bp->links->id == $scope ) {
 					$do_filter = 'user';
 				}
-			} elseif ( $bp->links->id == $bp->current_component ) {
+			} elseif ( bp_is_links_component() ) {
 				// filter 'links' component home pages
 				if ( $bp->is_single_item ) {
 					$do_filter = 'default';
