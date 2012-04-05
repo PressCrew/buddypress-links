@@ -36,7 +36,7 @@ function bp_links_dtheme_add_css() {
 	
 	if ( bp_is_links_component() ) {
 		bp_links_dtheme_enqueue_styles();
-	} else if ( bp_is_groups_component() && $bp->current_action == $bp->links->slug ) {
+	} else if ( bp_is_groups_component() && $bp->current_action == bp_links_slug() ) {
 		bp_links_dtheme_enqueue_styles();
 	}
 }
@@ -53,7 +53,7 @@ function bp_links_dtheme_add_js() {
 
 	if ( bp_is_links_component() ) {
 		bp_links_dtheme_enqueue_scripts( ( $bp->current_action == 'create' ) );
-	} else if ( bp_is_groups_component() && $bp->current_action == $bp->links->slug ) {
+	} else if ( bp_is_groups_component() && $bp->current_action == bp_links_slug() ) {
 		bp_links_dtheme_enqueue_scripts( ( $bp->action_variables[0] == 'create' ) );
 	}
 }
@@ -68,7 +68,7 @@ function bp_links_dtheme_activity_type_tabs_setup() {
 	if ( is_user_logged_in() && bp_links_total_links_for_user( bp_loggedin_user_id() ) ) {
 		echo sprintf(
 			'<li id="activity-links"><a href="%s" title="%s">%s</a></li>',
-			bp_loggedin_user_domain() . BP_ACTIVITY_SLUG . '/' . BP_LINKS_SLUG . '/',
+			bp_loggedin_user_domain() . BP_ACTIVITY_SLUG . '/' . bp_links_slug() . '/',
 			__( 'The activity of links I created.', 'buddypress-links' ),
 			__( 'My Links', 'buddypress-links' ) .
 			sprintf( ' <span>%s</span>', bp_links_total_links_for_user( bp_loggedin_user_id() ) )
@@ -115,7 +115,7 @@ function bp_links_dtheme_search_form() {
 function bp_links_dtheme_creation_tabs() {
 	global $bp;
 
-	$href = sprintf( '%s/%s/create/', $bp->root_domain, $bp->links->slug ); ?>
+	$href = sprintf( '%s/%s/create/', $bp->root_domain, bp_links_root_slug() ); ?>
 
 	<li class="current"><a href="<?php echo $href ?>"><?php _e( 'Create', 'buddypress-links' ) ?></a></li>
 	<li><a href="<?php echo $href ?>"><?php _e( 'Start Over', 'buddypress-links' ) ?></a></li> <?php
@@ -224,7 +224,7 @@ function bp_links_dtheme_selected_category() {
 function bp_links_dtheme_ajax_querystring_category_filter( $query_string, $object ) {
 	global $bp;
 
-	if ( ( bp_is_links_component() || 'links' == $object ) || ( bp_is_groups_component() && $bp->current_action == $bp->links->slug ) ) {
+	if ( ( bp_is_links_component() || 'links' == $object ) || ( bp_is_groups_component() && $bp->current_action == bp_links_slug() ) ) {
 
 		$selected_category = bp_links_dtheme_selected_category();
 
@@ -285,7 +285,7 @@ function bp_links_dtheme_ajax_querystring_group_filter( $query_string ) {
 		return $query_string;
 
 	// look for groups component and links action
-	if ( bp_is_groups_component() && $bp->current_action == $bp->links->slug ) {
+	if ( bp_is_groups_component() && $bp->current_action == bp_links_slug() ) {
 		
 		$args = array();
 		parse_str( $query_string, $args );
@@ -333,14 +333,14 @@ function bp_links_dtheme_ajax_querystring_activity_filter( $query_string, $objec
 		} elseif ( bp_is_user() ) {
 			// handle filtering for profile pages
 			// this nav does not use AJAX so don't rely on $scope
-			if ( bp_is_activity_component() && $bp->links->slug == $bp->current_action ) {
+			if ( bp_is_activity_component() && bp_links_slug() == $bp->current_action ) {
 				$do_filter = 'user';
 			}
 		} else {
 			// handle filtering for all non-profile, non-links pages
 			if ( !bp_current_component() || bp_is_activity_component() ) {
 				// filter under 'activity' component with 'links' scope
-				if ( $bp->links->id == $scope ) {
+				if ( bp_links_id() == $scope ) {
 					$do_filter = 'user';
 				}
 			} elseif ( bp_is_links_component() ) {
@@ -361,7 +361,7 @@ function bp_links_dtheme_ajax_querystring_activity_filter( $query_string, $objec
 		switch ( $do_filter ) {
 			case 'group':
 				// send groups AND links objects
-				$args['object'] = sprintf( '%s,%s', $bp->groups->id, $bp->links->id );
+				$args['object'] = sprintf( '%s,%s', $bp->groups->id, bp_links_id() );
 				// get recent link cloud ids for this group
 				$recent_ids = bp_links_recent_activity_item_ids_for_group();
 				// if there is activity, merge the ids with the current group id
@@ -373,7 +373,7 @@ function bp_links_dtheme_ajax_querystring_activity_filter( $query_string, $objec
 				break;
 			case 'user':
 				// override with links object
-				$args['object'] = $bp->links->id;
+				$args['object'] = bp_links_id();
 				// user_id must be empty to show OTHER user's actions for this user's links
 				$args['user_id'] = false;
 				// get recent link cloud ids for this user
@@ -384,7 +384,7 @@ function bp_links_dtheme_ajax_querystring_activity_filter( $query_string, $objec
 				break;
 			case 'default':
 				// override with links object
-				$args['object'] = $bp->links->id;
+				$args['object'] = bp_links_id();
 				// set primary id to current link id if applicable
 				if ( $bp->links->current_link ) {
 					$args['primary_id'] = $bp->links->current_link->cloud_id;
@@ -411,7 +411,7 @@ add_filter( 'bp_dtheme_ajax_querystring', 'bp_links_dtheme_ajax_querystring_acti
 function bp_links_dtheme_activity_feed_url( $feed_url, $scope ) {
 	global $bp;
 
-	if ( !bp_links_is_activity_enabled() || empty( $scope ) || $scope != $bp->links->id )
+	if ( !bp_links_is_activity_enabled() || empty( $scope ) || $scope != bp_links_id() )
 		return $feed_url;
 
 	return $bp->loggedin_user->domain . BP_ACTIVITY_SLUG . '/my-links/feed/';

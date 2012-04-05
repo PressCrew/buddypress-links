@@ -488,7 +488,7 @@ function bp_link_permalink() {
 		if ( !$link )
 			$link =& $links_template->link;
 
-		return apply_filters( 'bp_get_link_permalink', $bp->root_domain . '/' . $bp->links->slug . '/' . $link->slug );
+		return apply_filters( 'bp_get_link_permalink', $bp->root_domain . '/' . bp_links_root_slug() . '/' . $link->slug );
 	}
 
 function bp_link_userlink() {
@@ -765,18 +765,18 @@ function bp_link_admin_tabs() {
 	$current_tab = $bp->action_variables[0];
 ?>
 	<?php if ( $bp->is_item_admin ) { ?>
-		<li<?php if ( 'edit-details' == $current_tab || empty( $current_tab ) ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->links->slug ?>/<?php echo $link->slug ?>/admin/edit-details"><?php _e( 'Edit Details', 'buddypress-links' ) ?></a></li>
+		<li<?php if ( 'edit-details' == $current_tab || empty( $current_tab ) ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . bp_links_root_slug() ?>/<?php echo $link->slug ?>/admin/edit-details"><?php _e( 'Edit Details', 'buddypress-links' ) ?></a></li>
 	<?php } ?>
 	
 	<?php
 		if ( !$bp->is_item_admin )
 			return false;
 	?>
-	<li<?php if ( 'link-avatar' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->links->slug ?>/<?php echo $link->slug ?>/admin/link-avatar"><?php _e( 'Link Avatar', 'buddypress-links' ) ?></a></li>
+	<li<?php if ( 'link-avatar' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . bp_links_root_slug() ?>/<?php echo $link->slug ?>/admin/link-avatar"><?php _e( 'Link Avatar', 'buddypress-links' ) ?></a></li>
 
 	<?php do_action( 'bp_link_admin_tabs', $current_tab, $link->slug ) ?>
 	
-	<li<?php if ( 'delete-link' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->links->slug ?>/<?php echo $link->slug ?>/admin/delete-link"><?php _e( 'Delete Link', 'buddypress-links' ) ?></a></li>
+	<li<?php if ( 'delete-link' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . bp_links_root_slug() ?>/<?php echo $link->slug ?>/admin/delete-link"><?php _e( 'Delete Link', 'buddypress-links' ) ?></a></li>
 <?php
 }
 
@@ -810,12 +810,12 @@ function bp_link_details_form_action() {
 		} else {
 			switch ( bp_current_component() ) {
 				default:
-				case $bp->links->id:
-				case $bp->links->slug:
-					$form_action = $bp->loggedin_user->domain . $bp->links->slug . '/create';
+				case bp_links_id():
+				case bp_links_slug():
+					$form_action = $bp->loggedin_user->domain . bp_links_slug() . '/create';
 					break;
 				case $bp->groups->slug:
-					$form_action = sprintf( '%s/%s/%s/%s/create', $bp->root_domain, $bp->groups->slug, $bp->groups->current_group->slug, $bp->links->slug ) ;
+					$form_action = sprintf( '%s/%s/%s/%s/create', $bp->root_domain, $bp->groups->slug, $bp->groups->current_group->slug, bp_links_slug() ) ;
 			}
 			
 		}
@@ -1526,10 +1526,10 @@ function bp_directory_links_feed_link() {
 		global $bp;
 		/*
 		if ( !empty( $_POST['scope'] ) && $_POST['scope'] == 'mylinks' )
-			return $bp->loggedin_user->domain . BP_LINKS_SLUG . '/my-links/feed/';
+			return $bp->loggedin_user->domain . bp_links_slug() . '/my-links/feed/';
 		else
 		*/
-		return apply_filters( 'bp_get_directory_links_feed_link', site_url( $bp->links->slug . '/feed' ) );
+		return apply_filters( 'bp_get_directory_links_feed_link', site_url( bp_links_root_slug() . '/feed' ) );
 	}
 
 function bp_link_activity_feed_link() {
@@ -1837,10 +1837,10 @@ function bp_links_group_links_tabs( $group = false ) {
 	$current_tab = $bp->action_variables[0];
 	?>
 
-	<li<?php if ( '' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo $bp->links->slug ?>/"><?php _e('All Group Links', 'buddypress-links') ?> <span><?php echo bp_links_total_links_for_group() ?></span></a></li>
+	<li<?php if ( '' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo bp_links_slug() ?>/"><?php _e('All Group Links', 'buddypress-links') ?> <span><?php echo bp_links_total_links_for_group() ?></span></a></li>
 	<?php if ( bp_group_is_member() ): ?>
-		<li<?php if ( 'my-links' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo $bp->links->slug ?>/my-links/"><?php _e('My Group Links', 'buddypress-links' ) ?> <span><?php echo bp_links_total_links_for_group_member() ?></span></a></li>
-		<li<?php if ( 'create' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo $bp->links->slug ?>/create/"><?php _e('Create Group Link', 'buddypress-links') ?></a></li>
+		<li<?php if ( 'my-links' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo bp_links_slug() ?>/my-links/"><?php _e('My Group Links', 'buddypress-links' ) ?> <span><?php echo bp_links_total_links_for_group_member() ?></span></a></li>
+		<li<?php if ( 'create' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo bp_links_slug() ?>/create/"><?php _e('Create Group Link', 'buddypress-links') ?></a></li>
 	<?php endif; ?>
 
 	<?php

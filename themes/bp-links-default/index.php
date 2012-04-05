@@ -4,7 +4,7 @@
 		<div class="padder">
 
 		<form action="" method="post" id="links-directory-form" class="dir-form">
-			<h2><?php _e( 'Links Directory', 'buddypress-links' ) ?><?php if ( is_user_logged_in() ) : ?> &nbsp;<a class="button" href="<?php echo bp_get_root_domain() . '/' . BP_LINKS_SLUG . '/create/' ?>"><?php _e( 'Create a Link', 'buddypress-links' ) ?></a><?php endif; ?></h2>
+			<h2><?php _e( 'Links Directory', 'buddypress-links' ) ?><?php if ( is_user_logged_in() ) : ?> &nbsp;<a class="button" href="<?php echo bp_get_root_domain() . '/' . bp_links_root_slug() . '/create/' ?>"><?php _e( 'Create a Link', 'buddypress-links' ) ?></a><?php endif; ?></h2>
 
 			<?php do_action( 'bp_before_directory_links_content' ) ?>
 
@@ -17,7 +17,7 @@
 					<li class="selected" id="links-all"><a href="<?php bp_root_domain() ?>"><?php _e( 'All Links', 'buddypress-links' ) ?> <span><?php echo bp_get_links_total_link_count() ?></span></a></li>
 
 					<?php if ( is_user_logged_in() && bp_links_total_links_for_user( bp_loggedin_user_id() ) ) : ?>
-						<li id="links-mylinks"><a href="<?php echo bp_loggedin_user_domain() . BP_LINKS_SLUG . '/my-links/' ?>"><?php _e( 'My Links', 'buddypress-links' ) ?> <?php echo bp_links_total_links_for_user( bp_loggedin_user_id() ) ?></a></li>
+						<li id="links-mylinks"><a href="<?php echo bp_loggedin_user_domain() . bp_links_slug() . '/my-links/' ?>"><?php _e( 'My Links', 'buddypress-links' ) ?> <?php echo bp_links_total_links_for_user( bp_loggedin_user_id() ) ?></a></li>
 					<?php endif; ?>
 
 					<?php do_action( 'bp_links_directory_link_types' ) ?>

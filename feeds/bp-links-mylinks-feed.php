@@ -38,7 +38,7 @@ header('Status: 200 OK');
 	 */
 	?>
 
-	<?php if ( bp_has_activities( 'object=' . $bp->links->id . /*'&primary_id=' . $link_ids_str .*/ '&max=50&display_comments=threaded' ) ) : ?>
+	<?php if ( bp_has_activities( 'object=' . bp_links_id() . /*'&primary_id=' . $link_ids_str .*/ '&max=50&display_comments=threaded' ) ) : ?>
 		<?php while ( bp_activities() ) : bp_the_activity(); ?>
 			<item>
 				<guid><?php bp_activity_thread_permalink() ?></guid>

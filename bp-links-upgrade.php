@@ -36,7 +36,7 @@ function bp_links_upgrade_04( $db_version ) {
 		return false;
 
 	// update the activity table item_id column replacing the link_id with the cloud_id
-	$sql_activity = $wpdb->prepare( "UPDATE {$bp->links->table_name} AS l, {$bp->activity->table_name} AS a SET a.item_id = l.cloud_id WHERE l.id = a.item_id AND a.component = %s", $bp->links->id );
+	$sql_activity = $wpdb->prepare( "UPDATE {$bp->links->table_name} AS l, {$bp->activity->table_name} AS a SET a.item_id = l.cloud_id WHERE l.id = a.item_id AND a.component = %s", bp_links_id() );
 	if ( false === $wpdb->query($sql_activity) )
 		return false;
 

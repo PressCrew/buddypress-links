@@ -31,11 +31,11 @@ class BP_Links_Widget extends WP_Widget {
 		<?php if ( bp_has_links( 'type=popular&per_page=' . $instance['max_links'] . '&max=' . $instance['max_links'] ) ) : ?>
 			<div class="item-options" id="links-list-options">
 				<span class="ajax-loader" id="ajax-loader-links"></span>
-				<a href="<?php echo site_url() . '/' . $bp->links->slug ?>" id="newest-links"><?php _e("Newest", 'buddypress') ?></a> |
-				<!-- a href="<?php echo site_url() . '/' . $bp->links->slug ?>" id="recently-active-links"><?php _e("Active", 'buddypress') ?></a> | -->
-				<a href="<?php echo site_url() . '/' . $bp->links->slug ?>" id="most-votes"><?php _e("Votes", 'buddypress-links') ?></a> |
-				<a href="<?php echo site_url() . '/' . $bp->links->slug ?>" id="high-votes"><?php _e("Rating", 'buddypress-links') ?></a> |
-				<a href="<?php echo site_url() . '/' . $bp->links->slug ?>" id="popular-links" class="selected"><?php _e("Popular", 'buddypress') ?></a>
+				<a href="<?php echo site_url() . '/' . bp_links_root_slug() ?>" id="newest-links"><?php _e("Newest", 'buddypress') ?></a> |
+				<!-- a href="<?php echo site_url() . '/' . bp_links_root_slug() ?>" id="recently-active-links"><?php _e("Active", 'buddypress') ?></a> | -->
+				<a href="<?php echo site_url() . '/' . bp_links_root_slug() ?>" id="most-votes"><?php _e("Votes", 'buddypress-links') ?></a> |
+				<a href="<?php echo site_url() . '/' . bp_links_root_slug() ?>" id="high-votes"><?php _e("Rating", 'buddypress-links') ?></a> |
+				<a href="<?php echo site_url() . '/' . bp_links_root_slug() ?>" id="popular-links" class="selected"><?php _e("Popular", 'buddypress') ?></a>
 			</div>
 
 			<ul id="links-list" class="item-list">
