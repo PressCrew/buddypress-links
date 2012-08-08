@@ -186,6 +186,7 @@ function bp_links_dtheme_share_button( $link = false, $group = false ) {
  */
 function bp_links_dtheme_template_loader() {
 	bp_links_locate_template( array( 'links-loop.php' ), true );
+	die();
 }
 add_action( 'wp_ajax_links_filter', 'bp_links_dtheme_template_loader' );
 
