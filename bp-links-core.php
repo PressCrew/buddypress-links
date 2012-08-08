@@ -1056,7 +1056,7 @@ function bp_links_action_create_link() {
 		}
 	}
 }
-add_action( 'bp_screens', 'bp_links_action_create_link' );
+add_action( 'bp_screens', 'bp_links_action_create_link', 1 );
 
 function bp_links_action_redirect_to_random_link() {
 	global $bp, $wpdb;
