@@ -3,7 +3,7 @@ Contributors: MrMaz
 Tags: wpmu, buddypress, social, networking, links, rich media, embed, youtube, flickr, metacafe
 Requires at least: PHP 5.2.4, WordPress 3.1.x, BuddyPress 1.5.x
 Tested up to: PHP 5.3.9, WordPress 3.3.x, BuddyPress 1.5.3.1
-Stable tag: 0.6.2
+Stable tag: 0.6.3
 
 BuddyPress Links is a drop in link and rich media sharing component for BuddyPress 1.5.x
 
@@ -100,6 +100,11 @@ DO NOT attempt to install version 0.3 or higher on BP 1.1.X!  DO NOT try to use 
 This version contains the first support for rich media embedding. *Please make sure that you update the "links" directory in your theme (see Installation).*
 
 == Changelog ==
+
+= 0.6.3 =
+
+* PHP 5.4.x compatibility fixes
+* BuddyPress 1.6.x compatibility fixes
 
 = 0.6.2 =
 
