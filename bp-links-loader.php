@@ -174,6 +174,8 @@ function bp_links_setup_root_component() {
 function bp_links_setup_globals() {
 	global $bp, $wpdb;
 
+	$bp->links = new stdClass();
+
 	/* For internal identification NEVER, EVER, CHANGE THIS */
 	$bp->links->id = 'links';
 	$bp->links->slug = BP_LINKS_SLUG;
