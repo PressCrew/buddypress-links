@@ -225,7 +225,7 @@ function bp_has_links( $args = '' ) {
 	
 	$links_template = new BP_Links_Template( $user_id, $type, $page, $per_page, $max, $slug, $search_terms, $category, $group_id );
 	$links_template->avatar_display_size( $avatar_size );
-	return apply_filters( 'bp_has_links', $links_template->has_links(), &$links_template );
+	return apply_filters( 'bp_has_links', $links_template->has_links(), $links_template );
 }
 
 
@@ -1341,7 +1341,7 @@ function bp_has_links_categories( $args = '' ) {
 	}
 
 	$links_categories_template = new BP_Links_Categories_Template( $type, $per_page, $max );
-	return apply_filters( 'bp_has_links_categories', $links_categories_template->has_categories(), &$links_categories_template );
+	return apply_filters( 'bp_has_links_categories', $links_categories_template->has_categories(), $links_categories_template );
 }
 
 function bp_links_categories() {
