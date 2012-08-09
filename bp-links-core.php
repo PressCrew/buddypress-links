@@ -342,6 +342,8 @@ function bp_links_load_textdomain() {
 			load_textdomain( BP_LINKS_PLUGIN_TEXTDOMAIN, $mofile );
 		}
 	}
+
+	do_action( 'bp_links_load_textdomain' );
 }
 add_action ( 'bp_setup_nav', 'bp_links_load_textdomain', 1 );
 add_action ( 'bp_init', 'bp_links_load_textdomain', 2 );
