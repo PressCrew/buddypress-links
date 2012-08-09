@@ -360,6 +360,8 @@ function bp_links_check_installed() {
 	// set up cron for popularity recalc
 	if ( !wp_next_scheduled('bp_links_cron_popularity') )
 		wp_schedule_event( time(), '15_min', 'bp_links_cron_popularity' );
+
+	do_action( 'bp_links_check_installed' );
 }
 add_action( 'admin_menu', 'bp_links_check_installed' );
 
