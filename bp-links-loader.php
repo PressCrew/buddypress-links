@@ -212,6 +212,8 @@ function bp_links_init() {
 	if ( bp_links_is_groups_enabled() ) {
 		require_once 'bp-links-groupext.php';
 	}
+
+	do_action( 'bp_links_init' );
 }
 
 //
