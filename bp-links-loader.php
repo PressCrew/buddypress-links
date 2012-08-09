@@ -194,6 +194,7 @@ function bp_links_setup_globals() {
 
 	$bp->links->forbidden_names = apply_filters( 'bp_links_forbidden_names', array( 'links', 'my-links', 'link-finder', 'create', 'delete', 'add', 'admin', 'popular', 'most-votes', 'high-votes', 'active', 'newest', 'all', 'submit', 'feed' ) );
 
+	do_action( 'bp_links_setup_globals' );
 }
 
 /**
