@@ -39,6 +39,8 @@ function bp_links_dtheme_add_css() {
 	} else if ( bp_is_groups_component() && $bp->current_action == bp_links_slug() ) {
 		bp_links_dtheme_enqueue_styles();
 	}
+
+	do_action( 'bp_links_dtheme_add_css' );
 }
 add_action( 'wp_enqueue_scripts', 'bp_links_dtheme_add_css' );
 
@@ -56,6 +58,8 @@ function bp_links_dtheme_add_js() {
 	} else if ( bp_is_groups_component() && $bp->current_action == bp_links_slug() ) {
 		bp_links_dtheme_enqueue_scripts( ( $bp->action_variables[0] == 'create' ) );
 	}
+
+	do_action( 'bp_links_dtheme_add_js' );
 }
 add_action( 'wp_enqueue_scripts', 'bp_links_dtheme_add_js' );
 
