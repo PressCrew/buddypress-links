@@ -1,6 +1,6 @@
 <div class="item-list-tabs no-ajax" id="subnav">
 	<ul>
-		<?php bp_links_group_links_tabs() ?>
+		<?php do_action( 'bp_links_group_item_list_tabs' ) ?>
 	</ul>
 </div>
 

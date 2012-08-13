@@ -376,10 +376,8 @@ class BP_Links_Link {
 		// Finally remove the link entry from the DB
 		if ( !$wpdb->query( $wpdb->prepare( "DELETE FROM {$bp->links->table_name} WHERE id = %d", $this->id ) ) )
 			return false;
-			
-		// Remove all link share associations
-		BP_Links_Profile_Link::delete_all_for_link( $this->id );
-		BP_Links_Group_Link::delete_all_for_link( $this->id );
+
+		do_action( 'bp_links_link_after_delete', $this );
 
 		return true;
 	}
@@ -553,9 +551,20 @@ class BP_Links_Link {
 	// Methods for a links directory
 	//
 
-	function get_active( $limit = null, $page = null, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
+	function get_active( $args ) {
 		global $wpdb, $bp;
 
+		// init args
+		$limit = null;
+		$page = 1;
+		$user_id = false;
+		$search_terms = false;
+		$category_id = null;
+		$group_id = null;
+
+		// extract 'em
+		extract( $args );
+		
 		$status_sql = self::get_status_sql( $user_id, ' AND %s' );
 
 		if ( $limit && $page )
@@ -592,9 +601,20 @@ class BP_Links_Link {
 		return array( 'links' => $paged_links, 'total' => $total_links );
 	}
 
-	function get_by_columns_filtered( $sort_columns = array(), $limit = null, $page = null, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
+	function get_by_columns_filtered( $args, $sort_columns = array() ) {
 		global $wpdb, $bp;
-		
+
+		// init args
+		$limit = null;
+		$page = 1;
+		$user_id = false;
+		$search_terms = false;
+		$category_id = null;
+		$group_id = null;
+
+		// extract 'em
+		extract( $args );
+
 		$status_sql = self::get_status_sql( $user_id, ' AND %s' );
 		
 		if ( $search_terms ) {
@@ -639,39 +659,39 @@ class BP_Links_Link {
 		return array( 'links' => $paged_links, 'total' => $total_links );
 	}
 
-	function get_newest( $limit = null, $page = null, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
+	function get_newest( $args ) {
 		$sort_columns = array( 'l.date_created' => 'DESC' );
-		return self::get_by_columns_filtered( $sort_columns, $limit, $page, $user_id, $search_terms, $category_id, $group_id );
+		return self::get_by_columns_filtered( $args, $sort_columns );
 	}
 	
-	function get_popular( $limit = null, $page = null, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
+	function get_popular( $args ) {
 		$sort_columns = array( 'l.popularity' => 'ASC', 'l.date_created' => 'DESC' );
-		return self::get_by_columns_filtered( $sort_columns, $limit, $page, $user_id, $search_terms, $category_id, $group_id );
+		return self::get_by_columns_filtered( $args, $sort_columns );
 	}
 
-	function get_most_votes( $limit = null, $page = null, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
+	function get_most_votes( $args ) {
 		$sort_columns = array( 'l.vote_count' => 'DESC', 'l.date_created' => 'DESC' );
-		return self::get_by_columns_filtered( $sort_columns, $limit, $page, $user_id, $search_terms, $category_id, $group_id );
+		return self::get_by_columns_filtered( $args, $sort_columns );
 	}
 
-	function get_high_votes( $limit = null, $page = null, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
+	function get_high_votes( $args ) {
 		$sort_columns = array( 'l.vote_total' => 'DESC', 'l.date_created' => 'DESC' );
-		return self::get_by_columns_filtered( $sort_columns, $limit, $page, $user_id, $search_terms, $category_id, $group_id );
+		return self::get_by_columns_filtered( $args, $sort_columns );
 	}
 
-	function get_search( $limit = null, $page = null, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
+	function get_search( $args ) {
 		$sort_columns = array( 'l.date_created' => 'DESC' );
-		return self::get_by_columns_filtered( $sort_columns, $limit, $page, $user_id, $search_terms, $category_id, $group_id );
+		return self::get_by_columns_filtered( $args, $sort_columns );
 	}
 
-	function get_all( $limit = null, $page = null, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
+	function get_all( $args ) {
 		$sort_columns = array( 'l.date_created' => 'DESC' );
-		return self::get_by_columns_filtered( $sort_columns, $limit, $page, $user_id, $search_terms, $category_id, $group_id );
+		return self::get_by_columns_filtered( $args, $sort_columns );
 	}
 
-	function get_random( $limit = null, $page = null ) {
+	function get_random( $args ) {
 		$sort_columns = array( 'RAND()' => 'ASC' );
-		return self::get_by_columns_filtered( $sort_columns, null, null, null, $limit, $page );
+		return self::get_by_columns_filtered( $args, $sort_columns );
 	}
 
 	function get_total_link_count() {
@@ -713,16 +733,6 @@ class BP_Links_Link {
 			$hidden_sql = " AND a.hide_sitewide = 0";
 
 		return $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT l.cloud_id FROM {$bp->links->table_name} AS l JOIN {$bp->activity->table_name} AS a ON l.cloud_id = a.item_id WHERE l.user_id = %d AND a.component = %s{$hidden_sql} ORDER BY a.date_recorded DESC LIMIT %d", $user_id, bp_links_id(), BP_LINKS_PERSONAL_ACTIVITY_HISTORY ) );
-	}
-
-	function get_activity_recent_ids_for_group( $group_id, $show_hidden = false ) {
-		global $wpdb, $bp;
-
-		// Hide Hidden Items?
-		if ( !$show_hidden )
-			$hidden_sql = " AND a.hide_sitewide = 0";
-
-		return $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT l.cloud_id FROM {$bp->links->table_name} AS l JOIN {$bp->links->table_name_share_grlink} AS sg ON l.id = sg.link_id JOIN {$bp->activity->table_name} AS a ON l.cloud_id = a.item_id WHERE sg.group_id = %d AND a.component = %s{$hidden_sql} ORDER BY a.date_recorded DESC LIMIT %d", $group_id, bp_links_id(), BP_LINKS_GROUP_ACTIVITY_HISTORY ) );
 	}
 	
 	function get_status_sql( $link_owner_user_id = false, $format_string = '%s' ){
@@ -1223,636 +1233,6 @@ class BP_Links_Vote {
 		}
 
 		return $wpdb->get_var( $wpdb->prepare( "SELECT SUM(vote) FROM {$bp->links->table_name_votes} WHERE link_id = %d", $link_id ) );
-	}
-}
-
-/**
- * An association between a BP_Links_Link and a user that is not the link owner
- *
- * @package BP_Links
- * @author Marshall Sorenson
- * @see BP_Links_Link
- */
-class BP_Links_Profile_Link {
-
-	/**
-	 * @see BP_Links_Link::id
-	 * @var integer
-	 */
-	var $link_id;
-
-	/**
-	 * The user_id that created the association
-	 * @var boolean
-	 */
-	var $user_id;
-
-	/**
-	 * Date and time that record was created
-	 * @var integer
-	 */
-	var $date_created;
-
-	/**
-	 * Date and time that record was last updated
-	 * @var integer
-	 */
-	var $date_updated;
-
-	/**
-	 * This will be set to true if populate() is successful
-	 *
-	 * @see populate()
-	 * @var boolean
-	 */
-	var $_edit_mode = false;
-
-	/**
-	 * Constructor
-	 *
-	 * @param integer $link_id
-	 * @param integer $user_id
-	 * @return boolean
-	 */
-	function bp_links_profile_link( $link_id = false, $user_id = false ) {
-		if ( $link_id && $user_id ) {
-			return $this->populate( $link_id, $user_id );
-		}
-		return true;
-	}
-
-	/**
-	 * Populate object from database
-	 *
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @param integer $link_id
-	 * @param integer $user_id
-	 * @return boolean
-	 */
-	function populate( $link_id, $user_id ) {
-		global $wpdb, $bp;
-
-		if ( $this->validate_primary_key( $link_id, $user_id ) === true ) {
-
-			$this->link_id = (int)$link_id;
-			$this->user_id = (int)$user_id;
-
-			$sql = $wpdb->prepare( "SELECT * FROM {$bp->links->table_name_share_prlink} WHERE link_id = %d AND user_id = %d", $this->link_id, $this->user_id );
-
-		} else {
-			return false;
-		}
-
-		$profile_link = $wpdb->get_row($sql);
-
-		if ( $profile_link !== false ) {
-			$this->link_id = $profile_link->link_id;
-			$this->user_id = $profile_link->user_id;
-			$this->date_created = strtotime($profile_link->date_created);
-			$this->date_updated = strtotime($profile_link->date_updated);
-
-			$this->_edit_mode = true;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Save
-	 *
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @return boolean
-	 */
-	function save() {
-		global $wpdb, $bp;
-
-		do_action( 'bp_links_profile_link_before_save', $this );
-
-		if ( $this->check_foreign_keys() === true ) {
-
-			if ( $this->_edit_mode ) {
-				// nothing to update
-				// $sql = $wpdb->prepare( "UPDATE {$bp->links->table_name_share_prlink} SET ???=??? WHERE link_id = %d AND user_id = %d", $this->link_id, $this->user_id );
-				return true;
-			} else {
-				$sql = $wpdb->prepare( "INSERT INTO {$bp->links->table_name_share_prlink} ( link_id, user_id, date_created ) VALUES ( %d, %d, %s )", $this->link_id, $this->user_id, date('Y-m-d H:i:s') );
-			}
-
-			if ( false === $wpdb->query($sql) ) {
-				return false;
-			}
-
-		} else {
-			return false;
-		}
-
-		do_action( 'bp_links_profile_link_after_save', $this );
-
-		return true;
-	}
-
-	/**
-	 * Delete
-	 *
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @return boolean
-	 */
-	function delete() {
-		global $wpdb, $bp;
-
-		if ( $this->_edit_mode && $this->validate_primary_key( $this->link_id, $this->user_id ) === true ) {
-			$delete_result = $wpdb->query( $wpdb->prepare( "DELETE FROM {$bp->links->table_name_share_prlink} WHERE link_id = %d AND user_id = %d", $this->link_id, $this->user_id ) );
-			return $delete_result;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Sanity check a numeric key
-	 *
-	 * @param integer $int
-	 * @return boolean
-	 */
-	function validate_key ( $int ) {
-		return ( is_numeric( $int ) && $int >= 1 );
-	}
-
-	/**
-	 * Sanity check the primary key
-	 *
-	 * @param integer $link_id
-	 * @param integer $user_id
-	 * @return boolean
-	 */
-	function validate_primary_key ( $link_id, $user_id ) {
-		return ( self::validate_key( $link_id ) === true && self::validate_key( $user_id ) === true );
-	}
-
-	/**
-	 * Check that all foreign keys in primary key exist
-	 *
-	 * @return boolean
-	 */
-	function check_foreign_keys () {
-		return ( $this->check_link_foreign_key() && $this->check_user_foreign_key() );
-	}
-
-	/**
-	 * Check that link foreign key exists
-	 *
-	 * @return boolean
-	 */
-	function check_link_foreign_key () {
-		global $wpdb, $bp;
-
-		return ( $this->validate_key( $this->link_id ) && $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$bp->links->table_name} WHERE id = %d", $this->link_id ) ) ) ? true : false;
-	}
-
-	/**
-	 * Check that user foreign key exists
-	 *
-	 * @return boolean
-	 */
-	function check_user_foreign_key () {
-		global $wpdb;
-
-		return ( $this->validate_key( $this->user_id ) && $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM {$wpdb->users} WHERE ID = %d", $this->user_id ) ) ) ? true : false;
-	}
-	
-	//
-	// Static Functions
-	//
-
-	/**
-	 * Check if link association exists
-	 *
-	 * @static
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @param integer $link_id
-	 * @param integer $user_id
-	 * @return boolean
-	 */
-	function check_exists( $link_id, $user_id ) {
-		global $wpdb, $bp;
-
-		if ( self::validate_primary_key( $link_id, $user_id ) === false ) {
-			return false;
-		}
-
-		return (boolean) $wpdb->get_var( $wpdb->prepare( "SELECT 1 AS found FROM {$bp->links->table_name_share_prlink} WHERE link_id = %d AND user_id = %d", $link_id, $user_id ) );
-	}
-
-	/**
-	 * Delete all profile link shares for a link id
-	 *
-	 * @static
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @param integer $link_id
-	 * @return integer
-	 */
-	function delete_all_for_link( $link_id ) {
-		global $bp, $wpdb;
-
-		return $wpdb->query( $wpdb->prepare( "DELETE FROM {$bp->links->table_name_share_prlink} WHERE link_id = %d", $link_id ) );
-	}
-
-	/**
-	 * Delete all profile link shares for a user id
-	 *
-	 * @static
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @param integer $user_id
-	 * @return integer
-	 */
-	function delete_all_for_user( $user_id ) {
-		global $bp, $wpdb;
-
-		return $wpdb->query( $wpdb->prepare( "DELETE FROM {$bp->links->table_name_share_prlink} WHERE user_id = %d", $user_id ) );
-	}
-}
-
-
-/**
- * An association between a BP_Links_Link and a BP_Group
- *
- * @package BP_Links
- * @author Marshall Sorenson
- * @see BP_Links_Link, BP_Group
- */
-class BP_Links_Group_Link {
-
-	const REMOVED_FALSE = 0;
-	const REMOVED_TRUE = 1;
-	
-	/**
-	 * @see BP_Links_Link::id
-	 * @var integer
-	 */
-	var $link_id;
-
-	/**
-	 * @see BP_Group::id
-	 * @var integer
-	 */
-	var $group_id;
-
-	/**
-	 * The user_id that created the association
-	 * @var boolean
-	 */
-	var $user_id;
-
-	/**
-	 * Whether link was previously removed from the group
-	 * @var boolean
-	 */
-	var $removed = 0;
-
-	/**
-	 * Date and time that record was created
-	 * @var integer
-	 */
-	var $date_created;
-
-	/**
-	 * Date and time that record was last updated
-	 * @var integer
-	 */
-	var $date_updated;
-
-	/**
-	 * This will be set to true if populate() is successful
-	 *
-	 * @see populate()
-	 * @var boolean
-	 */
-	var $_edit_mode = false;
-
-	/**
-	 * Constructor
-	 *
-	 * @param integer $link_id
-	 * @param integer $group_id
-	 * @return boolean
-	 */
-	function bp_links_group_link( $link_id = false, $group_id = false ) {
-		if ( $link_id && $group_id ) {
-			return $this->populate( $link_id, $group_id );
-		}
-		return true;
-	}
-
-	/**
-	 * Populate object from database
-	 *
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @param integer $link_id
-	 * @param integer $group_id
-	 * @return boolean
-	 */
-	function populate( $link_id, $group_id ) {
-		global $wpdb, $bp;
-
-		if ( $this->validate_primary_key( $link_id, $group_id ) === true ) {
-
-			$this->link_id = (int)$link_id;
-			$this->group_id = (int)$group_id;
-
-			$sql = $wpdb->prepare( "SELECT * FROM {$bp->links->table_name_share_grlink} WHERE link_id = %d AND group_id = %d", $this->link_id, $this->group_id );
-
-		} else {
-			return false;
-		}
-
-		$group_link = $wpdb->get_row($sql);
-
-		if ( $group_link !== false ) {
-			$this->link_id = $group_link->link_id;
-			$this->group_id = $group_link->group_id;
-			$this->user_id = $group_link->user_id;
-			$this->removed = (boolean) $group_link->removed;
-			$this->date_created = strtotime($group_link->date_created);
-			$this->date_updated = strtotime($group_link->date_updated);
-
-			$this->_edit_mode = true;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Save
-	 *
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @return boolean
-	 */
-	function save() {
-		global $wpdb, $bp;
-
-		$this->user_id = apply_filters( 'bp_links_group_link_user_id_before_save', $this->user_id, $this->link_id, $this->group_id );
-
-		// if you use this filter, make sure you return a boolean value!
-		$this->removed = apply_filters( 'bp_links_group_link_removed_before_save', $this->removed, $this->link_id, $this->group_id );
-
-		do_action( 'bp_links_group_link_before_save', $this );
-
-		// removed must be boolean, double check
-		if ( in_array($this->removed, array( true, false, self::REMOVED_FALSE, self::REMOVED_TRUE ) ) ) {
-			$this->removed = (integer) $this->removed;
-		} else {
-			return false;
-		}
-
-		if ( $this->check_foreign_keys() === true ) {
-
-			if ( $this->_edit_mode ) {
-				$sql = $wpdb->prepare( "UPDATE {$bp->links->table_name_share_grlink} SET user_id = %d, removed = %d WHERE link_id = %d AND group_id = %d", $this->user_id, $this->removed, $this->link_id, $this->group_id );
-			} else {
-				$sql = $wpdb->prepare( "INSERT INTO {$bp->links->table_name_share_grlink} ( link_id, group_id, user_id, removed, date_created ) VALUES ( %d, %d, %d, %d, %s )", $this->link_id, $this->group_id, $this->user_id, $this->removed, date('Y-m-d H:i:s') );
-			}
-
-			if ( false === $wpdb->query($sql) ) {
-				return false;
-			}
-
-		} else {
-			return false;
-		}
-
-		do_action( 'bp_links_group_link_after_save', $this );
-
-		return true;
-	}
-
-	/**
-	 * Delete
-	 *
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @return boolean
-	 */
-	function delete() {
-		global $wpdb, $bp;
-
-		if ( $this->_edit_mode && $this->validate_primary_key( $this->link_id, $this->group_id ) === true ) {
-			$delete_result = $wpdb->query( $wpdb->prepare( "DELETE FROM {$bp->links->table_name_share_grlink} WHERE link_id = %d AND group_id = %d", $this->link_id, $this->group_id ) );
-			return $delete_result;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Remove
-	 *
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @return boolean
-	 */
-	function remove( $revert = false ) {
-		global $wpdb, $bp;
-
-		if ( $this->_edit_mode ) {
-			$this->removed = ( $revert ) ? self::REMOVED_FALSE : self::REMOVED_TRUE;
-			return $this->save();
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Revert a remove action
-	 *
-	 * @return boolean
-	 */
-	function remove_revert() {
-		return $this->remove( true );
-	}
-
-	/**
-	 * Was link previously removed?
-	 *
-	 * @return boolean
-	 */
-	function removed() {
-		return ( self::REMOVED_TRUE == $this->removed );
-	}
-
-	/**
-	 * Sanity check a numeric key
-	 *
-	 * @param integer $int
-	 * @return boolean
-	 */
-	function validate_key ( $int ) {
-		return ( is_numeric( $int ) && $int >= 1 );
-	}
-
-	/**
-	 * Sanity check the primary key
-	 *
-	 * @param integer $link_id
-	 * @param integer $group_id
-	 * @return boolean
-	 */
-	function validate_primary_key ( $link_id, $group_id ) {
-		return ( self::validate_key( $link_id ) === true && self::validate_key( $group_id ) === true );
-	}
-
-	/**
-	 * Check that all foreign keys in primary key exist
-	 *
-	 * @return boolean
-	 */
-	function check_foreign_keys () {
-		return ( $this->check_group_foreign_key() && $this->check_link_foreign_key() && $this->check_user_foreign_key() );
-	}
-
-	/**
-	 * Check that link foreign key exists
-	 *
-	 * @return boolean
-	 */
-	function check_link_foreign_key () {
-		global $wpdb, $bp;
-
-		return ( $this->validate_key( $this->link_id ) && $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$bp->links->table_name} WHERE id = %d", $this->link_id ) ) ) ? true : false;
-	}
-	
-	/**
-	 * Check that user foreign key exists
-	 *
-	 * @return boolean
-	 */
-	function check_group_foreign_key () {
-		global $wpdb, $bp;
-
-		return ( $this->validate_key( $this->group_id ) && $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM {$bp->groups->table_name} WHERE ID = %d", $this->group_id ) ) ) ? true : false;
-	}
-
-	/**
-	 * Check that user foreign key exists
-	 *
-	 * @return boolean
-	 */
-	function check_user_foreign_key () {
-		global $wpdb;
-
-		return ( $this->validate_key( $this->user_id ) && $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM {$wpdb->users} WHERE ID = %d", $this->user_id ) ) ) ? true : false;
-	}
-
-	//
-	// Static Functions
-	//
-
-	/**
-	 * Check if group link association exists
-	 *
-	 * @static
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @param integer $link_id
-	 * @param integer $group_id
-	 * @return boolean
-	 */
-	function check_exists( $link_id, $group_id ) {
-		global $wpdb, $bp;
-
-		if ( self::validate_primary_key( $link_id, $group_id ) === false ) {
-			return false;
-		}
-
-		return (boolean) $wpdb->get_var( $wpdb->prepare( "SELECT 1 AS found FROM {$bp->links->table_name_share_grlink} WHERE link_id = %d AND group_id = %d", $link_id, $group_id ) );
-	}
-
-	/**
-	 * Check if group link association was previously removed
-	 *
-	 * @static
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @param integer $link_id
-	 * @param integer $group_id
-	 * @return boolean
-	 */
-	function check_removed( $link_id, $group_id ) {
-		global $wpdb, $bp;
-		
-		return (boolean) $wpdb->get_var( $wpdb->prepare( "SELECT 1 AS found FROM {$bp->links->table_name_share_grlink} WHERE link_id = %d AND group_id = %d AND removed = 1", $link_id, $group_id ) );
-	}
-
-	/**
-	 * Count number of links for a group
-	 *
-	 * @static
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @param integer $group_id
-	 * @return integer
-	 */
-	function get_total_link_count( $group_id ) {
-		global $wpdb, $bp;
-
-		if ( self::validate_key( $group_id ) === false ) {
-			return false;
-		}
-
-		return (integer) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$bp->links->table_name_share_grlink} WHERE group_id = %d", $group_id ) );
-	}
-
-	/**
-	 * Count number of links for a group member
-	 *
-	 * @static
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @param integer $group_id
-	 * @param integer $user_id
-	 * @return integer
-	 */
-	function get_total_link_count_for_user( $group_id, $user_id ) {
-		global $bp, $wpdb;
-
-		return (integer) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$bp->links->table_name_share_grlink} AS g JOIN {$bp->links->table_name} AS l ON g.link_id = l.id WHERE g.group_id = %d AND l.user_id = %d", $group_id, $user_id ) );
-	}
-
-	/**
-	 * Delete all group link shares for a group id
-	 *
-	 * @static
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @param integer $group_id
-	 * @return integer
-	 */
-	function delete_all_for_group( $group_id ) {
-		global $bp, $wpdb;
-
-		return $wpdb->query( $wpdb->prepare( "DELETE FROM {$bp->links->table_name_share_grlink} WHERE group_id = %d", $group_id ) );
-	}
-
-	/**
-	 * Delete all group link shares for a link id
-	 *
-	 * @static
-	 * @global wpdb $wpdb
-	 * @global stdClass $bp
-	 * @param integer $link_id
-	 * @return integer
-	 */
-	function delete_all_for_link( $link_id ) {
-		global $bp, $wpdb;
-
-		return $wpdb->query( $wpdb->prepare( "DELETE FROM {$bp->links->table_name_share_grlink} WHERE link_id = %d", $link_id ) );
 	}
 }
 

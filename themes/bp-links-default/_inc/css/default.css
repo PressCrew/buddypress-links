@@ -218,60 +218,10 @@ ul#link-list li div.xtrabar {
 		vertical-align: -0.6em;
 		border: 1px solid #c0c0c0;
 	}
-	ul#link-list li div.xtrabar div.link-shared {
-		float: left;
-		width: 16px;
-		height: 20px;
-		background: url(../images/icons/control_repeat.png) 0% no-repeat;
-	}
 
 ul#link-list li div.link-remove-button {
 	margin-bottom: 8px;
 }
-
-ul#link-list li div.link-share-button span.link-share-active {
-	margin-left: -6px;
-	padding-left: 20px;
-	background: url(../images/icons/bullet_wrench.png) 5% no-repeat;
-}
-
-ul#link-list li div.link-share-panel {
-	z-index: 999;
-	position: absolute;
-	right: 0px;
-	display: none;
-	background-color: #f8f8f8;
-	border: 3px dotted #ddd;
-	width: 160px;
-	padding: 0px 8px 5px 8px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	color: #888;
-	text-align: center;
-}
-	ul#link-list li form#link-share-form fieldset {
-		margin: 5px 0px 5px 0px;
-	}
-	ul#link-list li form#link-share-form legend {
-		padding: 0px 3px 3px 3px;
-	}
-	ul#link-list li form#link-share-form fieldset#link-share-group-set {
-		display: none;
-	}
-	ul#link-list li form#link-share-form select#link-share-group {
-		font-size: 11px;
-		min-width: 90%;
-		margin-top: 2px;
-	}
-	ul#link-list li form#link-share-form input[type=submit] {
-		font-size: 11px;
-		margin-top: 5px;
-		width: 45%;
-	}
-		ul#link-list li form#link-share-form input[name=link-share-remove] {
-			width: 90%;
-		}
 
 /**** Vote Panel *******/
 

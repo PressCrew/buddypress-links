@@ -126,7 +126,6 @@
 	<?php do_action( 'bp_after_link_details_form_buttons' ); ?>
 
 	<!-- Don't leave out these hidden fields -->
-	<input type="hidden" name="link-group-id" id="link-group-id" value="<?php bp_link_details_form_link_group_id() ?>" />
 	<input type="hidden" name="link-url-readonly" id="link-url-readonly" value="<?php bp_link_details_form_link_url_readonly() ?>" />
 	<input type="hidden" name="link-avatar-fields-display" id="link-avatar-fields-display" value="<?php bp_link_details_form_avatar_fields_display() ?>" />
 	<input type="hidden" name="link-settings-fields-display" id="link-settings-fields-display" value="<?php bp_link_details_form_settings_fields_display() ?>" />

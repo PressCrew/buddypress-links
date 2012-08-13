@@ -1,12 +1,12 @@
 <?php
 /*
-Plugin Name: BuddyPress Links Pro
+Plugin Name: BuddyPress Links
 Plugin URI: http://wordpress.org/extend/plugins/buddypress-links/
 Description: BuddyPress Links is a link sharing component for BuddyPress.
 Author: Marshall Sorenson (MrMaz)
 Author URI: http://marshallsorenson.com
 License: GNU GENERAL PUBLIC LICENSE 3.0 http://www.gnu.org/licenses/gpl.txt
-Version: 0.6.3
+Version: 0.7
 Text Domain: buddypress-links
 Network: false
 */
@@ -54,11 +54,6 @@ if ( !defined( 'BP_LINKS_VOTE_ALLOW_CHANGE' ) )
 if ( !defined( 'BP_LINKS_VOTE_RECORD_ACTIVITY' ) )
 	define( 'BP_LINKS_VOTE_RECORD_ACTIVITY', true );
 
-// The default behavior is to enable links integration with the groups component.
-// Override and set this constant to false to disable all integration with groups.
-if ( !defined( 'BP_LINKS_ENABLE_GROUPS_INTEGRATION' ) )
-	define( 'BP_LINKS_ENABLE_GROUPS_INTEGRATION', true );
-
 // Limitations of the activity API require that we pass all item ids that we want to
 // display activity for if we are limiting results to links owned by a single user.
 // Passing the ids of all links that a user owns could get out of control. This
@@ -67,11 +62,6 @@ if ( !defined( 'BP_LINKS_ENABLE_GROUPS_INTEGRATION' ) )
 // of link ids! Each id could have many entries in the activity table.
 if ( !defined( 'BP_LINKS_PERSONAL_ACTIVITY_HISTORY' ) )
 	define( 'BP_LINKS_PERSONAL_ACTIVITY_HISTORY', 100 );
-
-// This option is very similar to the above, except that it applies to links
-// that have been shared with a group.
-if ( !defined( 'BP_LINKS_GROUP_ACTIVITY_HISTORY' ) )
-	define( 'BP_LINKS_GROUP_ACTIVITY_HISTORY', 100 );
 
 // The following three constants are used by the create/edit link validation
 // code to limit the number of characters allowed for url, name and description.
@@ -109,9 +99,9 @@ if ( !defined( 'BP_LINKS_EMBED_FOTOGLIF_PUBID' ) )
 // *** DO NOT MODIFY THESE ***
 
 // Configuration
-define( 'BP_LINKS_VERSION', '0.6.3' );
+define( 'BP_LINKS_VERSION', '0.7' );
 define( 'BP_LINKS_DB_VERSION', '7' );
-define( 'BP_LINKS_PLUGIN_NAME', 'buddypress-links-pro' );
+define( 'BP_LINKS_PLUGIN_NAME', 'buddypress-links' );
 define( 'BP_LINKS_PLUGIN_TEXTDOMAIN', 'buddypress-links' );
 define( 'BP_LINKS_THEMES_PATH', 'themes' );
 define( 'BP_LINKS_DEFAULT_THEME', 'bp-links-default' );
@@ -137,15 +127,6 @@ define( 'BP_LINKS_ADMIN_THEME_URL_INC', BP_LINKS_ADMIN_THEME_URL . '/_inc' );
 //
 // Plugin Compatibility Functions
 //
-
-/**
- * Check if groups component is enabled
- *
- * @return boolean
- */
-function bp_links_is_groups_enabled() {
-	return ( class_exists( 'BP_Groups_Component' ) && BP_LINKS_ENABLE_GROUPS_INTEGRATION );
-}
 
 /**
  * Check if activity component is enabled
@@ -184,10 +165,12 @@ function bp_links_setup_globals() {
 	$bp->links->table_name = $wpdb->base_prefix . 'bp_links';
 	$bp->links->table_name_categories = $wpdb->base_prefix . 'bp_links_categories';
 	$bp->links->table_name_votes = $wpdb->base_prefix . 'bp_links_votes';
-	$bp->links->table_name_share_prlink = $wpdb->base_prefix . 'bp_links_share_prlink';
-	$bp->links->table_name_share_grlink = $wpdb->base_prefix . 'bp_links_share_grlink';
 	$bp->links->table_name_linkmeta = $wpdb->base_prefix . 'bp_links_linkmeta';
 	$bp->links->format_notification_function = 'bp_links_format_notifications';
+
+	// var_dump( 'next two lines need to be killed!' )
+	$bp->links->table_name_share_prlink = $wpdb->base_prefix . 'bp_links_share_prlink';
+	$bp->links->table_name_share_grlink = $wpdb->base_prefix . 'bp_links_share_grlink';
 
 	/* Register this in the active components array */
 	$bp->active_components[$bp->links->slug] = $bp->links->id;
@@ -208,11 +191,6 @@ function bp_links_init() {
 
 	// load core
 	require_once 'bp-links-core.php';
-
-	// optionally load groups extension
-	if ( bp_links_is_groups_enabled() ) {
-		require_once 'bp-links-groupext.php';
-	}
 
 	do_action( 'bp_links_init' );
 }

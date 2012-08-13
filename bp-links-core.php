@@ -83,30 +83,6 @@ function bp_links_install() {
 			KEY `date_created` (`date_created`)
 			) {$charset_collate};";
 
-	$sql[] = "CREATE TABLE `{$bp->links->table_name_share_prlink}` (
-				`link_id` bigint unsigned NOT NULL,
-				`user_id` bigint unsigned NOT NULL,
-				`date_created` datetime NOT NULL,
-				`date_updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-			PRIMARY KEY  (`link_id`,`user_id`),
-			KEY `user_id` (`user_id`),
-			KEY `date_created` (`date_created`)
-			) {$charset_collate};";
-	
-	$sql[] = "CREATE TABLE `{$bp->links->table_name_share_grlink}` (
-				`link_id` bigint unsigned NOT NULL,
-				`group_id` bigint unsigned NOT NULL,
-				`user_id` bigint unsigned NOT NULL,
-				`removed` tinyint(1) NOT NULL default 0,
-				`date_created` datetime NOT NULL,
-				`date_updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-			PRIMARY KEY  (`link_id`,`group_id`),
-			KEY `group_id` (`group_id`),
-			KEY `user_id` (`user_id`),
-			KEY `removed` (`removed`),
-			KEY `date_created` (`date_created`)
-			) {$charset_collate};";
-
 	$sql[] = "CREATE TABLE `{$bp->links->table_name_linkmeta}` (
 				`id` bigint NOT NULL auto_increment,
 				`link_id` bigint unsigned NOT NULL,
@@ -137,6 +113,8 @@ function bp_links_install() {
 		// this is a new install
 		update_site_option( 'bp-links-db-version', BP_LINKS_DB_VERSION );
 	}
+
+	do_action( 'bp_links_install' );
 }
 
 function bp_links_add_cron_schedules() {
@@ -864,6 +842,10 @@ function bp_links_validate_create_form_input() {
 	
 	$message_required = __( 'Please fill in all of the required fields', 'buddypress-links' );
 
+	// init return data array
+	$return_data = array();
+
+	// link category
 	if ( !empty( $_POST['link-category'] ) ) {
 		$bp_new_link_category = stripslashes( $_POST['link-category'] );
 		$return_data['link-category'] = $bp_new_link_category;
@@ -968,32 +950,14 @@ function bp_links_validate_create_form_input() {
 function bp_links_action_create_link() {
 	global $bp;
 
-	switch ( bp_current_component() ) {
+	// get component that is creating link
+	$component_id = bp_links_create_component_id();
 
-		// Are we at domain.org/links/create ???
-		case bp_links_id():
-		case bp_links_slug():
-			if ( 'create' == $bp->current_action ) {
-				$load_template = bp_links_id();
-				break;
-			} else {
-				return false;
-			}
-
-		// Are we at domain.org/groups/foobar/links/create ???
-		case $bp->groups->slug:
-			if ( $bp->current_action == bp_links_slug() && 'create' == $bp->action_variables[0] ) {
-				$load_template = $bp->groups->id;
-				break;
-			} else {
-				return false;
-			}
-		
-		// do nothing
-		default:
-			return false;
+	// must have a component (string)
+	if ( false === $component_id ) {
+		return false;
 	}
-
+	
 	// User must be logged in to create links
 	if ( !is_user_logged_in() )
 		return false;
@@ -1052,7 +1016,7 @@ function bp_links_action_create_link() {
 
 	// only load the template for native links component.
 	// the group plugin will load the correct template for us.
-	if ( bp_links_id() == $load_template ) {
+	if ( bp_links_id() == $component_id ) {
 		if ( bp_displayed_user_id() ) {
 			bp_links_screen_personal_links();
 		} else {
@@ -1219,24 +1183,20 @@ function bp_links_format_notifications( $action, $item_id, $secondary_item_id, $
 function bp_links_manage_link( $args = '' ) {
 	global $bp;
 
-	extract( $args );
+	// init possible args
+	$link_id = null;
+	$user_id = null;
+	$category_id = null;
+	$url = null;
+	$target = null;
+	$rel = null;
+	$name = null;
+	$description = null;
+	$status = null;
+	$embed_data = null;
+	$embed_thidx = null;
 
-	/**
-	 * Possible parameters (pass as assoc array):
-	 *	'link_id'
-	 *	'user_id'
-	 *	'category_id'
-	 *	'url'
-	 *	'target'
-	 *	'rel'
-	 *	'name'
-	 *	'description'
-	 *	'status'
-	 *	'embed_data'
-	 *	'embed_thidx'
-	 *
-	 *  'group_id' // for association
-	 */
+	extract( $args );
 
 	if ( $link_id ) {
 		$link = new BP_Links_Link( $link_id );
@@ -1252,38 +1212,20 @@ function bp_links_manage_link( $args = '' ) {
 		}
 	}
 	
-	if ( isset( $category_id ) ) {
-		$link->category_id = $category_id;
+	if ( empty( $link->id ) ) {
+		$link->slug = bp_links_check_slug( sanitize_title_with_dashes( $name ) );
 	}
 
-	if ( isset( $url ) ) {
-		$link->url = $url;
+	if ( bp_links_is_valid_status( $status ) ) {
+		$link->status = $status;
 	}
 
-	if ( isset( $target ) ) {
-		$link->target = $target;
-	}
-
-	if ( isset( $rel ) ) {
-		$link->rel = $rel;
-	}
-
-	if ( isset( $name ) ) {
-		$link->name = $name;
-		if ( empty( $link->id ) ) {
-			$link->slug = bp_links_check_slug( sanitize_title_with_dashes( $name ) );
-		}
-	}
-	
-	if ( isset( $description ) ) {
-		$link->description = $description;
-	}
-	
-	if ( isset( $status ) ) {
-		if ( bp_links_is_valid_status( $status ) ) {
-			$link->status = $status;
-		}
-	}
+	$link->category_id = $category_id;
+	$link->url = $url;
+	$link->target = $target;
+	$link->rel = $rel;
+	$link->name = $name;
+	$link->description = $description;
 	
 	if ( !empty( $embed_data ) ) {
 		try {
@@ -1308,11 +1250,6 @@ function bp_links_manage_link( $args = '' ) {
 	}
 
 	if ( $link->save() ) {
-
-		// handle initial group attachment for brand new link
-		if ( !empty( $group_id ) ) {
-			bp_links_group_link_create( $link->id, $group_id );
-		}
 
 		// successful save event
 		do_action( 'bp_links_manage_link_save_success', $link, $args );
@@ -1354,6 +1291,24 @@ function bp_links_delete_link( $link_id ) {
 	do_action( 'bp_links_delete_link', $link_id );
 	
 	return true;
+}
+
+function bp_links_create_component_id() {
+
+	$component_id = false;
+
+	// check current component
+	switch ( bp_current_component() ) {
+		// Are we at domain.org/links/create ???
+		case bp_links_id():
+		case bp_links_slug():
+			if ( 'create' == bp_current_action() ) {
+				$component_id = bp_links_id();
+			}
+			break;
+	}
+
+	return apply_filters( 'bp_links_create_component_id', $component_id );
 }
 
 function bp_links_admin_current_action_variable() {
@@ -1482,89 +1437,41 @@ function bp_links_check_link_exists( $link_id ) {
 	return BP_Links_Link::link_exists( $link_id );
 }
 
-/*** Profile and Group Link Sharing Functions ***************************************************/
-
-function bp_links_profile_link_create( $link_id, $user_id ) {
-	$profile_link = new BP_Links_Profile_Link();
-	$profile_link->link_id = $link_id;
-	$profile_link->user_id = $user_id;
-	return $profile_link->save();
-}
-
-function bp_links_profile_link_delete( $link_id, $user_id ) {
-	$profile_link = new BP_Links_Group_Link( $link_id, $user_id );
-	return $profile_link->delete();
-}
-
-function bp_links_profile_link_exists( $link_id, $user_id ) {
-	return BP_Links_Profile_Link::check_exists( $link_id, $user_id );
-}
-
-function bp_links_group_link_create( $link_id, $group_id ) {
-	global $bp;
-
-	$group_link = new BP_Links_Group_Link();
-	$group_link->link_id = $link_id;
-	$group_link->group_id = $group_id;
-	$group_link->user_id = $bp->loggedin_user->id;
-	return $group_link->save();
-}
-
-function bp_links_group_link_delete( $link_id, $group_id ) {
-	$group_link = new BP_Links_Group_Link( $link_id, $group_id );
-	return $group_link->delete();
-}
-
-function bp_links_group_link_remove( $link_id, $group_id ) {
-	$group_link = new BP_Links_Group_Link( $link_id, $group_id );
-	return $group_link->remove();
-}
-
-function bp_links_group_link_exists( $link_id, $group_id ) {
-	return BP_Links_Group_Link::check_exists( $link_id, $group_id );
-}
-
-function bp_links_group_link_removed( $link_id, $group_id ) {
-	return BP_Links_Group_Link::check_removed( $link_id, $group_id );
-}
-
 /*** Link Fetching, Filtering & Searching  *************************************/
 
-function bp_links_get_all( $limit = null, $page = 1, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
-	return BP_Links_Link::get_all( $limit, $page, $user_id, $search_terms, $category_id, $group_id );
+function bp_links_get_all( $args ) {
+	return BP_Links_Link::get_all( $args );
 }
 
-function bp_links_get_active( $limit = null, $page = 1, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
-	return BP_Links_Link::get_active( $limit, $page, $user_id, $search_terms, $category_id, $group_id );
+function bp_links_get_active( $args ) {
+	return BP_Links_Link::get_active( $args );
 }
 
-function bp_links_get_newest( $limit = null, $page = 1, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
-	return BP_Links_Link::get_newest( $limit, $page, $user_id, $search_terms, $category_id, $group_id );
+function bp_links_get_newest( $args ) {
+	return BP_Links_Link::get_newest( $args );
 }
 
-function bp_links_get_search( $limit = null, $page = 1, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
-	return BP_Links_Link::get_search( $limit, $page, $user_id, $search_terms, $category_id, $group_id );
+function bp_links_get_search( $args ) {
+	return BP_Links_Link::get_search( $args );
 }
 
-function bp_links_get_popular( $limit = null, $page = 1, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
-	return BP_Links_Link::get_popular( $limit, $page, $user_id, $search_terms, $category_id, $group_id );
+function bp_links_get_popular( $args ) {
+	return BP_Links_Link::get_popular( $args );
 }
 
-function bp_links_get_most_votes( $limit = null, $page = 1, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
-	return BP_Links_Link::get_most_votes( $limit, $page, $user_id, $search_terms, $category_id, $group_id );
+function bp_links_get_most_votes( $args ) {
+	return BP_Links_Link::get_most_votes( $args );
 }
 
-function bp_links_get_high_votes( $limit = null, $page = 1, $user_id = false, $search_terms = false, $category_id = null, $group_id = null ) {
-	return BP_Links_Link::get_high_votes( $limit, $page, $user_id, $search_terms, $category_id, $group_id );
+function bp_links_get_high_votes( $args ) {
+	return BP_Links_Link::get_high_votes( $args );
 }
 
 function bp_links_get_random() {
-	return BP_Links_Link::get_random(1,1);
+	return BP_Links_Link::get_random( array( 'limit' => 1, 'page' => 1 ) );
 }
 
 function bp_links_total_links() {
-	global $bp;
-
 	return BP_Links_Link::get_total_link_count();
 }
 
@@ -1584,36 +1491,6 @@ function bp_links_recent_activity_item_ids_for_user( $user_id = false ) {
 		$user_id = ( $bp->displayed_user->id ) ? $bp->displayed_user->id : $bp->loggedin_user->id;
 
 	return BP_Links_Link::get_activity_recent_ids_for_user( $user_id );
-}
-
-function bp_links_recent_activity_item_ids_for_group( $group_id = false ) {
-	global $bp;
-
-	if ( !$group_id )
-		$group_id = ( $bp->groups->current_group->id );
-
-	return BP_Links_Link::get_activity_recent_ids_for_group( $group_id );
-}
-
-function bp_links_total_links_for_group( $group_id = false ) {
-	global $bp;
-
-	if ( !$group_id )
-		$group_id = $bp->groups->current_group->id;
-
-	return BP_Links_Group_Link::get_total_link_count( $group_id );
-}
-
-function bp_links_total_links_for_group_member( $group_id = false, $user_id = false ) {
-	global $bp;
-
-	if ( !$group_id )
-		$group_id = $bp->groups->current_group->id;
-
-	if ( !$user_id )
-		$user_id = $bp->loggedin_user->id;
-
-	return BP_Links_Group_Link::get_total_link_count_for_user( $group_id, $user_id );
 }
 
 /*** Link Avatars *************************************************************/
@@ -2014,22 +1891,12 @@ add_action( 'bp_core_delete_existing_avatar', 'bp_links_delete_existing_avatar' 
 function bp_links_remove_data_for_user( $user_id ) {
 	// remove all links for deleted user
 	BP_Links_Link::delete_all_for_user($user_id);
-	// remove all profile link associations for deleted user
-	BP_Links_Profile_Link::delete_all_for_user( $user_id );
 
 	do_action( 'bp_links_remove_data_for_user', $user_id );
 }
 add_action( 'wpmu_delete_user', 'bp_links_remove_data_for_user', 1 );
 add_action( 'delete_user', 'bp_links_remove_data_for_user', 1 );
 add_action( 'make_spam_user', 'bp_links_remove_data_for_user', 1 );
-
-function bp_links_remove_data_for_group( $group_id ) {
-	// remove all group link associations
-	BP_Links_Group_Link::delete_all_for_group( $group_id );
-
-	do_action( 'bp_links_remove_data_for_group', $group_id );
-}
-add_action( 'groups_delete_group', 'bp_links_remove_data_for_group' );
 
 function bp_links_clear_link_object_cache( $link_id ) {
 	wp_cache_delete( 'bp_links_link_nouserdata_' . $link_id, 'bp' );

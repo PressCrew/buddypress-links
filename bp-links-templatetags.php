@@ -22,45 +22,73 @@ class BP_Links_Template {
 
 	var $avatar_size;
 	
-	function bp_links_template( $user_id, $type, $page, $per_page, $max, $slug, $search_terms, $category_id = null, $group_id = null ) {
-		global $bp;
+	function bp_links_template( $args = array() )
+	{
+		// init args
+		$user_id = null;
+		$type = null;
+		$page = null;
+		$per_page = null;
+		$max = null;
+		$slug = null;
+		$search_terms = null;
+		$category_id = null;
+		$group_id = null;
+		$avatar_size = null;
 
+		// extract 'em
+		extract( $args );
+
+		// set avatar size
+		$this->avatar_display_size( $avatar_size );
+
+		// set paging props
 		$this->pag_page = isset( $_REQUEST['lpage'] ) ? intval( $_REQUEST['lpage'] ) : $page;
-		$this->pag_num = isset( $_REQUEST['num'] ) ? intval( $_REQUEST['num'] ) : $per_page;
-		
+		$this->pag_num = ( isset( $_REQUEST['num'] ) ) ? intval( $_REQUEST['num'] ) : $per_page;
+
+		// set query args
+		$query_args = array(
+			'limit' => $this->pag_num,
+			'page' => $this->pag_page,
+			'user_id' => $user_id,
+			'search_terms' => $search_terms,
+			'category_id' => $category_id,
+			'group_id' => $group_id
+		);
+
 		switch ( $type ) {
 
 			default:
 			case 'active':
-				$this->links = bp_links_get_active( $this->pag_num, $this->pag_page, $user_id, $search_terms, $category_id, $group_id );
+				$this->links = bp_links_get_active( $query_args );
 				break;
 
 			case 'newest':
-				$this->links = bp_links_get_newest( $this->pag_num, $this->pag_page, $user_id, $search_terms, $category_id, $group_id );
+				$this->links = bp_links_get_newest( $query_args );
 				break;
 
 			case 'search':
-				$this->links = bp_links_get_search( $this->pag_num, $this->pag_page, $user_id, $search_terms, $category_id, $group_id );
+				$this->links = bp_links_get_search( $query_args );
 				break;
 
 			case 'popular':
-				$this->links = bp_links_get_popular( $this->pag_num, $this->pag_page, $user_id, $search_terms, $category_id, $group_id );
+				$this->links = bp_links_get_popular( $query_args );
 				break;
 
 			case 'most-votes':
-				$this->links = bp_links_get_most_votes( $this->pag_num, $this->pag_page, $user_id, $search_terms, $category_id, $group_id );
+				$this->links = bp_links_get_most_votes( $query_args );
 				break;
 
 			case 'high-votes':
-				$this->links = bp_links_get_high_votes( $this->pag_num, $this->pag_page, $user_id, $search_terms, $category_id, $group_id );
+				$this->links = bp_links_get_high_votes( $query_args );
 				break;
 
 			case 'all':
-				$this->links = bp_links_get_all( $this->pag_num, $this->pag_page, $user_id, $search_terms, $category_id, $group_id );
+				$this->links = bp_links_get_all( $query_args );
 				break;
 			
 			case 'random':
-				$this->links = bp_links_get_random( $this->pag_num, $this->pag_page );
+				$this->links = bp_links_get_random();
 				break;
 
 			case 'single-link':
@@ -170,27 +198,26 @@ class BP_Links_Template {
 }
 
 
-function bp_has_links( $args = '' ) {
+function bp_has_links( $args = array() ) {
 	global $links_template, $bp;
 
+	// default args to use IF args is not empty
 	$defaults = array(
 		'type' => 'active',
 		'page' => 1,
 		'per_page' => 10,
 		'max' => false,
 		'avatar_size' => false,
-
 		'user_id' => false,
 		'slug' => false,
 		'search_terms' => false,
-		'category' => false,
-		'group_id' => false
+		'category' => false
 	);
 
-	$r = wp_parse_args( $args, $defaults );
-	extract( $r, EXTR_SKIP );
+	// args to pass to template class
+	$template_args = wp_parse_args( $args, $defaults );
 
-	if ( '' == $args ) {
+	if ( empty( $args ) ) {
 		// The following code will auto set parameters based on the page being viewed.
 		// for example on example.com/members/marshall/links/my-links/popular/
 		// $type = 'popular'
@@ -211,20 +238,27 @@ function bp_has_links( $args = '' ) {
 				$type = 'high-votes';
 		} else if ( $bp->links->current_link->slug ) {
 			$type = 'single-link';
-			$slug = $bp->links->current_link->slug;
+			$template_args['slug'] = $bp->links->current_link->slug;
 		}
 
-		// Auto set group_id if we are on a group home page
-		if ( bp_links_is_groups_enabled() && $bp->groups->current_group->id ) {
-			$group_id = $bp->groups->current_group->id;
-		}
+		$template_args['order'] = $order;
+		$template_args['type'] = $type;
+		
 	}
 	
-	if ( isset( $_REQUEST['link-filter-box'] ) || isset( $_REQUEST['s'] ) )
-		$search_terms = ( isset( $_REQUEST['link-filter-box'] ) ) ? $_REQUEST['link-filter-box'] : $_REQUEST['s'];
-	
-	$links_template = new BP_Links_Template( $user_id, $type, $page, $per_page, $max, $slug, $search_terms, $category, $group_id );
-	$links_template->avatar_display_size( $avatar_size );
+	switch ( true ) {
+		case ( isset( $_REQUEST['link-filter-box'] ) ):
+			$template_args['search_terms'] = $_REQUEST['link-filter-box'];
+			break;
+		case ( isset( $_REQUEST['s'] ) ):
+			$template_args['search_terms'] = $_REQUEST['s'];
+			break;
+	}
+
+	$template_args = apply_filters( 'bp_has_links_template_args', $template_args );
+
+	$links_template = new BP_Links_Template( $template_args );
+
 	return apply_filters( 'bp_has_links', $links_template->has_links(), $links_template );
 }
 
@@ -624,42 +658,6 @@ function bp_link_time_since_created() {
 		return apply_filters( 'bp_get_link_time_since_created', bp_core_time_since( $link->date_created ) );
 	}
 
-function bp_link_share_has_profile_link() {
-	echo bp_get_link_share_has_profile_link();
-}
-	function bp_get_link_share_has_profile_link( $link = false ) {
-		global $links_template;
-
-		if ( !$link )
-			$link =& $links_template->link;
-
-		return apply_filters( 'bp_get_link_share_has_profile_link', (boolean) bp_get_link_share_profile_link_user_id( $link ) );
-	}
-
-function bp_link_share_profile_link_user_id() {
-	echo bp_get_link_share_profile_link_user_id();
-}
-	function bp_get_link_share_profile_link_user_id( $link = false ) {
-		global $links_template;
-
-		if ( !$link )
-			$link =& $links_template->link;
-
-		return apply_filters( 'bp_get_link_share_profile_link_user_id', $link->prlink_user_id );
-	}
-
-function bp_link_share_profile_link_date_created() {
-	echo bp_get_link_share_profile_link_date_created();
-}
-	function bp_get_link_share_profile_link_date_created( $link = false ) {
-		global $links_template;
-
-		if ( !$link )
-			$link =& $links_template->link;
-
-		return apply_filters( 'bp_get_link_share_profile_link_date_created', date( get_option( 'date_format' ), $link->prlink_date_created ) );
-	}
-
 function bp_link_play_button() {
 	echo bp_get_link_play_button();
 }
@@ -814,22 +812,10 @@ function bp_link_details_form_action() {
 				case bp_links_slug():
 					$form_action = $bp->loggedin_user->domain . bp_links_slug() . '/create';
 					break;
-				case $bp->groups->slug:
-					$form_action = sprintf( '%s/%s/%s/%s/create', $bp->root_domain, $bp->groups->slug, $bp->groups->current_group->slug, bp_links_slug() ) ;
 			}
-			
 		}
 
-		return apply_filters( 'bp_get_link_details_form_action', $form_action, $admin_action );
-	}
-
-function bp_link_details_form_link_group_id() {
-	echo bp_get_link_details_form_link_group_id();
-}
-	function bp_get_link_details_form_link_group_id() {
-		global $bp;
-
-		return ( bp_is_groups_component() ) ? bp_get_group_id() : null;
+		return apply_filters( 'bp_get_link_details_form_action', $form_action );
 	}
 
 function bp_link_details_form_link_url_readonly() {
@@ -1077,81 +1063,6 @@ function bp_link_avatar_form_embed_html_display() {
 			return 1;
 		}
 	}
-
-function bp_link_user_group_options( $user_id = false, $max = 100 ) {
-	echo bp_get_link_user_group_options( $user_id, $max );
-}
-	function bp_get_link_user_group_options( $user_id = false, $max = 100 ) {
-		global $bp;
-
-		if ( empty( $user_id ) )
-			$user_id = $bp->loggedin_user->id;
-
-		$html = null;
-		$groups_tpl = new BP_Groups_Template( $user_id, 'alphabetical', 1, (integer) $max, (integer) $max, false, false, false );
-
-		while ( $groups_tpl->groups() ) {
-			$groups_tpl->the_group();
-			$html .= sprintf( '<option value="%d">%s</option>', bp_get_group_id( $groups_tpl->group ), bp_get_group_name( $groups_tpl->group ) );
-		}
-
-		return $html;
-	}
-
-function bp_link_share_button( $link = false ) {
-	global $bp, $links_template;
-
-	if ( is_user_logged_in() ) {
-
-		if ( !$link )
-			$link = $links_template->link;
-
-		$html = apply_filters( 'bp_link_share_button_html', '<input type="submit" name="link-share" id="linkshare-%d" value="%s">' );
-		printf( $html, $link->id, __( 'Share', 'buddypress-links' ) );
-	}
-}
-
-function bp_link_share_remove_button( $link, $object, $object_id ) {
-	global $bp;
-
-	if ( !is_user_logged_in() )
-		return false;
-	
-	$remove_from = false;
-
-	switch ( $object ) {
-
-		default:
-		case 'profile':
-			// only display to share creator in the global context
-			if ( bp_get_link_share_has_profile_link( $link ) )
-				$remove_from = __( 'Remove from Profile', 'buddypress-links' );
-			break;
-		
-		case 'group':
-			// only display to share creator and group admins/mods in the group context
-			if ( is_numeric( $object_id ) && $object_id >= 1 ) {
-				$group = new BP_Groups_Group( (integer) $object_id );
-			} else {
-				break;
-			}
-
-			if ( $group->id ) {
-				switch ( true ) {
-					case ( $link->user_id == $bp->loggedin_user->id ):
-					case $bp->is_item_admin:
-					case $bp->is_item_mod:
-						$remove_from = __( 'Remove from Group', 'buddypress-links' );
-				}
-			}
-			break;
-	}
-
-	if ( $remove_from ) {
-		$html = apply_filters( 'bp_link_share_remove_button_html', '<input type="submit" name="link-share-remove" id="linkshareremove-%d" value="%s">' );
-		printf( $html, $link->id, $remove_from );
-	}
-}
 
 function bp_link_hidden_fields() {
 	if ( isset( $_REQUEST['s'] ) ) {
@@ -1822,29 +1733,6 @@ function bp_links_link_order_options() { ?>
 	<option value="high-votes"><?php _e( 'Highest Rated', 'buddypress-links' ) ?></option> <?php
 
 	do_action( 'bp_links_link_order_options' );
-}
-
-/****
- * Links group extension template tags
- */
-
-function bp_links_group_links_tabs( $group = false ) {
-	global $bp, $groups_template;
-
-	if ( !$group )
-		$group = ( $groups_template->group ) ? $groups_template->group : $bp->groups->current_group;
-
-	$current_tab = $bp->action_variables[0];
-	?>
-
-	<li<?php if ( '' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo bp_links_slug() ?>/"><?php _e('All Group Links', 'buddypress-links') ?> <span><?php echo bp_links_total_links_for_group() ?></span></a></li>
-	<?php if ( bp_group_is_member() ): ?>
-		<li<?php if ( 'my-links' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo bp_links_slug() ?>/my-links/"><?php _e('My Group Links', 'buddypress-links' ) ?> <span><?php echo bp_links_total_links_for_group_member() ?></span></a></li>
-		<li<?php if ( 'create' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo bp_links_slug() ?>/create/"><?php _e('Create Group Link', 'buddypress-links') ?></a></li>
-	<?php endif; ?>
-
-	<?php
-	do_action( 'bp_links_group_links_tabs', $current_tab, $group->slug );
 }
 
 ?>

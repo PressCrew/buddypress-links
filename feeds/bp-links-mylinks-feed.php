@@ -26,18 +26,6 @@ header('Status: 200 OK');
 	<generator>http://buddypress.org/?v=<?php echo BP_VERSION ?></generator>
 	<language><?php echo get_option('rss_language'); ?></language>
 	<?php do_action('bp_links_activity_mylinks_feed_head'); ?>
-
-	<?php
-	/*
-		$links = bp_links_get_active( 20, 1, $bp->loggedin_user->id );
-		$link_ids = array();
-		foreach ( $links as $link ) {
-			$link_ids[] = $link['cloud_id'];
-		}
-		$link_ids_str = implode( ',', $link_ids );
-	 */
-	?>
-
 	<?php if ( bp_has_activities( 'object=' . bp_links_id() . /*'&primary_id=' . $link_ids_str .*/ '&max=50&display_comments=threaded' ) ) : ?>
 		<?php while ( bp_activities() ) : bp_the_activity(); ?>
 			<item>
