@@ -121,10 +121,43 @@ class BP_Links_Link {
 
 		$this->_is_new = false;
 
-		$prlink_user_id = ( bp_is_user() ) ? $bp->displayed_user->id : $bp->loggedin_user->id;
+		$sql_parts['select'] =
+			$wpdb->prepare( 'SELECT l.*' );
+
+		$sql_parts['select_x'] =
+			apply_filters( 'bp_links_link_populate_select_x', '' );
+
+		$sql_parts['from'] =
+			$wpdb->prepare( "FROM {$bp->links->table_name} AS l" );
+
+		$sql_parts['from_x'] =
+			apply_filters( 'bp_links_link_populate_from_x', '' );
+
+		$sql_parts['join'] = '';
+
+		$sql_parts['join_x'] =
+			apply_filters( 'bp_links_link_populate_join_x', '' );
+
+		$sql_parts['where_0'] = 'WHERE';
+
+		$sql_parts['where_1'] =
+			apply_filters(
+				'bp_links_link_populate_where',
+				$wpdb->prepare( 'l.id = %d', $this->id )
+			);
 		
-		$sql = $wpdb->prepare( "SELECT l.*, sp.user_id AS prlink_user_id, sp.date_created AS prlink_date_created, sp.date_updated AS prlink_date_updated FROM {$bp->links->table_name} AS l LEFT JOIN {$bp->links->table_name_share_prlink} sp ON l.id = sp.link_id and sp.user_id = %d WHERE id = %d", $prlink_user_id, $this->id );
-		$link = $wpdb->get_row($sql);
+		$sql_parts['where_x'] =
+			apply_filters( 'bp_links_link_populate_where_x', '' );
+
+		$sql = implode( ' ', $sql_parts );
+
+		// evil check
+		if ( strpos( $sql, ';' ) ) {
+			throw new Exception( 'Unexpected character in SQL statement' );
+		}
+
+		// exec query
+		$link = $wpdb->get_row( $sql );
 
 		if ( $link ) {
 			// link data
@@ -551,56 +584,6 @@ class BP_Links_Link {
 	// Methods for a links directory
 	//
 
-	function get_active( $args ) {
-		global $wpdb, $bp;
-
-		// init args
-		$limit = null;
-		$page = 1;
-		$user_id = false;
-		$search_terms = false;
-		$category_id = null;
-		$group_id = null;
-
-		// extract 'em
-		extract( $args );
-		
-		$status_sql = self::get_status_sql( $user_id, ' AND %s' );
-
-		if ( $limit && $page )
-			$pag_sql = $wpdb->prepare( " LIMIT %d, %d", intval( ( $page - 1 ) * $limit), intval( $limit ) );
-
-		if ( is_numeric($category_id) && $category_id >= 1 )
-			$category_sql = $wpdb->prepare( " AND l.category_id = %d", $category_id );			
-
-		if ( is_numeric($group_id) && $group_id >= 1 ) {
-			if ( $user_id ) {
-				$profile_sql = $wpdb->prepare( "l.user_id = %d", $user_id );
-			}
-			$group_join_sql = $wpdb->prepare( " INNER JOIN {$bp->links->table_name_share_grlink} g ON l.id = g.link_id" );
-			$group_sql = $wpdb->prepare( " AND g.group_id = %d AND g.removed = 0", $group_id );
-		} elseif ( $user_id ) {
-			$profile_join_sql = $wpdb->prepare( " LEFT JOIN {$bp->links->table_name_share_prlink} p ON l.id = p.link_id" );
-			$profile_sql = $wpdb->prepare( '( l.user_id = %1$d OR p.user_id = %1$d )', $user_id );
-		}
-
-		if ( $search_terms ) {
-			$search_terms = substr($search_terms, 0, 25);
-			$search_terms = like_escape($search_terms);
-			$filter_sql = " AND ( name LIKE '%%{$search_terms}%%' OR description LIKE '%%{$search_terms}%%' )";
-		}
-
-		if ( $user_id ) {
-			$paged_links = $wpdb->get_results( $wpdb->prepare( "SELECT l.id as link_id FROM {$bp->links->table_name_linkmeta} lm INNER JOIN {$bp->links->table_name} l ON lm.link_id = l.id{$group_join_sql}{$profile_join_sql} WHERE {$profile_sql}{$status_sql}{$filter_sql}{$category_sql}{$group_sql} AND lm.meta_key = 'last_activity' ORDER BY lm.meta_value DESC {$pag_sql}" ) );
-			$total_links = $wpdb->get_var( $wpdb->prepare( "SELECT count(l.id) FROM {$bp->links->table_name_linkmeta} lm INNER JOIN {$bp->links->table_name} l ON lm.link_id = l.id{$group_join_sql}{$profile_join_sql} WHERE {$profile_sql}{$status_sql}{$filter_sql}{$category_sql}{$group_sql} AND lm.meta_key = 'last_activity' ORDER BY lm.meta_value DESC" ) );
-		} else {
-			$paged_links = $wpdb->get_results( $wpdb->prepare( "SELECT l.id AS link_id, l.slug FROM {$bp->links->table_name_linkmeta} lm, {$bp->links->table_name} l{$group_join_sql} WHERE l.id = lm.link_id {$status_sql}{$filter_sql}{$category_sql}{$group_sql} AND lm.meta_key = 'last_activity' ORDER BY lm.meta_value DESC {$pag_sql}" ) );
-			$total_links = $wpdb->get_var( $wpdb->prepare( "SELECT count(*) FROM {$bp->links->table_name_linkmeta} lm, {$bp->links->table_name} l{$group_join_sql} WHERE l.id = lm.link_id{$status_sql}{$filter_sql}{$category_sql}{$group_sql} AND lm.meta_key = 'last_activity'" ) );
-		}
-
-		return array( 'links' => $paged_links, 'total' => $total_links );
-	}
-
 	function get_by_columns_filtered( $args, $sort_columns = array() ) {
 		global $wpdb, $bp;
 
@@ -610,10 +593,16 @@ class BP_Links_Link {
 		$user_id = false;
 		$search_terms = false;
 		$category_id = null;
-		$group_id = null;
+		$meta_key = null;
 
 		// extract 'em
 		extract( $args );
+		
+		$join_sql = apply_filters( 'bp_links_link_by_column_join', '', $args );
+
+		if ( $meta_key ) {
+			$join_sql .= $wpdb->prepare( " INNER JOIN {$bp->links->table_name_linkmeta} lm ON l.id = lm.link_id" );
+		}
 
 		$status_sql = self::get_status_sql( $user_id, ' AND %s' );
 		
@@ -626,15 +615,19 @@ class BP_Links_Link {
 		if ( is_numeric($category_id) && $category_id >= 1 )
 			$category_sql = $wpdb->prepare( " AND l.category_id = %d", $category_id );
 
-		if ( is_numeric($group_id) && $group_id >= 1 ) {
-			if ( $user_id ) {
-				$profile_sql = $wpdb->prepare( "l.user_id = %d", $user_id );
-			}
-			$group_join_sql = $wpdb->prepare( " INNER JOIN {$bp->links->table_name_share_grlink} g ON l.id = g.link_id" );
-			$group_sql = $wpdb->prepare( " AND g.group_id = %d AND g.removed = 0", $group_id );
-		} elseif ( $user_id ) {
-			$profile_join_sql = $wpdb->prepare( " LEFT JOIN {$bp->links->table_name_share_prlink} p ON l.id = p.link_id" );
-			$profile_sql = $wpdb->prepare( '( l.user_id = %1$d OR p.user_id = %1$d )', $user_id );
+		if ( $user_id ) {
+			$profile_sql =
+				apply_filters(
+					'bp_links_link_by_column_profile',
+					$wpdb->prepare( "l.user_id = %d", $user_id ),
+					$user_id
+				);
+		}
+
+		$extra_sql = apply_filters( 'bp_links_link_by_column_extra', '', $args );
+
+		if ( $meta_key ) {
+			$extra_sql .= $wpdb->prepare( " AND lm.meta_key = %s", $meta_key );
 		}
 		
 		if ( !empty( $sort_columns ) ) {
@@ -649,16 +642,26 @@ class BP_Links_Link {
 			$pag_sql = $wpdb->prepare( " LIMIT %d, %d", intval( ( $page - 1 ) * $limit), intval( $limit ) );
 
 		if ( $user_id ) {
-			$paged_links = $wpdb->get_results( $wpdb->prepare( "SELECT l.id AS link_id FROM {$bp->links->table_name} l{$group_join_sql}{$profile_join_sql} WHERE {$profile_sql}{$status_sql}{$filter_sql}{$category_sql}{$group_sql}{$order_by_sql} {$pag_sql}" ) );
-			$total_links = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$bp->links->table_name} l{$group_join_sql}{$profile_join_sql} WHERE {$profile_sql}{$status_sql}{$category_sql}{$group_sql}{$filter_sql}" ) );
+			$paged_sql = $wpdb->prepare( "SELECT l.id AS link_id, l.slug FROM {$bp->links->table_name} l{$join_sql} WHERE {$profile_sql}{$status_sql}{$filter_sql}{$category_sql}{$extra_sql}{$order_by_sql} {$pag_sql}" );
+			$paged_links = $wpdb->get_results( $paged_sql );
+			$total_sql = $wpdb->prepare( "SELECT COUNT(*) FROM {$bp->links->table_name} l{$join_sql} WHERE {$profile_sql}{$status_sql}{$category_sql}{$extra_sql}{$filter_sql}" );
+			$total_links = $wpdb->get_var( $total_sql );
 		} else {
-			$paged_links = $wpdb->get_results( $wpdb->prepare( "SELECT l.id AS link_id, l.slug FROM {$bp->links->table_name} l{$group_join_sql} WHERE l.status = %d{$filter_sql}{$category_sql}{$group_sql}{$order_by_sql} {$pag_sql}", self::STATUS_PUBLIC ) );
-			$total_links = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$bp->links->table_name} l{$group_join_sql} WHERE l.status = %d{$filter_sql}{$category_sql}{$group_sql}", self::STATUS_PUBLIC ) );
+			$paged_sql = $wpdb->prepare( "SELECT l.id AS link_id, l.slug FROM {$bp->links->table_name} l{$join_sql} WHERE l.status = %d{$filter_sql}{$category_sql}{$extra_sql}{$order_by_sql} {$pag_sql}", self::STATUS_PUBLIC );
+			$paged_links = $wpdb->get_results( $paged_sql );
+			$total_sql = $wpdb->prepare( "SELECT COUNT(*) FROM {$bp->links->table_name} l{$join_sql} WHERE l.status = %d{$filter_sql}{$category_sql}{$extra_sql}", self::STATUS_PUBLIC );
+			$total_links = $wpdb->get_var( $total_sql );
 		}
 
 		return array( 'links' => $paged_links, 'total' => $total_links );
 	}
 
+	function get_active( $args ) {
+		$args['meta_key'] = 'last_activity';
+		$sort_columns = array( 'lm.meta_value' => 'DESC' );
+		return self::get_by_columns_filtered( $args, $sort_columns );
+	}
+	
 	function get_newest( $args ) {
 		$sort_columns = array( 'l.date_created' => 'DESC' );
 		return self::get_by_columns_filtered( $args, $sort_columns );
@@ -709,9 +712,45 @@ class BP_Links_Link {
 		if ( !$user_id )
 			$user_id = ( $bp->displayed_user->id ) ? $bp->displayed_user->id : $bp->loggedin_user->id;
 
-		$status_sql = self::get_status_sql( $user_id, ' AND %s' );
+		$sql_parts['select'] =
+			$wpdb->prepare( 'SELECT COUNT(*)' );
+		
+		$sql_parts['select_x'] =
+			apply_filters( 'bp_links_link_count_for_user_select_x', '', $user_id );
 
-		return $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$bp->links->table_name} AS l LEFT JOIN {$bp->links->table_name_share_prlink} sp ON l.id = sp.link_id WHERE ( l.user_id = %1\$d OR sp.user_id = %1\$d ){$status_sql}", $user_id ) );
+		$sql_parts['from'] =
+			$wpdb->prepare( "FROM {$bp->links->table_name} AS l" );
+			
+		$sql_parts['from_x'] =
+			apply_filters( 'bp_links_link_count_for_user_from_x', '', $user_id );
+
+		$sql_parts['join'] = '';
+		
+		$sql_parts['join_x'] =
+			apply_filters( 'bp_links_link_count_for_user_join_x', '', $user_id );
+
+		$sql_parts['where_0'] = 'WHERE';
+
+		$sql_parts['where_1'] =
+			apply_filters(
+				'bp_links_link_count_for_user_where_1',
+				$wpdb->prepare( 'l.user_id = %1$d', $user_id ),
+				$user_id
+			);
+
+		$sql_parts['where_2'] = self::get_status_sql( $user_id, 'AND %s' );
+
+		$sql_parts['where_x'] =
+			apply_filters( 'bp_links_link_count_for_user_where_x', '', $user_id );
+
+		$sql = implode( ' ', $sql_parts );
+
+		// evil check
+		if ( strpos( $sql, ';' ) ) {
+			throw new Exception( 'Unexpected character in SQL statement' );
+		}
+		
+		return $wpdb->get_var( $sql );
 	}
 
 	// TODO make this a static method

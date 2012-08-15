@@ -168,10 +168,6 @@ function bp_links_setup_globals() {
 	$bp->links->table_name_linkmeta = $wpdb->base_prefix . 'bp_links_linkmeta';
 	$bp->links->format_notification_function = 'bp_links_format_notifications';
 
-	// var_dump( 'next two lines need to be killed!' )
-	$bp->links->table_name_share_prlink = $wpdb->base_prefix . 'bp_links_share_prlink';
-	$bp->links->table_name_share_grlink = $wpdb->base_prefix . 'bp_links_share_grlink';
-
 	/* Register this in the active components array */
 	$bp->active_components[$bp->links->slug] = $bp->links->id;
 
