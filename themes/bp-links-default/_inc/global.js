@@ -144,7 +144,7 @@ jQuery(document).ready( function() {
 function bpl_get_loader(id)
 {
 	var x_id = (id) ? '#' + id : null;
-	return j('.ajax-loader' + x_id);
+	return jQuery('.ajax-loader' + x_id);
 }
 
 function bpl_split_response(str)
@@ -154,11 +154,11 @@ function bpl_split_response(str)
 
 function bpl_remove_msg()
 {
-	j('#message').remove();
+	jQuery('#message').remove();
 }
 
 function bpl_list_item_msg(lid, type, msg)
 {
-	j('ul#link-list li#linklistitem-' + lid)
+	jQuery('ul#link-list li#linklistitem-' + lid)
 		.prepend('<div id="message" class="' + type + ' fade"><p>' + msg + '</p></div>');
 }
