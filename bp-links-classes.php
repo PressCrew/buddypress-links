@@ -620,7 +620,7 @@ class BP_Links_Link {
 				apply_filters(
 					'bp_links_link_by_column_profile',
 					$wpdb->prepare( "l.user_id = %d", $user_id ),
-					$user_id
+					$args
 				);
 		}
 
