@@ -1015,7 +1015,7 @@ function bp_links_action_create_link() {
 	}
 
 	// only load the template for native links component.
-	// the group plugin will load the correct template for us.
+	// the group extension *should* load the correct template for us if applicable
 	if ( bp_links_id() == $component_id ) {
 		if ( bp_displayed_user_id() ) {
 			bp_links_screen_personal_links();
