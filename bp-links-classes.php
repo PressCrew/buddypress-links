@@ -588,7 +588,7 @@ class BP_Links_Link {
 		global $wpdb, $bp;
 
 		// init args
-		$limit = null;
+		$per_page = null;
 		$page = 1;
 		$user_id = false;
 		$search_terms = false;
@@ -597,7 +597,7 @@ class BP_Links_Link {
 
 		// extract 'em
 		extract( $args );
-		
+
 		$join_sql = apply_filters( 'bp_links_link_by_column_join', '', $args );
 
 		if ( $meta_key ) {
@@ -638,8 +638,8 @@ class BP_Links_Link {
 			$order_by_sql = ' ORDER BY ' . join( ', ', $order_by_sql_bits);
 		}
 
-		if ( $limit && $page )
-			$pag_sql = $wpdb->prepare( " LIMIT %d, %d", intval( ( $page - 1 ) * $limit), intval( $limit ) );
+		if ( $per_page && $page )
+			$pag_sql = $wpdb->prepare( " LIMIT %d, %d", intval( ( $page - 1 ) * $per_page), intval( $per_page ) );
 
 		if ( $user_id ) {
 			$paged_sql = $wpdb->prepare( "SELECT l.id AS link_id, l.slug FROM {$bp->links->table_name} l{$join_sql} WHERE {$profile_sql}{$status_sql}{$filter_sql}{$category_sql}{$extra_sql}{$order_by_sql} {$pag_sql}" );

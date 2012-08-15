@@ -24,16 +24,12 @@ class BP_Links_Template {
 	
 	function bp_links_template( $args = array() )
 	{
-		// init args
-		$user_id = null;
+		// init args used in this scope
 		$type = null;
 		$page = null;
 		$per_page = null;
 		$max = null;
 		$slug = null;
-		$search_terms = null;
-		$category_id = null;
-		$group_id = null;
 		$avatar_size = null;
 
 		// extract 'em
@@ -46,45 +42,35 @@ class BP_Links_Template {
 		$this->pag_page = isset( $_REQUEST['lpage'] ) ? intval( $_REQUEST['lpage'] ) : $page;
 		$this->pag_num = ( isset( $_REQUEST['num'] ) ) ? intval( $_REQUEST['num'] ) : $per_page;
 
-		// set query args
-		$query_args = array(
-			'limit' => $this->pag_num,
-			'page' => $this->pag_page,
-			'user_id' => $user_id,
-			'search_terms' => $search_terms,
-			'category_id' => $category_id,
-			'group_id' => $group_id
-		);
-
 		switch ( $type ) {
 
 			default:
 			case 'active':
-				$this->links = bp_links_get_active( $query_args );
+				$this->links = bp_links_get_active( $args );
 				break;
 
 			case 'newest':
-				$this->links = bp_links_get_newest( $query_args );
+				$this->links = bp_links_get_newest( $args );
 				break;
 
 			case 'search':
-				$this->links = bp_links_get_search( $query_args );
+				$this->links = bp_links_get_search( $args );
 				break;
 
 			case 'popular':
-				$this->links = bp_links_get_popular( $query_args );
+				$this->links = bp_links_get_popular( $args );
 				break;
 
 			case 'most-votes':
-				$this->links = bp_links_get_most_votes( $query_args );
+				$this->links = bp_links_get_most_votes( $args );
 				break;
 
 			case 'high-votes':
-				$this->links = bp_links_get_high_votes( $query_args );
+				$this->links = bp_links_get_high_votes( $args );
 				break;
 
 			case 'all':
-				$this->links = bp_links_get_all( $query_args );
+				$this->links = bp_links_get_all( $args );
 				break;
 			
 			case 'random':
@@ -211,7 +197,7 @@ function bp_has_links( $args = array() ) {
 		'user_id' => false,
 		'slug' => false,
 		'search_terms' => false,
-		'category' => false
+		'category_id' => false
 	);
 
 	// args to pass to template class

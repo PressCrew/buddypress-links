@@ -1468,7 +1468,7 @@ function bp_links_get_high_votes( $args ) {
 }
 
 function bp_links_get_random() {
-	return BP_Links_Link::get_random( array( 'limit' => 1, 'page' => 1 ) );
+	return BP_Links_Link::get_random( array( 'per_page' => 1, 'page' => 1 ) );
 }
 
 function bp_links_total_links() {
