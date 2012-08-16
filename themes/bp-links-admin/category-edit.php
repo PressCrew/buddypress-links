@@ -5,7 +5,9 @@
 ?>
 
 <div class="wrap nosubsub buddypress-links-admin-content">
-	<div id="icon-buddypress-links" class="icon32"></div>
+
+	<?php screen_icon( 'bp-links' ); ?>
+	
 	<h2><?php echo $heading_text ?></h2>
 
 <?php echo $heading ?>

@@ -3,11 +3,11 @@
  */
 
 /* Icons */
-#icon-buddypress-links.icon {
-	background: transparent url('images/logo-icon16.png') no-repeat;
+div#icon-bp-links.icon16 {
+	background: url('images/logo_16.png') no-repeat;
 }
-#icon-buddypress-links.icon32 {
-	background: transparent url('images/logo-icon32.png') no-repeat;
+div#icon-bp-links.icon32 {
+	background: url('images/logo_32.png') no-repeat;
 }
 
 /* Menu */
@@ -21,6 +21,20 @@ span.buddypress-links-admin-menu-item {
 }
 
 /* Content */
+
+div.buddypress-links-admin-general table.widefat {
+	width: 400px;
+}
+
+div.buddypress-links-admin-general p, ul, ol {
+	max-width: 600px;
+}
+
+div.buddypress-links-admin-general ul li {
+	margin-left: 30px;
+	list-style: disc;
+}
+
 div.buddypress-links-admin-content ul {
 	list-style: disc outside none;
 	margin-left: 24px;

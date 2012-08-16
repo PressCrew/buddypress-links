@@ -11,7 +11,9 @@
 <?php } ?>
 
 <div class="wrap buddypress-links-admin-content" style="position: relative">
-	<div id="icon-buddypress-links" class="icon32"></div>
+
+	<?php screen_icon( 'bp-links' ); ?>
+	
 	<h2><?php _e( 'Manage Links', 'buddypress-links' ) ?></h2>
 
 	<form id="buddypress-links-search" method="post" action="">

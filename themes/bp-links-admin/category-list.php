@@ -12,7 +12,9 @@
 
 
 <div class="wrap nosubsub buddypress-links-admin-content" style="position: relative">
-	<div id="icon-buddypress-links" class="icon32"></div>
+
+	<?php screen_icon( 'bp-links' ); ?>
+	
 	<h2><?php _e( 'Edit Categories', 'buddypress-links' ) ?></h2>
 
 	<form id="search-form" method="post" action="">

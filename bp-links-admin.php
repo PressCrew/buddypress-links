@@ -20,7 +20,7 @@ function bp_links_add_admin_menu() {
 	if ( !is_super_admin() )
 		return false;
 
-	add_menu_page( __( 'BuddyPress Links', 'buddypress-links'), __( 'BP Links', 'buddypress-links' ), 'manage_options', 'buddypress-links-admin', 'bp_links_admin_index', BP_LINKS_ADMIN_THEME_URL . '/images/logo-icon16.png' );
+	add_menu_page( __( 'BuddyPress Links', 'buddypress-links'), __( 'BP Links', 'buddypress-links' ), 'manage_options', 'buddypress-links-admin', 'bp_links_admin_index', BP_LINKS_ADMIN_THEME_URL . '/images/logo_16.png' );
 	add_submenu_page( 'buddypress-links-admin', __( 'General Info', 'buddypress-links'), __( 'General Info', 'buddypress-links' ), 'manage_options', 'buddypress-links-admin', 'bp_links_admin_index' );
 	add_submenu_page( 'buddypress-links-admin', __( 'Manage Links', 'buddypress-links'), __( 'Manage Links', 'buddypress-links' ), 'manage_options', 'buddypress-links-admin-links', 'bp_links_admin_manage_links' );
 	add_submenu_page( 'buddypress-links-admin', __( 'Manage Categories', 'buddypress-links'), __( 'Edit Categories', 'buddypress-links' ), 'manage_options', 'buddypress-links-admin-cats', 'bp_links_admin_manage_categories' );
