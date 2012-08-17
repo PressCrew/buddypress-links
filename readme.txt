@@ -1,17 +1,19 @@
 === Plugin Name ===
 Contributors: MrMaz
-Tags: wpmu, buddypress, social, networking, links, rich media, embed, youtube, flickr, metacafe
-Requires at least: PHP 5.2.4, WordPress 3.1.x, BuddyPress 1.5.x
-Tested up to: PHP 5.3.9, WordPress 3.3.x, BuddyPress 1.5.3.1
-Stable tag: 0.6.3
+Tags: buddypress, social, networking, links, rich media, embed, youtube, flickr, metacafe
+Requires at least: 3.3
+Tested up to: 3.4.1
+Stable tag: 0.6.4
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-BuddyPress Links is a drop in link and rich media sharing component for BuddyPress 1.5.x
+BuddyPress Links is a drop in link and rich media sharing component for BuddyPress 1.5 and higher
 
 == Description ==
 
 #### What is BuddyPress Links?
 
-BuddyPress Links is a drop in link and rich media sharing component for BuddyPress 1.5.x
+BuddyPress Links is a drop in link and rich media sharing component for BuddyPress 1.5 and higher
 
 It supports complete integration with...
 
@@ -22,8 +24,6 @@ Members can:
 * Create and manage links from their profile
 * Assign links to a category
 * Control the visibility of their links (public, friends only, and hidden)
-* Share other member's links on their profile
-* Share any link with a group they are a member of
 * Upload an image "avatar" to show with a link
 * Auto embed rich media from URLs (YouTube, Flickr, and metacafe are supported)
 * Automatic thumbnail picker available as of 0.2.1
@@ -54,7 +54,7 @@ Other features include:
 
 == Installation ==
 
-* BuddyPress Links 0.6.x requires WordPress 3.2 or higher with BuddyPress 1.5 or higher installed.
+* BuddyPress Links 0.6.x requires WordPress 3.3 or higher with BuddyPress 1.5 or higher installed.
 * BuddyPress Links 0.5.x requires WordPress 3.0 or higher with BuddyPress 1.2.6 or higher installed.
 * BuddyPress Links 0.4.x requires WordPress 2.9.2 or higher with BuddyPress 1.2.x installed.
 * BuddyPress Links 0.3.x requires WordPress 2.9.1 or higher with BuddyPress 1.2.x installed.
@@ -100,6 +100,11 @@ DO NOT attempt to install version 0.3 or higher on BP 1.1.X!  DO NOT try to use 
 This version contains the first support for rich media embedding. *Please make sure that you update the "links" directory in your theme (see Installation).*
 
 == Changelog ==
+
+= 0.6.4 =
+
+* Removed group integration
+* Removed profile sharing
 
 = 0.6.3 =
 
