@@ -103,6 +103,7 @@ define( 'BP_LINKS_VERSION', '0.6.4' );
 define( 'BP_LINKS_DB_VERSION', '7' );
 define( 'BP_LINKS_PLUGIN_NAME', 'buddypress-links' );
 define( 'BP_LINKS_PLUGIN_TEXTDOMAIN', 'buddypress-links' );
+define( 'BP_LINKS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'BP_LINKS_THEMES_PATH', 'themes' );
 define( 'BP_LINKS_DEFAULT_THEME', 'bp-links-default' );
 define( 'BP_LINKS_ADMIN_THEME', 'bp-links-admin' );
@@ -190,6 +191,17 @@ function bp_links_init() {
 
 	do_action( 'bp_links_init' );
 }
+
+/**
+ * Handle activation
+ */
+function bp_links_activate()
+{
+	require_once( 'bp-links-upgrade.php' );
+	bp_links_setup_globals();
+	bp_links_upgrade();
+}
+add_action( 'activate_' . BP_LINKS_PLUGIN_BASENAME, 'bp_links_activate' );
 
 //
 // Hook into BuddyPress!

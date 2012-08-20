@@ -8,115 +8,6 @@ require ( BP_LINKS_PLUGIN_DIR . '/bp-links-widgets.php' );
 require ( BP_LINKS_PLUGIN_DIR . '/bp-links-filters.php' );
 require ( BP_LINKS_PLUGIN_DIR . '/bp-links-dtheme.php' );
 
-function bp_links_install() {
-	global $wpdb, $bp;
-
-	if ( !empty($wpdb->charset) )
-		$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
-	
-	$sql[] = "CREATE TABLE `{$bp->links->table_name}` (
-				`id` bigint unsigned NOT NULL auto_increment,
-				`cloud_id` char(32) NOT NULL,
-				`user_id` bigint unsigned NOT NULL,
-				`category_id` tinyint NOT NULL,
-				`url` varchar(255) NOT NULL default '',
-				`url_hash` char(32) NOT NULL,
-				`target` varchar(25) default NULL,
-				`rel` varchar(25) default NULL,
-				`slug` varchar(255) NOT NULL,
-				`name` varchar(255) NOT NULL,
-				`description` text,
-				`status` tinyint(1) NOT NULL default '1',
-				`vote_count` smallint NOT NULL default '0',
-				`vote_total` smallint NOT NULL default '0',
-				`popularity` mediumint UNSIGNED NOT NULL default '0',
-				`embed_service` char(32) default null,
-				`embed_status` tinyint(1) default '0',
-				`embed_data` text,
-				`date_created` datetime NOT NULL,
-				`date_updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-			PRIMARY KEY  (`id`),
-			UNIQUE `cloud_id` (`cloud_id`),
-			KEY `user_id` (`user_id`),
-			KEY `category_id` (`category_id`),
-			KEY `url_hash` (`url_hash`),
-			KEY `slug` (`slug`),
-			KEY `name` (`name`(20)),
-			KEY `status` (`status`),
-			KEY `vote_count` (`vote_count`),
-			KEY `vote_total` (`vote_total`),
-			KEY `popularity` (`popularity`),
-			KEY `date_created` (`date_created`),
-			KEY `date_updated` (`date_updated`)
-			) {$charset_collate};";
-
-	$sql[] = "CREATE TABLE `{$bp->links->table_name_categories}` (
-				`id` tinyint(4) NOT NULL auto_increment,
-				`slug` varchar(50) NOT NULL,
-				`name` varchar(50) NOT NULL,
-				`description` varchar(255) default NULL,
-				`priority` smallint NOT NULL,
-				`date_created` datetime NOT NULL,
-				`date_updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-			PRIMARY KEY  (`id`),
-			KEY `slug` (`slug`),
-			KEY `priority` (`priority`)
-			) {$charset_collate};";
-
-	// if initial install, add default categories
-	if ( !get_site_option( 'bp-links-db-version' ) ) {
-		$sql[] = "INSERT INTO `{$bp->links->table_name_categories}`
-					( slug, name, description, priority, date_created )
-					VALUES  ( 'news', 'News', NULL, 10, NOW() ),
-							( 'humor', 'Humor', NULL, 20, NOW() ),
-							( 'other', 'Other', NULL, 30, NOW() );";
-	}
-
-	$sql[] = "CREATE TABLE `{$bp->links->table_name_votes}` (
-				`link_id` bigint unsigned NOT NULL,
-				`user_id` bigint unsigned NOT NULL,
-				`vote` tinyint(1) NOT NULL,
-				`date_created` datetime NOT NULL,
-				`date_updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-			PRIMARY KEY  (`user_id`,`link_id`),
-			KEY `link_id` (`link_id`),
-			KEY `date_created` (`date_created`)
-			) {$charset_collate};";
-
-	$sql[] = "CREATE TABLE `{$bp->links->table_name_linkmeta}` (
-				`id` bigint NOT NULL auto_increment,
-				`link_id` bigint unsigned NOT NULL,
-				`meta_key` varchar(255) default NULL,
-				`meta_value` longtext,
-			PRIMARY KEY  (`id`),
-			KEY `meta_key` (`meta_key`),
-			KEY `link_id` (`link_id`)
-			) {$charset_collate};";
-	
-	require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
-	dbDelta($sql);
-
-	//
-	// Perform upgrades if necessary
-	//
-	require_once( 'bp-links-upgrade.php' );
-
-	if ( get_site_option( 'bp-links-db-version' ) ) {
-		// this is an upgrade
-		if ( bp_links_upgrade( get_site_option( 'bp-links-db-version' ) ) ) {
-			// update site version
-			update_site_option( 'bp-links-db-version', BP_LINKS_DB_VERSION );
-		} else {
-			// TODO record some kind of error to display in dashboard?
-		}
-	} else {
-		// this is a new install
-		update_site_option( 'bp-links-db-version', BP_LINKS_DB_VERSION );
-	}
-
-	do_action( 'bp_links_install' );
-}
-
 function bp_links_add_cron_schedules() {
 	return array(
 		'5_min' => array( 'interval' => 5*60, 'display' => sprintf( __( 'Every %1$d minutes', 'buddypress-links' ), 5 ) ),
@@ -326,22 +217,19 @@ function bp_links_load_textdomain() {
 add_action ( 'bp_setup_nav', 'bp_links_load_textdomain', 1 );
 add_action ( 'bp_init', 'bp_links_load_textdomain', 2 );
 
-function bp_links_check_installed() {
-	global $wpdb, $bp;
-
+function bp_links_setup_admin()
+{
+	// load admin file
 	require ( BP_LINKS_PLUGIN_DIR . '/bp-links-admin.php' );
 
-	/* Need to check db tables exist, activate hook no-worky in mu-plugins folder. */
-	if ( get_site_option('bp-links-db-version') < BP_LINKS_DB_VERSION )
-		bp_links_install();
-
 	// set up cron for popularity recalc
-	if ( !wp_next_scheduled('bp_links_cron_popularity') )
+	if ( !wp_next_scheduled( 'bp_links_cron_popularity' ) ) {
 		wp_schedule_event( time(), '15_min', 'bp_links_cron_popularity' );
+	}
 
-	do_action( 'bp_links_check_installed' );
+	do_action( 'bp_links_setup_admin' );
 }
-add_action( 'admin_menu', 'bp_links_check_installed' );
+add_action( 'admin_menu', 'bp_links_setup_admin' );
 
 function bp_links_setup_nav() {
 	global $bp;
