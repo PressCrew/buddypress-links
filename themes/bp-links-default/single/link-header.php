@@ -23,7 +23,7 @@
 <?php do_action( 'bp_after_link_menu_voting' ) ?>
 
 <h2><a href="<?php bp_link_url() ?>" title="<?php bp_link_name() ?>" target="_blank"><?php bp_link_name() ?></a></h2>
-<span class="highlight"><?php bp_link_type() ?></span> <span class="activity"><?php printf( __( 'active %s ago', 'buddypress' ), bp_get_link_last_active() ) ?></span>
+<span class="highlight"><?php bp_link_type() ?></span> <span class="activity"><?php printf( __( 'active %s', 'buddypress' ), bp_get_link_last_active() ) ?></span>
 
 <?php do_action( 'bp_before_link_header_meta' ) ?>
 

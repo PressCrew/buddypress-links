@@ -985,9 +985,9 @@ function bp_links_register_activity_actions() {
 	if ( !function_exists( 'bp_activity_set_action' ) )
 		return false;
 
-	bp_activity_set_action( bp_links_id(), BP_LINKS_ACTIVITY_ACTION_CREATE, __( 'Created a link', 'buddypress' ) );
-	bp_activity_set_action( bp_links_id(), BP_LINKS_ACTIVITY_ACTION_VOTE, __( 'Voted on a link', 'buddypress' ) );
-	bp_activity_set_action( bp_links_id(), BP_LINKS_ACTIVITY_ACTION_COMMENT, __( 'Commented on a link', 'buddypress' ) );
+	bp_activity_set_action( bp_links_id(), BP_LINKS_ACTIVITY_ACTION_CREATE, __( 'Created a link', 'buddypress-links' ) );
+	bp_activity_set_action( bp_links_id(), BP_LINKS_ACTIVITY_ACTION_VOTE, __( 'Voted on a link', 'buddypress-links' ) );
+	bp_activity_set_action( bp_links_id(), BP_LINKS_ACTIVITY_ACTION_COMMENT, __( 'Commented on a link', 'buddypress-links' ) );
 
 	do_action( 'bp_links_register_activity_actions' );
 }

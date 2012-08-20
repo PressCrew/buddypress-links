@@ -10,7 +10,7 @@ add_action( 'bp_loaded', 'bp_links_register_widgets' );
 
 class BP_Links_Widget extends WP_Widget {
 	function bp_links_widget() {
-		parent::WP_Widget( false, $name = __( 'Links', 'buddypress' ), array( 'description' => __( 'Your BuddyPress Links', 'buddypress-links' ) ) );
+		parent::WP_Widget( false, $name = __( 'Links', 'buddypress-links' ), array( 'description' => __( 'Your BuddyPress Links', 'buddypress-links' ) ) );
 
 		if ( is_active_widget( false, false, $this->id_base ) ) {
 			bp_links_setup_theme();
@@ -47,7 +47,7 @@ class BP_Links_Widget extends WP_Widget {
 
 						<div class="item">
 							<div class="item-title"><a href="<?php bp_link_permalink() ?>" title="<?php bp_link_name() ?>"><?php bp_link_name() ?></a></div>
-							<div class="item-meta"><span class="activity"><?php printf( __( '%+d rating', 'buddypress' ), bp_get_link_vote_total() ) ?></span></div>
+							<div class="item-meta"><span class="activity"><?php printf( __( '%+d rating', 'buddypress-links' ), bp_get_link_vote_total() ) ?></span></div>
 						</div>
 					</li>
 
@@ -59,7 +59,7 @@ class BP_Links_Widget extends WP_Widget {
 		<?php else: ?>
 
 			<div class="widget-error">
-				<?php _e('There are no links to display.', 'buddypress') ?>
+				<?php _e('There are no links to display.', 'buddypress-links') ?>
 			</div>
 
 		<?php endif; ?>
@@ -80,7 +80,7 @@ class BP_Links_Widget extends WP_Widget {
 		$max_links = strip_tags( $instance['max_links'] );
 		?>
 
-		<p><label for="bp-links-widget-links-max"><?php _e('Max links to show:', 'buddypress'); ?> <input class="widefat" id="<?php echo $this->get_field_id( 'max_links' ); ?>" name="<?php echo $this->get_field_name( 'max_links' ); ?>" type="text" value="<?php echo attribute_escape( $max_links ); ?>" style="width: 30%" /></label></p>
+		<p><label for="bp-links-widget-links-max"><?php _e('Max links to show:', 'buddypress-links'); ?> <input class="widefat" id="<?php echo $this->get_field_id( 'max_links' ); ?>" name="<?php echo $this->get_field_name( 'max_links' ); ?>" type="text" value="<?php echo attribute_escape( $max_links ); ?>" style="width: 30%" /></label></p>
 	<?php
 	}
 }
@@ -124,13 +124,13 @@ function bp_links_ajax_widget_links_list() {
 							<span class="activity">
 								<?php
 								if ( 'newest-links' == $_POST['filter'] ) {
-									printf( __( 'created %s ago', 'buddypress' ), bp_get_link_time_since_created() );
+									printf( __( 'created %s', 'buddypress' ), bp_get_link_time_since_created() );
 //								} else if ( 'recently-active-links' == $_POST['filter'] ) {
-//									printf( __( 'active %s ago', 'buddypress' ), bp_get_link_last_active() );
+//									printf( __( 'active %', 'buddypress-links' ), bp_get_link_last_active() );
 								} else if ( 'popular-links' == $_POST['filter'] || 'high-votes' == $_POST['filter'] ) {
-									printf( __( '%+d rating', 'buddypress' ), bp_get_link_vote_total() );
+									printf( __( '%+d rating', 'buddypress-links' ), bp_get_link_vote_total() );
 								} else {
-									printf( __( '%s votes', 'buddypress' ), bp_get_link_vote_count() );
+									printf( __( '%s votes', 'buddypress-links' ), bp_get_link_vote_count() );
 								}
 								?>
 							</span>
@@ -145,7 +145,7 @@ function bp_links_ajax_widget_links_list() {
 
 	<?php else: ?>
 
-		<?php echo "-1[[SPLIT]]<li>" . __("No links matched the current filter.", 'buddypress'); ?>
+		<?php echo "-1[[SPLIT]]<li>" . __("No links matched the current filter.", 'buddypress-links'); ?>
 
 	<?php endif;
 
