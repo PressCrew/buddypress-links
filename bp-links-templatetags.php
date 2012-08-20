@@ -1704,7 +1704,7 @@ function bp_link_list_item_xtrabar_userlink_created() {
 	echo bp_get_link_list_item_xtrabar_userlink_created();
 }
 	function bp_get_link_list_item_xtrabar_userlink_created() {
-		return apply_filters( 'bp_get_link_list_item_xtrabar_userlink_created', sprintf( __( 'created %s ago', 'buddypress-links' ), bp_get_link_time_since_created() ) );
+		return apply_filters( 'bp_get_link_list_item_xtrabar_userlink_created', sprintf( __( 'created %s', 'buddypress-links' ), bp_get_link_time_since_created() ) );
 	}
 
 /****
