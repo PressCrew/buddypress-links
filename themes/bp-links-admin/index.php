@@ -20,29 +20,28 @@ if ( defined( 'BP_LINKS_PRO_VERSION' ) ) {
 
 	<h3><?php _e( 'Thank you for installing BuddyPress Links!', 'buddypress-links' ) ?></h3>
 	<p>
-		There are some additional steps required to get this plugin working after
-		the first activation. These steps are documented further down on this page.
+		<?php _e( 'There are some additional steps required to get this plugin working after the first activation. These steps are documented further down on this page.', 'buddypress-links' ) ?>
 	</p>
 	
 	<table border="0" class="widefat">
 		<thead>
 			<tr>
 				<th colspan="2">
-					Version Information
+					<?php _e( 'Version Information', 'buddypress-links' ) ?>
 				</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<th>Base:</th>
+				<th><?php _e( 'Base:', 'buddypress-links' ) ?></th>
 				<th><?php print BP_LINKS_VERSION ?></th>
 			</tr>
 			<tr>
-				<th>Pro Extension:</th>
+				<th><?php _e( 'Pro Extension:', 'buddypress-links' ) ?></th>
 				<th>
 					<?php print $bp_links_pro_version ?>
 					<?php if ( !$bp_links_pro_installed ): ?>
-						<a href="http://shop.presscrew.com/shop/buddypress-links/" target="_blank" style="margin-left: 10px;">Purchase</a>
+						<a href="http://shop.presscrew.com/shop/buddypress-links/" target="_blank" style="margin-left: 10px;"><?php _e( 'Purchase', 'buddypress-links' ) ?></a>
 					<?php endif; ?>
 				</th>
 			</tr>
@@ -55,14 +54,14 @@ if ( defined( 'BP_LINKS_PRO_VERSION' ) ) {
 		<li><a href="?page=buddypress-links-admin-cats"><?php _e( 'Edit Categories', 'buddypress-links' ) ?></a></li>
 	</ul>
 	
-	<h3>Additional Activation Steps:</h3>
+	<h3><?php _e( 'Additional Activation Steps:', 'buddypress-links' ) ?></h3>
 	<ol>
-		<li>Click on <strong>Settings</strong> under the <strong>Dashboard</strong> menu.</li>
-		<li>Click on <strong>BuddyPress</strong> under the <strong>Settings</strong> menu.</li>
-		<li>Click the <strong>Pages</strong> tab on the <strong>BuddyPress</strong> settings screen.</li>
-		<li>Under directories, assign a page to the <strong>Links</strong> component by selecting an existing page, or creating a new one.</li>
-		<li>Click the <strong>Save</strong> button.</li>
-		<li>The <strong>Links</strong> item in your site navigation should now load the links component!</li>
+		<li><?php _e( 'Click on <strong>Settings</strong> under the <strong>Dashboard</strong> menu.', 'buddypress-links' ) ?></li>
+		<li><?php _e( 'Click on <strong>BuddyPress</strong> under the <strong>Settings</strong> menu.', 'buddypress-links' ) ?></li>
+		<li><?php _e( 'Click the <strong>Pages</strong> tab on the <strong>BuddyPress</strong> settings screen.', 'buddypress-links' ) ?></li>
+		<li><?php _e( 'Under directories, assign a page to the <strong>Links</strong> component by selecting an existing page, or creating a new one.', 'buddypress-links' ) ?></li>
+		<li><?php _e( 'Click the <strong>Save</strong> button.', 'buddypress-links' ) ?></li>
+		<li><?php _e( 'The <strong>Links</strong> item in your site navigation should now load the links component!', 'buddypress-links' ) ?></li>
 	</ol>
 
 	<!-- h3>Documentation</h3>
@@ -70,54 +69,54 @@ if ( defined( 'BP_LINKS_PRO_VERSION' ) ) {
 		TODO
 	</p -->
 
-	<h3>Support</h3>
+	<h3><?php _e( 'Support', 'buddypress-links' ) ?></h3>
 	<p>
-		There are two levels of support:
+		<?php _e( 'There are two levels of support:', 'buddypress-links' ) ?>
 	</p>
 	<ul>
-		<li>For support on the community version, head over to this plugin's <a href="http://buddypress.org/community/groups/buddypress-links/home/" target="_blank">official group</a> on BuddyPress.org</li>
-		<li>For premium support on the community and pro versions, head over to the Press Crew <a href="http://community.presscrew.com/discussion/premium-plugins/" target="_blank">premium plugin forums</a>.</li>
+		<li><?php _e( "For support on the community version, head over to this plugin's", 'buddypress-links' ) ?> <a href="http://buddypress.org/community/groups/buddypress-links/home/" target="_blank"><?php _e( 'official group', 'buddypress-links' ) ?></a> <?php _e( 'on BuddyPress.org', 'buddypress-links' ) ?></li>
+		<li><?php _e( 'For premium support on the community and pro versions, head over to the Press Crew', 'buddypress-links' ) ?> <a href="http://community.presscrew.com/discussion/premium-plugins/" target="_blank"><?php _e( 'premium plugin forums', 'buddypress-links' ) ?></a>.</li>
 	</ul>
 
-	<h3>Pro Extension</h3>
+	<h3><?php _e( 'Pro Extension', 'buddypress-links' ) ?></h3>
 	<p>
-		The pro extension adds the following additional features:
+		<?php _e( 'The pro extension adds the following additional features:', 'buddypress-links' ) ?>
 	</p>
-	<h4>Member Links Sharing</h4>
+	<h4><?php _e( 'Member Links Sharing', 'buddypress-links' ) ?></h4>
 	<ul>
-		<li>Share other member's links on their profile.</li>
-		<li>Share any link with a group they are a member of.</li>
+		<li><?php _e( "Share other member's links on their profile.", 'buddypress-links' ) ?></li>
+		<li><?php _e( 'Share any link with a group they are a member of.', 'buddypress-links' ) ?></li>
 	</ul>
-	<h4>Groups Integration</h4>
+	<h4><?php _e( 'Groups Integration', 'buddypress-links' ) ?></h4>
 	<ul>
-		<li>Group members can add a link to any group they are a member of, directly from the group.</li>
-		<li>Fully integrated with the group activity stream.</li>
-		<li>Each group has their own links mini-directory which lists only that group's links.</li>
-		<li>Separate tabs for listing all group links, or just my group links.</li>
-		<li>The same powerful category and order filtering is available.</li>
-		<li>Group administrators can remove group links, with prejudice.</li>
+		<li><?php _e( 'Group members can add a link to any group they are a member of, directly from the group.', 'buddypress-links' ) ?></li>
+		<li><?php _e( 'Fully integrated with the group activity stream.', 'buddypress-links' ) ?></li>
+		<li><?php _e( "Each group has their own links mini-directory which lists only that group's links.", 'buddypress-links' ) ?></li>
+		<li><?php _e( 'Separate tabs for listing all group links, or just my group links.', 'buddypress-links' ) ?></li>
+		<li><?php _e( 'The same powerful category and order filtering is available.', 'buddypress-links' ) ?></li>
+		<li><?php _e( 'Group administrators can remove group links, with prejudice.', 'buddypress-links' ) ?></li>
 	</ul>
 	<p>
-		The pro extension is available for purchase in the <a href="http://shop.presscrew.com/shop/buddypress-links/" target="_blank">Press Crew Shop</a>
+		<?php _e( 'The pro extension is available for purchase in the', 'buddypress-links' ) ?> <a href="http://shop.presscrew.com/shop/buddypress-links/" target="_blank"><?php _e( 'Press Crew Shop', 'buddypress-links' ) ?></a>
 	</p>
 	
-	<h3>Developer Extras</h3>
+	<h3><?php _e( 'Developer Extras', 'buddypress-links' ) ?></h3>
 	<ul>
-		<li><a href="http://plugins.trac.wordpress.org/log/buddypress-links" target="_blank">Trac Revision Log</a></li>
-		<li><a href="http://plugins.trac.wordpress.org/browser/buddypress-links/" target="_blank">Trac Browser</a></li>
+		<li><a href="http://plugins.trac.wordpress.org/log/buddypress-links" target="_blank"><?php _e( 'Trac Revision Log', 'buddypress-links' ) ?></a></li>
+		<li><a href="http://plugins.trac.wordpress.org/browser/buddypress-links/" target="_blank"><?php _e( 'Trac Browser', 'buddypress-links' ) ?></a></li>
 	</ul>
 
 	<h3><?php _e( 'About the Author:', 'buddypress-links' ) ?></h3>
 	<ul>
-		<li><a href="http://marshallsorenson.com/" target="_blank">Marshall Sorenson's Blog</a></li>
-		<li><a href="http://buddypress.org/community/members/MrMaz/" target="_blank">MrMaz on BuddyPress.org</a></li>
+		<li><a href="http://marshallsorenson.com/" target="_blank"><?php _e( "Marshall Sorenson's Blog", 'buddypress-links' ) ?></a></li>
+		<li><a href="http://buddypress.org/community/members/MrMaz/" target="_blank"><?php _e( 'MrMaz on BuddyPress.org', 'buddypress-links' ) ?></a></li>
 	</ul>
 
 	<h3><?php _e( 'Credits:', 'buddypress-links' ) ?></h3>
 	<ul>
 		<li>
-			Logo Elements:
-			&quot;Share&quot; symbol by The Noun Project, from <a href="http://thenounproject.com" target="_blank">The Noun Project</a> collection.</p>
+			<?php _e( 'Logo Elements:', 'buddypress-links' ) ?>
+			<?php _e( '&quot;Share&quot; symbol by The Noun Project, from', 'buddypress-links' ) ?> <a href="http://thenounproject.com" target="_blank"><?php _e( 'The Noun Project', 'buddypress-links' ) ?></a> <?php _e( 'collection.', 'buddypress-links' ) ?></p>
 		</li>
 	</ul>
 
