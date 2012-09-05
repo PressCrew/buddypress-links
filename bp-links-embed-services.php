@@ -985,13 +985,13 @@ final class BP_Links_Embed_Service_YouTube
 	final public function html()
 	{
 		return sprintf(
-			'<object width="640" height="385">' .
+			'<object width="640" height="385" style="height: 385px;">' .
 			'<param name="movie" value="%1$s"></param>' .
 			'<param name="allowFullScreen" value="true"></param>' .
 			'<param name="allowscriptaccess" value="always"></param>' .
 			'<embed src="%1$s" type="application/x-shockwave-flash" ' .
 				'allowscriptaccess="always" allowfullscreen="true" ' .
-				'width="640" height="385"></embed>' .
+				'width="640" height="385" style="height: 385px;"></embed>' .
 			'</object>',
 			esc_url( $this->yt_player_url() )
 		);
