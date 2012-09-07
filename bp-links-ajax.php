@@ -105,6 +105,6 @@ function bp_links_ajax_link_lightbox() {
 
 	bp_links_ajax_response_string( -1, __( 'Invalid request', 'buddypress-links' ) );
 }
-add_filter( 'wp_ajax_link_lightbox', 'bp_links_ajax_link_lightbox' );
+add_filter( 'wp_ajax_nopriv_link_lightbox', 'bp_links_ajax_link_lightbox' );
 
 ?>

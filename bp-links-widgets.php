@@ -151,4 +151,5 @@ function bp_links_ajax_widget_links_list() {
 
 }
 add_action( 'wp_ajax_widget_links_list', 'bp_links_ajax_widget_links_list' );
+add_action( 'wp_ajax_nopriv_widget_links_list', 'bp_links_ajax_widget_links_list' );
 ?>

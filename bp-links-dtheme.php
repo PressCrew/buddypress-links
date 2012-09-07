@@ -154,6 +154,7 @@ function bp_links_dtheme_template_loader() {
 	die();
 }
 add_action( 'wp_ajax_links_filter', 'bp_links_dtheme_template_loader' );
+add_action( 'wp_ajax_nopriv_links_filter', 'bp_links_dtheme_template_loader' );
 
 /**
  * Augment profile Links page sub-navigation
