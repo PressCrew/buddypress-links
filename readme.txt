@@ -3,7 +3,7 @@ Contributors: MrMaz
 Tags: buddypress, social, networking, links, rich media, embed, youtube, flickr, metacafe
 Requires at least: 3.3
 Tested up to: 3.4.1
-Stable tag: 0.6.4
+Stable tag: 0.6.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,13 @@ DO NOT attempt to install version 0.3 or higher on BP 1.1.X!  DO NOT try to use 
 This version contains the first support for rich media embedding. *Please make sure that you update the "links" directory in your theme (see Installation).*
 
 == Changelog ==
+
+= 0.6.5 =
+
+* Fixed embedded video issues caused by responsive themes
+* Upgraded to Colorbox 1.3.2
+* Fixing missing sidebar on create link page
+* Additional BuddyPress 1.6.x fixes
 
 = 0.6.4 =
 
