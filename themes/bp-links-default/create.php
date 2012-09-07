@@ -11,12 +11,15 @@
 				</ul>
 			</div>
 
-			<?php
-				do_action( 'template_notices' ); // (error/success feedback)
-				do_action( 'bp_before_link_creation_content' );
-				bp_links_locate_template( array( 'single/forms/details.php' ), true );
-				do_action( 'bp_after_link_creation_content' );
-			?>
+			<?php do_action( 'template_notices' ); ?>
+
+			<div class="item-body" id="link-create-body">
+				<?php
+					do_action( 'bp_before_link_creation_content' );
+					bp_links_locate_template( array( 'single/forms/details.php' ), true );
+					do_action( 'bp_after_link_creation_content' );
+				?>
+			</div>
 		</div>
 	</div>
 
