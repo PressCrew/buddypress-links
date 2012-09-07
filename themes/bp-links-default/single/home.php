@@ -1,4 +1,4 @@
-<?php get_header() ?>
+<?php get_header( 'buddypress' ) ?>
 
 	<div id="content" class="link-home">
 		<div class="padder">
@@ -53,6 +53,5 @@
 		</div><!-- .padder -->
 	</div><!-- #content -->
 
-	<?php locate_template( array( 'sidebar.php' ), true ) ?>
-
-<?php get_footer() ?>
+<?php get_sidebar( 'buddypress' ) ?>
+<?php get_footer( 'buddypress' ) ?>
