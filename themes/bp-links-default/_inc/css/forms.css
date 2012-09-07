@@ -25,6 +25,9 @@
 	border: 2px solid #c8c8c8;
 	padding: 2px 8px;
 	background: #f0f0f0;
+	font-size: 14px;
+	width: auto;
+	line-height: 1.5;
 }
 
 #link-details-form.standard-form fieldset input[type=text],
