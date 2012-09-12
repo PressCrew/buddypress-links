@@ -115,7 +115,7 @@ function bp_links_ajax_widget_links_list() {
 			<?php while ( bp_links() ) : bp_the_link(); ?>
 				<li>
 					<div class="item-avatar">
-						<a href="<?php bp_link_permalink() ?>"><?php bp_link_avatar_thumb() ?></a>
+						<a href="<?php bp_link_permalink() ?>"><?php bp_link_avatar( array( 'width' => bp_core_avatar_thumb_width(), 'height' => bp_core_avatar_thumb_height() ) ) ?></a>
 					</div>
 
 					<div class="item">
