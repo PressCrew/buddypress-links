@@ -241,7 +241,7 @@ function bp_links_setup_nav() {
 		$bp->links->current_link = &new BP_Links_Link( $link_id );
 
 		/* Using "item" not "link" for generic support in other components. */
-		if ( is_super_admin() ) {
+		if ( current_user_can( 'manage_links' ) ) {
 			$bp->is_item_admin = 1;
 		} else {
 			$bp->is_item_admin = ( $bp->loggedin_user->id == $bp->links->current_link->user_id ) ? true : false;
