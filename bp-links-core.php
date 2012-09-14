@@ -267,7 +267,7 @@ function bp_links_setup_nav() {
 	));
 
 	$links_link = $bp->loggedin_user->domain . bp_links_slug() . '/';
-	
+
 	/* Add the subnav items to the links nav item */
 	$subnav_name_mylinks =
 		apply_filters(
@@ -380,6 +380,39 @@ function bp_links_setup_nav() {
 	do_action( 'bp_links_setup_nav', $bp->is_item_admin );
 }
 add_action( 'bp_setup_nav', 'bp_links_setup_nav' );
+
+function bp_links_setup_admin_bar() {
+	global $bp, $wp_admin_bar;
+
+	// base link
+	$links_link = $bp->loggedin_user->domain . bp_links_slug() . '/';
+
+	// add top level
+	$wp_admin_bar->add_menu( array(
+		'parent' => $bp->my_account_menu_id,
+		'id'     => 'my-account-' . $bp->links->id,
+		'title'  => __( 'Links', 'buddypress-links' ),
+		'href'   => trailingslashit( $links_link )
+	));
+
+	// add list sub
+	$wp_admin_bar->add_menu( array(
+		'parent' => 'my-account-' . $bp->links->id,
+		'id'     => 'my-account-' . $bp->links->id . '-list',
+		'title'  => __( 'List', 'buddypress-links' ),
+		'href'   => bp_get_loggedin_user_link() . $bp->links->slug
+	));
+
+	// add create sub
+	$wp_admin_bar->add_menu( array(
+		'parent' => 'my-account-' . $bp->links->id,
+		'id'     => 'my-account-' . $bp->links->id . '-create',
+		'title'  => __( 'Create', 'buddypress-links' ),
+		'href'   => bp_get_loggedin_user_link() . $bp->links->slug . '/create'
+	));
+	
+}
+add_action( 'bp_setup_admin_bar', 'bp_links_setup_admin_bar' );
 
 function bp_links_setup_activity_nav() {
 	global $bp;
