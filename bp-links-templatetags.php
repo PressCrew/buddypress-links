@@ -984,7 +984,7 @@ function bp_link_details_form_avatar_thumb() {
 
 		if ( bp_links_admin_current_action_variable() ) {
 
-			return bp_get_link_avatar( 'width=100&height=100', bp_links_current_link() );
+			return bp_get_link_avatar( 'width=100&height=100&class=avatar-current', bp_links_current_link() );
 
 		} else {
 

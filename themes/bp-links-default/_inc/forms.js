@@ -51,11 +51,11 @@ jQuery(document).ready( function() {
 		var e_thpick_curr = e_thpick.children("span#thcurrent");
 		var e_thpick_idx = jQuery("input#link-url-embed-thidx");
 		var e_thpick_skip = jQuery("input#link-url-embed-thskip");
-		var e_avimg_cur = jQuery("div#link-url-embed-content img");
+		var e_thpick_img = jQuery("div#link-url-embed-content img");
 
 		var local_idx = null;
 		var last_img_idx = e_thpick_idx.val();
-		var last_img_src = e_avimg_cur.attr("src");
+		var last_img_src = e_thpick_img.attr("src");
 
 		e_thpick_a.click(function() {
 
@@ -94,12 +94,13 @@ jQuery(document).ready( function() {
 			}
 
 			// swap out the image
-			e_avimg_cur.fadeTo(200, 0.3, function() {
+			e_thpick_img.fadeTo(200, 0.3, function() {
 				// update idx locally and in form
 				e_thpick_idx.val(images[local_idx][0]);
 				e_thpick_curr.html(local_idx + 1);
+				e_thpick_img.attr("src", images[local_idx][1]);
+				e_thpick_img.fadeTo(200, 1);
 				e_avimg_cur.attr("src", images[local_idx][1]);
-				e_avimg_cur.fadeTo(200, 1);
 			});
 
 			return false;
@@ -111,23 +112,23 @@ jQuery(document).ready( function() {
 			var images = e_thpick.data("images");
 
 			// swap out image with default if checked
-			switch (jQuery(this).attr('checked')) {
-				case true:
-					last_img_idx = e_thpick_idx.val()
-					last_img_src = e_avimg_cur.attr("src");
-					e_thpick_idx.val(null);
-					e_avimg_cur.attr("src", e_avimg_def.attr("src"));
-					break;
-				default:
-					if ((last_img_idx) && (last_img_src)) {
-						e_thpick_idx.val(last_img_idx);
-						e_avimg_cur.attr("src", last_img_src);
-					} else {
-						// use values from first element
-						e_thpick_idx.val(images[0][0]);
-						e_avimg_cur.attr("src", images[0][1]);
-					}
-					break;
+			if ( jQuery(this).attr('checked') ) {
+				last_img_idx = e_thpick_idx.val()
+				last_img_src = e_thpick_img.attr("src");
+				e_thpick_idx.val(null);
+				e_thpick_img.attr("src", e_avimg_def.attr("src"));
+				e_avimg_cur.attr("src", e_avimg_def.attr("src"));
+			} else {
+				if ((last_img_idx) && (last_img_src)) {
+					e_thpick_idx.val(last_img_idx);
+					e_thpick_img.attr("src", last_img_src);
+					e_avimg_cur.attr("src", last_img_src);
+				} else {
+					// use values from first element
+					e_thpick_idx.val(images[0][0]);
+					e_thpick_img.attr("src", images[0][1]);
+					e_avimg_cur.attr("src", images[0][1]);
+				}
 			}
 		});
 	}
