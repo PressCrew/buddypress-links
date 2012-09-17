@@ -48,9 +48,22 @@ Other features include:
 
 == Screenshots ==
 
-1. This is the directory. Not seen on this image are the search, order by, and category drop down filters.
-2. This is the how the links activity items appear on the main activity stream.
-3. This is the create/admin form. You can see how web page thumbs were auto-detected.
+1. Links behaves just like a root component, complete with its own directory for links which have their privacy set to public.
+2. Links for embedded videos and images play in a modal window at their original size.
+3. Links is fully integrated into the activity stream, including several powerful filters for limiting results.
+4. When creating a link, rich media and thumbnails are auto-detected. Quickly select a thumbnail to display for the link.
+5. Edit fetched link content to clean up title and description, or to completely customize the content to your liking.
+6. You can choose to use the fetched thumbnail, or to upload a custom image from your computer.
+7. Each link has its own privacy setting for full control over who sees your links.
+8. Uploading a custom link image (avatar) is identical to other root components.
+9. Links is fully integrated into member profiles. View link related activity for yourself or another member. Conveniently create a new link directly from your profile.
+10. Links activity is integrated into the profile, just like the core components.
+11. A BuddyPress compatible link list widget is available to add to any sidebar. Advanced filtering and sorting is possible directly in the widget.
+12. Links completely integrates with the groups component (pro version only). Group members can add links to the group. All group link activity is visible from the group’s activity page. Group administrators have full control over which links are allowed.
+13. Easily share an existing link with your profile or any group you are a member of (pro version only). Use this powerful feature to track external resources for yourself, or inside of a group.
+14. Links has a complete set of administration tools available in the WordPress dashboard.
+15. Manage all links from a central location.
+16. Manage available link categories.
 
 == Installation ==
 
