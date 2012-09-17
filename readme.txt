@@ -15,9 +15,11 @@ BuddyPress Links is a drop in link and rich media sharing component for BuddyPre
 
 BuddyPress Links is a drop in link and rich media sharing component for BuddyPress 1.5 and higher
 
-It supports complete integration with...
+Try out the fully functional demo at http://demo.presscrew.com/
 
->Profiles, Directory, Activity Stream, Widgets, Notifications, Admin Bar, Admin Dashboard
+Link is completely integrated with...
+
+>Profiles, Activity Stream, Widgets, Notifications, Admin Bar, Admin Dashboard
 
 Members can:
 
