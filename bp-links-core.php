@@ -1134,7 +1134,7 @@ function bp_links_manage_link( $args = '' ) {
 	}
 	
 	if ( empty( $link->id ) ) {
-		$link->slug = bp_links_check_slug( sanitize_title_with_dashes( $name ) );
+		$link->slug = bp_links_check_slug( sanitize_title( $name ) );
 	}
 
 	if ( bp_links_is_valid_status( $status ) ) {

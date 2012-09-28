@@ -907,7 +907,7 @@ class BP_Links_Category {
 	}
 
 	function make_slug( $string ) {
-		return sanitize_title_with_dashes( $string );
+		return sanitize_title( $string );
 	}
 
 	function check_slug( $slug ) {
