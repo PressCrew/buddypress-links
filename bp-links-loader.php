@@ -137,6 +137,15 @@ function bp_links_is_activity_enabled() {
 	return ( class_exists( 'BP_Activity_Component', false ) );
 }
 
+/**
+ * Check if friends component is enabled
+ *
+ * @return boolean
+ */
+function bp_links_is_friends_enabled() {
+	return ( class_exists( 'BP_Friends_Component', false ) );
+}
+
 //
 // Plugin Bootstrap Functions
 //
