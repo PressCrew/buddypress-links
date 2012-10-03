@@ -82,6 +82,11 @@ if ( defined( 'BP_LINKS_PRO_VERSION' ) ) {
 	<p>
 		<?php _e( 'The pro extension adds the following additional features:', 'buddypress-links' ) ?>
 	</p>
+	<h4><?php _e( 'Additional Rich Media Support', 'buddypress-links' ) ?></h4>
+	<ul>
+		<li><a href="http://www.dailymotion.com/" target="_blank"><?php _e( 'Dailymotion', 'buddypress-links' ) ?></a></li>
+		<li><a href="http://www.vimeo.com/" target="_blank"><?php _e( 'Vimeo', 'buddypress-links' ) ?></a></li>
+	</ul>
 	<h4><?php _e( 'Member Links Sharing', 'buddypress-links' ) ?></h4>
 	<ul>
 		<li><?php _e( "Share other member's links on their profile.", 'buddypress-links' ) ?></li>
