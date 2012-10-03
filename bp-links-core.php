@@ -384,6 +384,12 @@ add_action( 'bp_setup_nav', 'bp_links_setup_nav' );
 function bp_links_setup_admin_bar() {
 	global $bp, $wp_admin_bar;
 
+	// user must be logged in
+	if ( false == is_user_logged_in() ) {
+		// abort
+		return;
+	}
+
 	// base link
 	$links_link = $bp->loggedin_user->domain . bp_links_slug() . '/';
 
