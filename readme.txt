@@ -7,19 +7,36 @@ Stable tag: 0.6.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-BuddyPress Links is a drop in link and rich media sharing component for BuddyPress 1.5 and higher
+BuddyPress Links is a drop-in link, image, video and other rich media sharing component for BuddyPress 1.5 and 1.6
 
 == Description ==
 
-#### What is BuddyPress Links?
+#### Overview
 
-BuddyPress Links is a drop in link and rich media sharing component for BuddyPress 1.5 and higher
+If you're running a BuddyPress community, and would like to give your members the ability to
+easily share content from across the web, this is your solution! BuddyPress Links allows your
+members to quickly and easily share links, images, videos, and other rich content.
 
-Try out the fully functional demo at http://demo.presscrew.com/
+All links that are shared by your community (with privacy mode set to public) are displayed
+in a central directory where your members can filter, vote, and comment on them.
 
-Link is completely integrated with...
+> *If you are anxious to try it out, go to the fully functional demo at http://demo.presscrew.com/*
 
->Profiles, Activity Stream, Widgets, Notifications, Admin Bar, Admin Dashboard
+Links is fully integrated with these BuddyPress core components:
+
+> *Profiles, Activity Stream, Widgets, Notifications, Admin Bar, Admin Dashboard*
+
+This deep integration adds a powerful new social tool through which your members can interact:
+
+* Your members can see the links they've submitted on their own profile, as well as other's.
+* Privacy settings allow your members to have total control over who sees which links.
+* A new activity stream tab is added so your members can quickly see new links which have been added by friends or by other members from across the site.
+* Your members can comment and vote on each other's links.
+* A powerful ranking algorithm turns your links directory into a social book-marking destination.
+
+We've seen some amazing examples of BuddyPress Links in action. Use it to create a directory of images or videos (with built-in lightbox support) for your members to vote upon. Or use it to build a tutorial section of your community with links pointing to articles or rich media from across the web. BuddyPress Links is flexible enough to handle it all.
+
+#### Feature List
 
 Members can:
 
@@ -115,6 +132,13 @@ DO NOT attempt to install version 0.3 or higher on BP 1.1.X!  DO NOT try to use 
 This version contains the first support for rich media embedding. *Please make sure that you update the "links" directory in your theme (see Installation).*
 
 == Changelog ==
+
+= 0.6.6 =
+
+* Fixed friends only privacy setting was displayed even when friends component disabled
+* Fixed admin bar items showing up when user not logged in
+* Fixed issue with slugs containing extended characters
+* Fixed dashboard styles that were in conflict with other plugins
 
 = 0.6.5 =
 
