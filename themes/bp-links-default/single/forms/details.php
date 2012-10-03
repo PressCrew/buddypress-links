@@ -93,6 +93,7 @@
 					<li><?php _e( 'Link content and activity will be visible to any site member.', 'buddypress-links' ) ?></li>
 				</ul>
 
+			<?php if ( bp_links_is_friends_enabled() ): ?>
 			<label>
 				<input type="radio" name="link-status" value="<?php echo BP_Links_Link::STATUS_FRIENDS ?>"<?php if ( BP_Links_Link::STATUS_FRIENDS == bp_get_link_details_form_status() ) { ?> checked="checked"<?php } ?> />
 				<?php _e( 'This is a friends-only link', 'buddypress-links' ) ?>
@@ -102,6 +103,7 @@
 					<li><?php _e( 'This link will NOT be listed in the links directory or in search results.', 'buddypress-links' ) ?></li>
 					<li><?php _e( 'Link content and activity will only be visible to your friends.', 'buddypress-links' ) ?></li>
 				</ul>
+			<?php endif; ?>
 
 			<label>
 				<input type="radio" name="link-status" value="<?php echo BP_Links_Link::STATUS_HIDDEN ?>"<?php if ( BP_Links_Link::STATUS_HIDDEN == bp_get_link_details_form_status() ) { ?> checked="checked"<?php } ?> />
