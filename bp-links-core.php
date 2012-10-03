@@ -1283,7 +1283,7 @@ function bp_links_is_link_visibile( $link_id_or_obj, $user_id = null ) {
 		case BP_Links_Link::STATUS_HIDDEN:
 			return false;
 		case BP_Links_Link::STATUS_FRIENDS:
-			return ( $user_id && class_exists( 'BP_Friends_Component' ) ) ? friends_check_friendship( $user_id, $link->user_id ) : false;
+			return ( $user_id && bp_links_is_friends_enabled() ) ? friends_check_friendship( $user_id, $link->user_id ) : false;
 		default:
 			return false;
 	}
