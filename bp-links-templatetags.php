@@ -1469,6 +1469,9 @@ function bp_links_notification_settings() {
  */
 
 function bp_link_vote_panel( $show_count = true ) {
+
+	$show_count = apply_filters( 'bp_get_link_vote_panel_show_count', $show_count );
+	
 	// render tags ?>
 	<div class="link-vote-panel" id="link-vote-panel-<?php bp_link_id() ?>">
 		<?php do_action( 'bp_before_link_vote_panel_content' ) ?>
