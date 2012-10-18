@@ -21,67 +21,12 @@ Text Domain: buddypress-links
 if ( !defined( 'BP_LINKS_SLUG' ) )
 	define( 'BP_LINKS_SLUG', 'links' );
 
-// Define the nav position
-if ( !defined( 'BP_LINKS_NAV_POSITION' ) )
-	define( 'BP_LINKS_NAV_POSITION', 100 );
-
 // Define a custom theme name to completely bypass any core links themes
 // For example, if your active WordPress theme is 'bluesky', and you wanted
 // to define your links theme as 'links-custom', you would put your files in:
 // /../../wp-content/themes/bluesky/links-custom
 if ( !defined( 'BP_LINKS_CUSTOM_THEME' ) )
 	define( 'BP_LINKS_CUSTOM_THEME', false );
-
-// Define the default avatar size for link lists
-// Allowed values are 50, 60, 70, 80, 90, 100, 110, 120, 130
-// *** Widget avatar size can be customized via the admin dashboard ***
-if ( !defined( 'BP_LINKS_LIST_AVATAR_SIZE' ) )
-	define( 'BP_LINKS_LIST_AVATAR_SIZE', 100 );
-
-// The default behavior is to link the "title link" to the "local" links page when
-// a link is clicked, set this to false to send them directly to the external url
-if ( !defined( 'BP_LINKS_LIST_ITEM_URL_LOCAL' ) )
-	define( 'BP_LINKS_LIST_ITEM_URL_LOCAL', true );
-
-// The default behavior is to allow members to change their vote.
-// Override this constant and set to false to prevent vote changing.
-if ( !defined( 'BP_LINKS_VOTE_ALLOW_CHANGE' ) )
-	define( 'BP_LINKS_VOTE_ALLOW_CHANGE', true );
-
-// The default behavior is to record vote activity (if it is their original vote).
-// Override this constant and set to false to prevent ANY vote activity recording.
-if ( !defined( 'BP_LINKS_VOTE_RECORD_ACTIVITY' ) )
-	define( 'BP_LINKS_VOTE_RECORD_ACTIVITY', true );
-
-// Limitations of the activity API require that we pass all item ids that we want to
-// display activity for if we are limiting results to links owned by a single user.
-// Passing the ids of all links that a user owns could get out of control. This
-// option allows you to override the default number of links that have recent entries
-// in the activity stream which are passed to the activity API. This is set to the number
-// of link ids! Each id could have many entries in the activity table.
-if ( !defined( 'BP_LINKS_PERSONAL_ACTIVITY_HISTORY' ) )
-	define( 'BP_LINKS_PERSONAL_ACTIVITY_HISTORY', 100 );
-
-// The following three constants are used by the create/edit link validation
-// code to limit the number of characters allowed for url, name and description.
-// Any value over 255 (varchar limit) for url and name will be truncated by MySQL. UTF8 string
-// lengths are supported if your PHP install has mbstring support enabled.
-if ( !defined( 'BP_LINKS_MAX_CHARACTERS_URL' ) )
-	define( 'BP_LINKS_MAX_CHARACTERS_URL', 255 );
-if ( !defined( 'BP_LINKS_MAX_CHARACTERS_NAME' ) )
-	define( 'BP_LINKS_MAX_CHARACTERS_NAME', 125 );
-if ( !defined( 'BP_LINKS_MAX_CHARACTERS_DESCRIPTION' ) )
-	define( 'BP_LINKS_MAX_CHARACTERS_DESCRIPTION', 500 );
-
-// By default the link description is required.
-// You can override this constant to change that behavior.
-if ( !defined( 'BP_LINKS_IS_REQUIRED_DESCRIPTION' ) )
-	define( 'BP_LINKS_IS_REQUIRED_DESCRIPTION', true );
-
-// The default behavior is to use radio buttons to display categories on the create form.
-// Override this constant and set to true to use a select box instead.
-if ( !defined( 'BP_LINKS_CREATE_CATEGORY_SELECT' ) )
-	define( 'BP_LINKS_CREATE_CATEGORY_SELECT', false );
 
 //
 // If you have a Fotoglif account you may want to change this so
@@ -113,6 +58,7 @@ define( 'BP_LINKS_ACTIVITY_ACTION_COMMENT', 'bp_link_comment' );
 // Core Paths
 define( 'BP_LINKS_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . BP_LINKS_PLUGIN_NAME );
 define( 'BP_LINKS_PLUGIN_URL', WP_PLUGIN_URL . '/' . BP_LINKS_PLUGIN_NAME );
+define( 'BP_LINKS_LIB_DIR', BP_LINKS_PLUGIN_DIR . '/lib' );
 
 // Sub Paths
 define( 'BP_LINKS_THEMES_DIR', BP_LINKS_PLUGIN_DIR . '/' . BP_LINKS_THEMES_PATH );

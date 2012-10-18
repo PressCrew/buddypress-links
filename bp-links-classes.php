@@ -6,6 +6,105 @@
  * @author Marshall Sorenson
  */
 
+// include settings framework
+require_once( BP_LINKS_LIB_DIR . '/wp-settings-framework.php' );
+
+/**
+ * Custom settings class extension
+ */
+class BP_Links_Settings extends WordPressSettingsFramework
+{
+	/**
+	 * Name of the option group
+	 */
+	const OPTION_GROUP = 'buddypress_links';
+
+	/**
+	 * Singleton instance
+	 *
+	 * @var BP_Links_Settings
+	 */
+	private static $instance;
+
+	/**
+	 */
+	public function __construct()
+	{
+		// call parent constructor
+		parent::__construct( BP_LINKS_PLUGIN_DIR . '/bp-links-settings.php', self::OPTION_GROUP );
+
+		// add settings validation filter
+		add_filter( $this->get_option_group() . '_settings_validate', array( $this, 'validate_settings' ) );
+	}
+
+	/**
+	 * Return singleton istance
+	 *
+	 * @return BP_Links_Settings
+	 */
+	final public static function instance()
+	{
+		if ( !self::$instance instanceof BP_Links_Settings ) {
+			self::$instance = new BP_Links_Settings();
+		}
+
+		return self::$instance;
+	}
+
+	final public static function init( $the_plugin_page )
+	{
+		global $plugin_page, $pagenow;
+
+		// init settings
+		if (
+			( 'options.php' == $pagenow && isset( $_POST['option_page'] ) && self::OPTION_GROUP == $_POST['option_page'] ) ||
+			$the_plugin_page == $plugin_page
+		) {
+			return self::instance();
+		}
+	}
+
+	final public static function get_defaults()
+	{
+		global $wpsf_settings;
+
+		require_once BP_LINKS_PLUGIN_DIR . '/bp-links-settings.php';
+
+		$defaults = array();
+
+		if ( !empty( $wpsf_settings ) ) {
+			foreach( $wpsf_settings as $section ) {
+				if ( isset( $section['section_id'] ) && isset( $section['fields'] ) ) {
+					foreach( $section['fields'] as $field ) {
+						if ( isset( $field['id'] ) ) {
+							$key = sprintf( '%s_%s_%s', self::OPTION_GROUP, $section['section_id'], $field['id'] );
+							$std = ( isset( $field['std'] ) ) ? $field['std'] : null;
+							$defaults[ $key ] = $std;
+						}
+					}
+				}
+			}
+		}
+
+		return $defaults;
+	}
+
+	final public static function get_settings()
+	{
+		return wp_parse_args(
+			wpsf_get_settings( BP_PLUGIN_DIR . '/bp-links-settings.php', self::OPTION_GROUP ),
+			self::get_defaults()
+		);
+	}
+
+	public function validate_settings( $input )
+	{
+		// Same as $sanitize_callback from http://codex.wordpress.org/Function_Reference/register_setting
+		return $input;
+	}
+
+}
+
 /**
  * A link belonging to a member
  *

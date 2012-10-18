@@ -69,6 +69,72 @@ function bp_is_links_component()
 }
 
 /**
+ * Get links settings
+ *
+ * @return mixed
+ */
+function bp_links_get_settings()
+{
+	return BP_Links_Settings::get_settings();
+}
+
+/**
+ * Init links settings
+ */
+function bp_links_init_settings()
+{
+	// default values
+	$settings = bp_links_get_settings();
+
+	// list avatar size
+	if ( !defined( 'BP_LINKS_LIST_AVATAR_SIZE' ) )
+		define( 'BP_LINKS_LIST_AVATAR_SIZE', (integer) $settings['buddypress_links_global_avsize'] );
+
+	// list item url to local?
+	if ( !defined( 'BP_LINKS_LIST_ITEM_URL_LOCAL' ) )
+		define( 'BP_LINKS_LIST_ITEM_URL_LOCAL', (boolean) $settings['buddypress_links_global_linklocal'] );
+
+	// max url characters
+	if ( !defined( 'BP_LINKS_MAX_CHARACTERS_URL' ) )
+		define( 'BP_LINKS_MAX_CHARACTERS_URL', (integer) $settings['buddypress_links_content_maxurl'] );
+
+	// max name characters
+	if ( !defined( 'BP_LINKS_MAX_CHARACTERS_NAME' ) )
+		define( 'BP_LINKS_MAX_CHARACTERS_NAME', (integer) $settings['buddypress_links_content_maxname'] );
+
+	// max desc characters
+	if ( !defined( 'BP_LINKS_MAX_CHARACTERS_DESCRIPTION' ) )
+		define( 'BP_LINKS_MAX_CHARACTERS_DESCRIPTION', (integer) $settings['buddypress_links_content_maxdesc'] );
+
+	// desc required?
+	if ( !defined( 'BP_LINKS_IS_REQUIRED_DESCRIPTION' ) )
+		define( 'BP_LINKS_IS_REQUIRED_DESCRIPTION', (boolean) $settings['buddypress_links_content_reqdesc'] );
+
+	// create category input
+	if ( !defined( 'BP_LINKS_CREATE_CATEGORY_SELECT' ) )
+		define( 'BP_LINKS_CREATE_CATEGORY_SELECT', (boolean) $settings['buddypress_links_content_catselect'] );
+
+	// vote changing
+	if ( !defined( 'BP_LINKS_VOTE_ALLOW_CHANGE' ) )
+		define( 'BP_LINKS_VOTE_ALLOW_CHANGE', (boolean) $settings['buddypress_links_voting_change'] );
+
+	// voting activity
+	if ( !defined( 'BP_LINKS_VOTE_RECORD_ACTIVITY' ) )
+		define( 'BP_LINKS_VOTE_RECORD_ACTIVITY', (boolean) $settings['buddypress_links_voting_activity'] );
+	
+	// profile nav position
+	if ( !defined( 'BP_LINKS_NAV_POSITION' ) )
+		define( 'BP_LINKS_NAV_POSITION', (integer) $settings['buddypress_links_profile_navpos'] );
+
+	// activity history
+	if ( !defined( 'BP_LINKS_PERSONAL_ACTIVITY_HISTORY' ) )
+		define( 'BP_LINKS_PERSONAL_ACTIVITY_HISTORY', (integer) $settings['buddypress_links_profile_acthist'] );
+
+	do_action( 'bp_links_init_settings' );
+}
+add_action( 'bp_links_init', 'bp_links_init_settings', 1 );
+
+/**
  * Filter located template from bp_core_load_template
  *
  * @see bp_core_load_template()
@@ -1844,4 +1910,8 @@ add_action( 'bp_links_create_complete', 'bp_core_clear_cache' );
 add_action( 'bp_links_created_link', 'bp_core_clear_cache' );
 add_action( 'bp_links_link_avatar_updated', 'bp_core_clear_cache' );
 add_action( 'bp_links_cast_vote_success', 'bp_core_clear_cache' );
+
+// this action should always be called after all other code
+do_action( 'bp_links_core_includes' );
+
 ?>
