@@ -195,9 +195,10 @@ add_action( 'bp_init', 'bp_links_setup_theme' );
  *
  * @param array $template_names
  * @param boolean $load Auto load template if set to true
+ * @param boolean $require_once
  * @return string
  */
-function bp_links_locate_theme_template( $template_names, $load = false ) {
+function bp_links_locate_theme_template( $template_names, $load = false, $require_once = true ) {
 
 	bp_links_setup_theme();
 	
@@ -227,7 +228,7 @@ function bp_links_locate_theme_template( $template_names, $load = false ) {
 	}
 
 	if ($load && '' != $located)
-		load_template($located);
+		load_template($located, $require_once);
 
 	return $located;
 }
@@ -239,7 +240,7 @@ function bp_links_locate_theme_template( $template_names, $load = false ) {
  * @param boolean $load Auto load template if set to true
  * @return string
  */
-function bp_links_locate_template( $template_names, $load = false ) {
+function bp_links_locate_template( $template_names, $load = false, $require_once = true ) {
 
 	bp_links_setup_theme();
 	
@@ -252,7 +253,7 @@ function bp_links_locate_template( $template_names, $load = false ) {
 		$ret_arr[] = BP_LINKS_THEME . '/' . $template_name;
 	}
 
-	return bp_links_locate_theme_template( $ret_arr, $load );
+	return bp_links_locate_theme_template( $ret_arr, $load, $require_once );
 }
 
 /**
