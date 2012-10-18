@@ -1469,62 +1469,34 @@ function bp_links_notification_settings() {
  */
 
 function bp_link_vote_panel( $show_count = true ) {
-	echo bp_get_link_vote_panel( $show_count );
+	// render tags ?>
+	<div class="link-vote-panel" id="link-vote-panel-<?php bp_link_id() ?>">
+		<?php do_action( 'bp_before_link_vote_panel_content' ) ?>
+		<?php bp_link_vote_panel_clickers() ?>
+		<?php bp_link_vote_panel_count( $show_count ) ?>
+		<?php do_action( 'bp_after_link_vote_panel_content' ) ?>
+	</div><?php
 }
-	function bp_get_link_vote_panel( $show_count = true ) {
-
-		$show_count = apply_filters( 'bp_get_link_vote_panel_show_count', $show_count );
-
-		return sprintf('
-			<div class="link-vote-panel" id="link-vote-panel-%2$d">
-				%1$s%3$s
-				%4$s
-			%5$s</div>',
-			apply_filters( 'bp_before_link_vote_panel_content', '' ), // arg 1
-			bp_get_link_id(), // arg 2
-			bp_get_link_vote_panel_clickers(), // arg 3
-			( $show_count ) ? bp_get_link_vote_panel_count() : null, // arg 4
-			apply_filters( 'bp_after_link_vote_panel_content', '' )	// arg 5
-		);
-	}
 
 function bp_link_vote_panel_clickers() {
-	echo bp_get_link_vote_panel_clickers();
+	// render tags ?>
+	<div class="clickers">
+		<a href="#vu" id="vote-up-<?php bp_link_id() ?>" class="vote up"></a>
+		<div id="vote-total-<?php bp_link_id() ?>" class="vote-total"><?php printf( '%+d', bp_get_link_vote_total() ) ?></div>
+		<a href="#vd" id="vote-down-<?php bp_link_id() ?>" class="vote down"></a>
+	</div><?php
 }
-	function bp_get_link_vote_panel_clickers() {
 
-		$html = '
-			<div class="clickers">
-				<a href="#vu" id="vote-up-%1$d" class="vote up"></a>
-				<div id="vote-total-%1$d" class="vote-total">%2$+d</div>
-				<a href="#vd" id="vote-down-%1$d" class="vote down"></a>
-			</div>';
+function bp_link_vote_panel_count( $show = true ) {
 
-		$html_filtered = apply_filters( 'bp_get_link_vote_panel_clickers', $html );
-
-		return sprintf(
-			$html_filtered,
-			bp_get_link_id(), // arg 1
-			bp_get_link_vote_total() // arg 2
-		);
+	if ( true === $show ) {
+		// render tags ?>
+		<div class="vote-count">
+			<span id="vote-count-<?php bp_link_id() ?>"><?php bp_link_vote_count() ?></span>
+			<?php _e( 'Votes', 'buddypress-links' ) ?>
+		</div><?php
 	}
-
-function bp_link_vote_panel_count() {
-	echo bp_get_link_vote_panel_count();
 }
-	function bp_get_link_vote_panel_count() {
-
-		$html = '<div class="vote-count"><span id="vote-count-%1$d">%2$d</span> %3$s</div>';
-		
-		$html_filtered = apply_filters( 'bp_get_link_vote_panel_count', $html );
-
-		return sprintf(
-			$html_filtered,
-			bp_get_link_id(), // arg 1
-			bp_get_link_vote_count(), // arg 2
-			__('Votes', 'buddypress-links') // arg 3
-		);
-	}
 	
 function bp_link_vote_panel_form() {
 	printf( '<form action="%s/" method="post" id="link-vote-form">', site_url() );
