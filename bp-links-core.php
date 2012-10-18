@@ -126,6 +126,10 @@ function bp_links_init_settings()
 	if ( !defined( 'BP_LINKS_NAV_POSITION' ) )
 		define( 'BP_LINKS_NAV_POSITION', (integer) $settings['buddypress_links_profile_navpos'] );
 
+	// profile activity nav position
+	if ( !defined( 'BP_LINKS_ACTNAV_POSITION' ) )
+		define( 'BP_LINKS_ACTNAV_POSITION', (integer) $settings['buddypress_links_profile_actnavpos'] );
+
 	// activity history
 	if ( !defined( 'BP_LINKS_PERSONAL_ACTIVITY_HISTORY' ) )
 		define( 'BP_LINKS_PERSONAL_ACTIVITY_HISTORY', (integer) $settings['buddypress_links_profile_acthist'] );
@@ -492,7 +496,15 @@ function bp_links_setup_activity_nav() {
 	$user_domain = ( !empty( $bp->displayed_user->domain ) ) ? $bp->displayed_user->domain : $bp->loggedin_user->domain;
 	$activity_link = $user_domain . $bp->activity->slug . '/';
 
-	bp_core_new_subnav_item( array( 'name' => __( 'Links', 'buddypress-links' ), 'slug' => bp_links_slug(), 'parent_url' => $activity_link, 'parent_slug' => $bp->activity->slug, 'screen_function' => 'bp_links_screen_personal_links_activity', 'position' => 35, 'item_css_id' => 'activity-links' ) );
+	bp_core_new_subnav_item( array(
+		'name' => __( 'Links', 'buddypress-links' ),
+		'slug' => bp_links_slug(),
+		'parent_url' => $activity_link,
+		'parent_slug' => $bp->activity->slug,
+		'screen_function' => 'bp_links_screen_personal_links_activity',
+		'position' => BP_LINKS_ACTNAV_POSITION,
+		'item_css_id' => 'activity-links' )
+	);
 }
 add_action( 'bp_activity_setup_nav', 'bp_links_setup_activity_nav' );
 

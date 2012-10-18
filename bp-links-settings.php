@@ -143,9 +143,16 @@ $wpsf_settings[] = array(
         array(
             'id' => 'navpos',
             'title' => __( 'Nav Position', 'buddypress-links' ),
-            'desc' => __( 'Enter a number to set the position of the Links tab in the profile navigation.', 'buddypress-links' ),
+            'desc' => __( 'Enter a number to set the position of the Links tab in the profile main navigation.', 'buddypress-links' ),
             'type' => 'text',
             'std' => 100
+        ),
+        array(
+            'id' => 'actnavpos',
+            'title' => __( 'Activity Nav Position', 'buddypress-links' ),
+            'desc' => __( 'Enter a number to set the position of the Links tab in the profile activity navigation.', 'buddypress-links' ),
+            'type' => 'text',
+            'std' => 35
         ),
         array(
             'id' => 'acthist',
