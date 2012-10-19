@@ -22,14 +22,50 @@ span.buddypress-links-admin-menu-item {
 
 /* Content */
 
-div.buddypress-links-admin-general table.widefat {
-	width: 400px;
+div.buddypress-links-admin-sidebar {
+	margin: 0 0 0 580px;
+	padding: 45px 20px 20px 20px;
+	width: 250px;
 }
 
-div.buddypress-links-admin-general p,
-div.buddypress-links-admin-general ul,
-div.buddypress-links-admin-general ol {
-	max-width: 600px;
+div.buddypress-links-admin-sidebar > div {
+	margin-bottom: 20px;
+	padding: 5px 10px 10px 10px;
+	background-color: #f9f9f9;
+	border: solid 1px #dfdfdf;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+	div.buddypress-links-admin-sidebar > div h2,
+	div.buddypress-links-admin-sidebar > div h3 {
+		text-align: center;
+	}
+	div.buddypress-links-admin-sidebar > div a {
+		font-weight: bold;
+	}
+	div.buddypress-links-admin-sidebar > div iframe.twitter-follow-button,
+	div.buddypress-links-admin-sidebar > div form#mc-embedded-subscribe-form {
+		margin-top: 15px;
+	}
+
+div.buddypress-links-admin-sidebar ul {
+	list-style: circle;
+	margin-left: 25px;
+}
+
+div.buddypress-links-admin-general,
+div.buddypress-links-admin-settings,
+div.buddypress-links-admin-cats {
+	float: left;
+	width: 550px;
+}
+
+div.buddypress-links-admin-general > h3 {
+	margin-top: 25px;
+}
+
+div.buddypress-links-admin-general table.widefat {
+	width: 400px;
 }
 
 div.buddypress-links-admin-general ul li {
@@ -37,7 +73,15 @@ div.buddypress-links-admin-general ul li {
 	list-style: disc;
 }
 
-div.buddypress-links-admin-content ul {
+div.buddypress-links-admin-settings table.form-table th {
+	width: 150px;
+	font-weight: bold;
+}
+
+div.buddypress-links-admin-cats table.widefat{
+	width: 100%;
+}
+
+div.buddypress-links-admin-manage ul {
 	list-style: disc outside none;
-	margin-left: 24px;
 }

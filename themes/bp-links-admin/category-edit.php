@@ -4,7 +4,7 @@
  */
 ?>
 
-<div class="wrap nosubsub buddypress-links-admin-content">
+<div class="wrap nosubsub buddypress-links-admin-cats">
 
 	<?php screen_icon( 'bp-links' ); ?>
 	
@@ -48,4 +48,4 @@
 </form>
 </div>
 
-<?php include('admin-footer.php'); ?>
+<?php include 'sidebar.php'; ?>

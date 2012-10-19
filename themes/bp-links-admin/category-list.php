@@ -11,7 +11,7 @@
 <?php } ?>
 
 
-<div class="wrap nosubsub buddypress-links-admin-content" style="position: relative">
+<div class="wrap nosubsub buddypress-links-admin-cats">
 
 	<?php screen_icon( 'bp-links' ); ?>
 	
@@ -70,12 +70,6 @@
 								<?php _e( 'Links', 'buddypress-links' ) ?>
 						</th>
 						<th scope="col">
-								<?php _e( 'Created', 'buddypress-links' ) ?>
-						</th>
-						<th scope="col">
-								<?php _e( 'Updated', 'buddypress-links' ) ?>
-						</th>
-						<th scope="col">
 						</th>
 					</tr>
 				</thead>
@@ -92,8 +86,6 @@
 						<td><?php bp_links_categories_category_slug() ?></td>
 						<td><?php bp_links_categories_category_priority() ?></td>
 						<td><?php bp_links_categories_category_link_count() ?></td>
-						<td><?php bp_links_categories_category_date_created() ?></td>
-						<td><?php bp_links_categories_category_date_updated() ?></td>
 						<td><a href="?page=buddypress-links-admin-cats&category_id=<?php bp_links_categories_category_id() ?>"><?php _e( 'Edit', 'buddypress-links') ?></a></td>
 					</tr>
 					<?php $counter++ ?>
@@ -120,3 +112,5 @@
 		</p>
 	</form>
 </div>
+
+<?php include 'sidebar.php'; ?>

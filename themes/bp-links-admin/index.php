@@ -19,9 +19,6 @@ if ( defined( 'BP_LINKS_PRO_VERSION' ) ) {
 	<h2><?php _e( 'BuddyPress Links', 'buddypress-links' ) ?></h2>
 
 	<h3><?php _e( 'Thank you for installing BuddyPress Links!', 'buddypress-links' ) ?></h3>
-	<p>
-		<?php _e( 'There are some additional steps required to get this plugin working after the first activation. These steps are documented further down on this page.', 'buddypress-links' ) ?>
-	</p>
 	
 	<table border="0" class="widefat">
 		<thead>
@@ -47,14 +44,13 @@ if ( defined( 'BP_LINKS_PRO_VERSION' ) ) {
 			</tr>
 		</tbody>
 	</table>
-
-	<h3><?php _e( 'Administrative Options:', 'buddypress-links' ) ?></h3>
-	<ul>
-		<li><a href="?page=buddypress-links-admin-links"><?php _e( 'Manage Links', 'buddypress-links' ) ?></a></li>
-		<li><a href="?page=buddypress-links-admin-cats"><?php _e( 'Edit Categories', 'buddypress-links' ) ?></a></li>
-	</ul>
 	
 	<h3><?php _e( 'Additional Activation Steps:', 'buddypress-links' ) ?></h3>
+
+	<p>
+		<?php _e( 'These additional steps are required to get this plugin working after the first activation.', 'buddypress-links' ) ?>
+	</p>
+	
 	<ol>
 		<li><?php _e( 'Click on <strong>Settings</strong> under the <strong>Dashboard</strong> menu.', 'buddypress-links' ) ?></li>
 		<li><?php _e( 'Click on <strong>BuddyPress</strong> under the <strong>Settings</strong> menu.', 'buddypress-links' ) ?></li>
@@ -80,7 +76,9 @@ if ( defined( 'BP_LINKS_PRO_VERSION' ) ) {
 
 	<h3><?php _e( 'Pro Extension', 'buddypress-links' ) ?></h3>
 	<p>
-		<?php _e( 'The pro extension adds the following additional features:', 'buddypress-links' ) ?>
+		<?php _e( 'The pro extension, available for purchase in the' ); ?>
+		<a href="http://shop.presscrew.com/shop/buddypress-links/" target="_blank"><?php _e( 'Press Crew Shop', 'buddypress-links' ) ?></a>
+		<?php _e( 'adds the following additional features:', 'buddypress-links' ) ?>
 	</p>
 	<h4><?php _e( 'Additional Rich Media Support', 'buddypress-links' ) ?></h4>
 	<ul>
@@ -101,9 +99,6 @@ if ( defined( 'BP_LINKS_PRO_VERSION' ) ) {
 		<li><?php _e( 'The same powerful category and order filtering is available.', 'buddypress-links' ) ?></li>
 		<li><?php _e( 'Group administrators can remove group links, with prejudice.', 'buddypress-links' ) ?></li>
 	</ul>
-	<p>
-		<?php _e( 'The pro extension is available for purchase in the', 'buddypress-links' ) ?> <a href="http://shop.presscrew.com/shop/buddypress-links/" target="_blank"><?php _e( 'Press Crew Shop', 'buddypress-links' ) ?></a>
-	</p>
 	
 	<h3><?php _e( 'Developer Extras', 'buddypress-links' ) ?></h3>
 	<ul>
@@ -126,3 +121,5 @@ if ( defined( 'BP_LINKS_PRO_VERSION' ) ) {
 	</ul>
 
 </div>
+
+<?php include 'sidebar.php'; ?>

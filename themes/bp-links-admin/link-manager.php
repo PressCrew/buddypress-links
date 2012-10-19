@@ -10,7 +10,7 @@
 	</div>
 <?php } ?>
 
-<div class="wrap buddypress-links-admin-content" style="position: relative">
+<div class="wrap buddypress-links-admin-manage" style="position: relative">
 
 	<?php screen_icon( 'bp-links' ); ?>
 	

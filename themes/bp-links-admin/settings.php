@@ -20,7 +20,7 @@
 
 	<p>
 		<strong>&dagger;</strong> -
-		<em><a href="http://shop.presscrew.com/shop/buddypress-links/" target="_blank"><?php _e( 'Setting applies to pro version only', 'buddypress-links' ) ?></a></em>
+		<em><a href="http://shop.presscrew.com/shop/buddypress-links/" target="_blank"><?php _e( 'Setting applies to pro extension only', 'buddypress-links' ) ?></a></em>
 	</p>
 	
 </div>
@@ -30,3 +30,5 @@
 		$('div.buddypress-links-admin-settings input.disabled').attr('disabled', 'disabled');
 	});
 </script>
+
+<?php include 'sidebar.php'; ?>
