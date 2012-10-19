@@ -1,9 +1,10 @@
 === Plugin Name ===
 Contributors: MrMaz
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8591311
 Tags: buddypress, social, networking, links, rich media, embed, youtube, flickr, metacafe
-Requires at least: 3.3
-Tested up to: 3.4.1
-Stable tag: 0.6.6
+Requires at least: 3.4
+Tested up to: 3.4.2
+Stable tag: 0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +87,7 @@ Other features include:
 
 == Installation ==
 
+* BuddyPress Links 0.7.x requires WordPress 3.4 or higher with BuddyPress 1.6 or higher installed.
 * BuddyPress Links 0.6.x requires WordPress 3.3 or higher with BuddyPress 1.5 or higher installed.
 * BuddyPress Links 0.5.x requires WordPress 3.0 or higher with BuddyPress 1.2.6 or higher installed.
 * BuddyPress Links 0.4.x requires WordPress 2.9.2 or higher with BuddyPress 1.2.x installed.
@@ -111,6 +113,10 @@ The links data from the 0.2.x branch is compatible with 0.3.x and higher, except
 
 == Upgrade Notice ==
 
+= 0.7 =
+
+No changes that affect data were made, however it is always a good idea to back up your data just in case!
+
 = 0.6 =
 
 No changes that affect data were made, however it is always a good idea to back up your data just in case!
@@ -132,6 +138,13 @@ DO NOT attempt to install version 0.3 or higher on BP 1.1.X!  DO NOT try to use 
 This version contains the first support for rich media embedding. *Please make sure that you update the "links" directory in your theme (see Installation).*
 
 == Changelog ==
+
+= 0.7 =
+
+* Added new settings screen, sweet!
+* Added activity nav item position setting
+* Vote panel template tags now print unescaped html instead of passing to sprintf()
+* Cleaned up admin screen html, added sidebar with upgrade links and other info
 
 = 0.6.6 =
 
