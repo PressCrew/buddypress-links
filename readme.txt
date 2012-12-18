@@ -141,6 +141,9 @@ This version contains the first support for rich media embedding. *Please make s
 
 = 0.7.1 =
 
+* Removed custom cron scheduling due to plugin conflicts
+* Fixed pagination of links manager admin screen
+* Killed colorbox dynamic image window sizing in favor of fixed size
 * Minor fixes to resolve issues related to WordPress 3.5
 
 = 0.7 =
