@@ -21,6 +21,10 @@ Text Domain: buddypress-links
 if ( !defined( 'BP_LINKS_SLUG' ) )
 	define( 'BP_LINKS_SLUG', 'links' );
 
+// Define the capability required to manage links
+if ( !defined( 'BP_LINKS_CAPABILITY' ) )
+	define( 'BP_LINKS_CAPABILITY', 'manage_options' );
+
 // Define a custom theme name to completely bypass any core links themes
 // For example, if your active WordPress theme is 'bluesky', and you wanted
 // to define your links theme as 'links-custom', you would put your files in:
