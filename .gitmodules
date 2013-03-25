@@ -1,0 +1,3 @@
+[submodule "lib/wp-sdl"]
+	path = lib/wp-sdl
+	url = git@github.com:PressCrew/wp-sdl.git
