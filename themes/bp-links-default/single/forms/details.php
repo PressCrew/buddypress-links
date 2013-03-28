@@ -6,9 +6,14 @@
 	<?php do_action( 'bp_before_link_details_form_base' ); ?>
 
 	<fieldset>
+
+		<?php do_action( 'bp_before_link_details_form_base_fieldset' ); ?>
+
 		<legend>
 			<?php _e( 'Details', 'buddypress-links' ) ?>
 		</legend>
+
+		<?php do_action( 'bp_before_link_details_form_base_category' ); ?>
 
 		<label for="link-category">
 			<?php _e('Category', 'buddypress-links') ?>
@@ -21,13 +26,19 @@
 			<?php bp_links_category_radio_options( bp_get_link_details_form_category_id(), 'link-category', '' ) ?>
 		<?php endif; ?>
 
+		<?php do_action( 'bp_before_link_details_form_base_url' ); ?>
+
 		<label for="link-url">
 			<?php _e('URL', 'buddypress-links') ?>&nbsp;
 		</label>
 		<input type="text" name="link-url" id="link-url" value="<?php bp_link_details_form_url() ?>"<?php if ( bp_get_link_details_form_link_url_readonly() ): ?> readonly="readonly"<?php endif; ?>/>
 
+		<?php do_action( 'bp_before_link_details_form_base_embed' ); ?>
+
 		<?php bp_links_auto_embed_panel_from_data( bp_get_link_details_form_url_embed_data() ) ?>
 		<?php wp_nonce_field( 'bp_links_save_link-auto-embed', '_wpnonce-link-auto-embed' ) ?>
+
+		<?php do_action( 'bp_before_link_details_form_base_desc_fields' ); ?>
 
 		<div id="link-name-desc-fields"<?php if ( !bp_get_link_details_form_name_desc_fields_display() ): ?> style="display: none;"<?php endif; ?>>
 			<label for="link-name">
@@ -39,6 +50,9 @@
 			</label>
 			<textarea name="link-desc" id="link-desc" cols="60" rows="4"><?php bp_link_details_form_description() ?></textarea>
 		</div>
+
+		<?php do_action( 'bp_after_link_details_form_base_fieldset' ); ?>
+
 	</fieldset>
 
 	<?php do_action( 'bp_after_link_details_form_base' ); ?>
