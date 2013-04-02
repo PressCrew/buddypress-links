@@ -690,15 +690,36 @@ class BP_Links_Link {
 		$user_id = false;
 		$search_terms = false;
 		$category_id = null;
-		$meta_key = null;
+		$meta_match = array();
 
 		// extract 'em
 		extract( $args );
 
 		$join_sql = apply_filters( 'bp_links_link_by_column_join', '', $args );
+		$meta_sql = apply_filters( 'bp_links_link_by_column_meta', '', $args );
+		$extra_sql = apply_filters( 'bp_links_link_by_column_extra', '', $args );
 
-		if ( $meta_key ) {
-			$join_sql .= " INNER JOIN {$bp->links->table_name_linkmeta} lm ON l.id = lm.link_id";
+		// have meta match rules?
+		if ( count( $meta_match ) ) {
+			// yep, start with table alias number 1
+			$meta_table_num = 1;
+			// loop all match rules
+			foreach ( $meta_match as $meta_key => $meta_rules ) {
+				// build join statement on link id and given meta key
+				$join_sql .= sprintf( ' INNER JOIN ' . $bp->links->table_name_linkmeta . ' AS lm%1$d ON l.id = lm%1$d.link_id AND lm%1$d.meta_key = \'%2$s\'', $meta_table_num, $meta_key );
+				// have operator and value?
+				if ( isset( $meta_rules['operator'] ) && isset( $meta_rules['value'] ) ) {
+					// build sql statement to match value
+					$meta_sql .= $wpdb->prepare( ' AND lm%1$d.meta_value ' . $meta_rules['operator'] . ' \'%2$s\'', $meta_table_num, $meta_rules['value'] );
+				}
+				// order set?
+				if ( isset( $meta_rules['order'] ) ) {
+					// yep, append to sort columns
+					$sort_columns[ sprintf( 'lm%1$d.meta_key', $meta_table_num ) ] = $meta_rules['order'];
+				}
+				// increment meta idx
+				$meta_table_num++;
+			}
 		}
 
 		$status_sql = self::get_status_sql( $user_id, ' AND %s' );
@@ -721,12 +742,6 @@ class BP_Links_Link {
 				);
 		}
 
-		$extra_sql = apply_filters( 'bp_links_link_by_column_extra', '', $args );
-
-		if ( $meta_key ) {
-			$extra_sql .= $wpdb->prepare( " AND lm.meta_key = %s", $meta_key );
-		}
-		
 		if ( !empty( $sort_columns ) ) {
 			$order_by_sql_bits = array();
 			foreach ( $sort_columns as $column => $order ) {
@@ -739,14 +754,14 @@ class BP_Links_Link {
 			$pag_sql = $wpdb->prepare( " LIMIT %d, %d", intval( ( $page - 1 ) * $per_page), intval( $per_page ) );
 
 		if ( $user_id ) {
-			$paged_sql = "SELECT l.id AS link_id, l.slug FROM {$bp->links->table_name} l{$join_sql} WHERE {$profile_sql}{$status_sql}{$filter_sql}{$category_sql}{$extra_sql}{$order_by_sql} {$pag_sql}";
+			$paged_sql = "SELECT l.id AS link_id, l.slug FROM {$bp->links->table_name} l{$join_sql} WHERE {$profile_sql}{$status_sql}{$filter_sql}{$category_sql}{$meta_sql}{$extra_sql}{$order_by_sql} {$pag_sql}";
 			$paged_links = $wpdb->get_results( $paged_sql );
-			$total_sql = "SELECT COUNT(*) FROM {$bp->links->table_name} l{$join_sql} WHERE {$profile_sql}{$status_sql}{$category_sql}{$extra_sql}{$filter_sql}";
+			$total_sql = "SELECT COUNT(*) FROM {$bp->links->table_name} l{$join_sql} WHERE {$profile_sql}{$status_sql}{$category_sql}{$meta_sql}{$extra_sql}{$filter_sql}";
 			$total_links = $wpdb->get_var( $total_sql );
 		} else {
-			$paged_sql = $wpdb->prepare( "SELECT l.id AS link_id, l.slug FROM {$bp->links->table_name} l{$join_sql} WHERE l.status = %d{$filter_sql}{$category_sql}{$extra_sql}{$order_by_sql} {$pag_sql}", self::STATUS_PUBLIC );
+			$paged_sql = $wpdb->prepare( "SELECT l.id AS link_id, l.slug FROM {$bp->links->table_name} l{$join_sql} WHERE l.status = %d{$filter_sql}{$category_sql}{$meta_sql}{$extra_sql}{$order_by_sql} {$pag_sql}", self::STATUS_PUBLIC );
 			$paged_links = $wpdb->get_results( $paged_sql );
-			$total_sql = $wpdb->prepare( "SELECT COUNT(*) FROM {$bp->links->table_name} l{$join_sql} WHERE l.status = %d{$filter_sql}{$category_sql}{$extra_sql}", self::STATUS_PUBLIC );
+			$total_sql = $wpdb->prepare( "SELECT COUNT(*) FROM {$bp->links->table_name} l{$join_sql} WHERE l.status = %d{$filter_sql}{$category_sql}{$meta_sql}{$extra_sql}", self::STATUS_PUBLIC );
 			$total_links = $wpdb->get_var( $total_sql );
 		}
 
@@ -754,9 +769,14 @@ class BP_Links_Link {
 	}
 
 	function get_active( $args ) {
-		$args['meta_key'] = 'last_activity';
-		$sort_columns = array( 'lm.meta_value' => 'DESC' );
-		return self::get_by_columns_filtered( $args, $sort_columns );
+		$args['meta_match'] = array(
+			'last_activity' => array(
+				'operator' => null,
+				'value' => null,
+				'order' => 'DESC'
+			)
+		);
+		return self::get_by_columns_filtered( $args );
 	}
 	
 	function get_newest( $args ) {
