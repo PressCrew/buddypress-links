@@ -136,7 +136,7 @@ function bp_links_dtheme_link_category_filter_options_list() { ?>
 			<?php _e( 'Category:', 'buddypress-links' ) ?>
 			<select id="links-category-filter">
 				<option value="-1"><?php _e( 'All', 'buddypress' ) ?></option>
-				<?php bp_links_category_select_options( bp_links_dtheme_selected_category() ) ?>
+				<?php bp_links_category_select_options() ?>
 				<?php do_action( 'bp_links_category_filter_options' ) ?>
 			</select>
 		</li> <?php
@@ -168,17 +168,22 @@ function bp_links_dtheme_personal_links_subnav( $html ) {
 add_filter( 'bp_get_options_nav_links-my-links', 'bp_links_dtheme_personal_links_subnav' );
 
 /**
- * Helper function to return selected category cookie
+ * Parse the custom delimeted extras string into an array
+ *
+ * @param string $string
+ * @return array
  */
-function bp_links_dtheme_selected_category() {
-	if ( isset( $_COOKIE['bp-links-extras'] ) && preg_match('/^category-\d+$/', $_COOKIE['bp-links-extras'] ) ) {
-		$parts = split( '-', $_COOKIE['bp-links-extras'] );
-		if ( $parts[1] > 0 ) {
-			return $parts[1];
-		}
+function bp_links_dtheme_parse_extras( $string )
+{
+	// params to return
+	$params = array();
+
+	foreach( explode( '|', $string ) as $item ) {
+		$next = explode( ':', $item );
+		$params[ $next[0] ] = $next[ 1 ];
 	}
 
-	return null;
+	return $params;
 }
 
 /**
@@ -188,7 +193,7 @@ function bp_links_dtheme_selected_category() {
  * @param string $object
  * @return string
  */
-function bp_links_dtheme_category_filter( $query_string, $object ) {
+function bp_links_dtheme_category_filter( $query_string, $object, $object_filter, $object_scope, $object_page, $object_search_terms, $object_extras ) {
 	global $bp;
 
 	$filter_enabled = ( bp_is_links_component() || 'links' == $object );
@@ -197,7 +202,10 @@ function bp_links_dtheme_category_filter( $query_string, $object ) {
 
 	if ( true === $filter_enabled ) {
 
-		$selected_category = bp_links_dtheme_selected_category();
+		$extras = bp_links_dtheme_parse_extras( $object_extras );
+
+		$selected_category =
+			( isset( $extras['category_id'] ) ) ? $extras['category_id'] : null;
 
 		if ( !empty( $selected_category ) ) {
 			$args = array();
@@ -210,7 +218,7 @@ function bp_links_dtheme_category_filter( $query_string, $object ) {
 
 	return $query_string;
 }
-add_filter( 'bp_dtheme_ajax_querystring', 'bp_links_dtheme_category_filter', 1, 2 );
+add_filter( 'bp_dtheme_ajax_querystring', 'bp_links_dtheme_category_filter', 1, 7 );
 
 /**
  * Filter all AJAX bp_filter_request() calls to user ids to profile page calls

@@ -17,16 +17,23 @@ jQuery(document).ready( function() {
 
 	/**** Directory ******************************/
 
+	var extras = bpl_split_extras( j.cookie('bp-links-extras' ) );
+
+	// set currently selected category filter
+	if ( extras && extras.category_id ) {
+		j('select#links-category-filter').val( extras.category_id );
+	}
+
 	/* When the category filter select box is changed, re-query */
 	j('select#links-category-filter').change( function(e)
 	{
-		var extras, el_cat = j(this);
+		var categ = j(this);
 		
-		if ( el_cat.val().length ) {
-			extras = 'category-' + el_cat.val();
+		if ( categ.val().length ) {
+			bpl_filter_request({
+				'extras': { 'category_id': categ.val() }
+			});
 		}
-
-		bp_filter_request( 'links', j.cookie('bp-links-filter'), j.cookie('bp-links-scope'), 'div.links', j('#links_search').val(), 1, extras );
 
 		e.preventDefault();
 		e.stopPropagation();
@@ -35,7 +42,9 @@ jQuery(document).ready( function() {
 	/* When the order  select box is changed, re-query */
 	j('select#links-order-by').change( function(e)
 	{
-		bp_filter_request( 'links', j(this).val(), j.cookie('bp-links-scope'), 'div.links', j('#links_search').val(), 1, j.cookie('bp-links-extras') );
+		bpl_filter_request({
+			'filter': j(this).val()
+		});
 
 		e.preventDefault();
 		e.stopPropagation();
@@ -55,7 +64,9 @@ jQuery(document).ready( function() {
 			page_number = Number( j(this).html() );
 		}
 		// send ajax request
-		bp_filter_request( 'links', j.cookie('bp-links-filter'), j.cookie('bp-links-scope'), 'div.links', j('#links_search').val(), page_number, j.cookie('bp-links-extras') );
+		bpl_filter_request({
+			'page': page_number
+		});
 		// kill any other events
 		e.preventDefault();
 		e.stopPropagation();
@@ -151,6 +162,31 @@ jQuery(document).ready( function() {
 
 /*** Helpers **************************************************************/
 
+function bpl_filter_request( options )
+{
+	var settings = {
+		'object': 'links',
+		'filter': jQuery.cookie('bp-links-filter'),
+		'scope': jQuery.cookie('bp-links-scope'),
+		'target': 'div.links',
+		'search': jQuery('#links_search').val(),
+		'page': 1,
+		'extras': bpl_split_extras( jQuery.cookie('bp-links-extras') )
+	}
+
+	jQuery.extend( true, settings, options );
+
+	bp_filter_request(
+		settings.object,
+		settings.filter,
+		settings.scope,
+		settings.target,
+		settings.search,
+		settings.page,
+		bpl_join_extras( settings.extras )
+	);
+}
+
 function bpl_get_loader(id)
 {
 	var x_id = (id) ? '#' + id : null;
@@ -171,4 +207,29 @@ function bpl_list_item_msg(lid, type, msg)
 {
 	jQuery('ul#link-list li#linklistitem-' + lid)
 		.prepend('<div id="message" class="' + type + ' fade"><p>' + msg + '</p></div>');
+}
+
+function bpl_join_extras( obj )
+{
+	var items = [];
+
+	jQuery.each( obj, function(k,v) {
+		items.push( k + ':' + v );
+	});
+
+	return items.join('|');
+}
+
+function bpl_split_extras( string )
+{
+	var items = string.split( '|' ),
+		object = {},
+		next;
+
+	jQuery.each( items, function(k,v) {
+		next = v.split( ':' );
+		object[ next[0] ] = next[1];
+	});
+
+	return object;
 }
