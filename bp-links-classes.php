@@ -175,6 +175,9 @@ class BP_Links_Link {
 	private $embed_status;
 	private $embed_data;
 
+	// cached meta data
+	public $meta_data = array();
+
 	/**
 	 * This will be true if this object is brand new
 	 * 
@@ -284,9 +287,12 @@ class BP_Links_Link {
 		}
 	}
 
-	function populate_meta() {
+	function populate_meta()
+	{
+		// must have an id!
 		if ( $this->id ) {
-			// unused for now
+			// load meta data keys and values with one call
+			$this->meta_data = bp_links_get_linkmeta( $this->id );
 		}
 	}
 

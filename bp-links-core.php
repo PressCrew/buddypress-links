@@ -930,6 +930,13 @@ function bp_links_validate_create_form_input() {
 	} else {
 		$return_data['link-group-id'] = null;
 	}
+	
+	// process meta data
+	if ( isset( $_POST['link-meta'] ) ) {
+		$return_data['link-meta'] = apply_filters( 'bp_links_validate_create_form_input_meta', $_POST['link-meta'] );
+	} else{
+		$return_data['link-meta'] = array();
+	}
 
 	return apply_filters( 'bp_links_validate_create_form_input', $return_data );
 }
