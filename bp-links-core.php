@@ -1812,7 +1812,15 @@ function bp_links_get_linkmeta( $link_id, $meta_key = '') {
 			wp_cache_set( 'bp_links_linkmeta_' . $link_id . '_' . $meta_key, $metas, 'bp' );
 		}
 	} else {
-		$metas = $wpdb->get_col( $wpdb->prepare("SELECT meta_value FROM " . $bp->links->table_name_linkmeta . " WHERE link_id = %d", $link_id) );
+		$metas = $wpdb->get_results(
+			$wpdb->prepare(
+				'SELECT meta_key, meta_value FROM ' .
+				$bp->links->table_name_linkmeta .
+				' WHERE link_id = %d',
+				$link_id
+			),
+			ARRAY_A
+		);
 	}
 
 	if ( empty($metas) ) {
