@@ -222,7 +222,7 @@ function bpl_join_extras( obj )
 
 function bpl_split_extras( string )
 {
-	var items = string.split( '|' ),
+	var items = (string) ? string.split( '|' ) : [],
 		object = {},
 		next;
 
