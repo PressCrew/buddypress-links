@@ -931,7 +931,7 @@ function bp_links_validate_create_form_input() {
 		$return_data['link-group-id'] = null;
 	}
 
-	return $return_data;
+	return apply_filters( 'bp_links_validate_create_form_input', $return_data );
 }
 
 /********************************************************************************
