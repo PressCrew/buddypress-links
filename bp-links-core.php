@@ -1197,6 +1197,7 @@ function bp_links_manage_link( $args = '' ) {
 	$status = null;
 	$embed_data = null;
 	$embed_thidx = null;
+	$meta = array();
 
 	extract( $args );
 
@@ -1252,6 +1253,17 @@ function bp_links_manage_link( $args = '' ) {
 	}
 
 	if ( $link->save() ) {
+
+		// set meta data
+		if ( !empty( $meta ) ) {
+			// loop all meta data
+			foreach( $meta as $meta_key => $meta_value ) {
+				// try to update each key/value
+				bp_links_update_linkmeta( $link->id, $meta_key, $meta_value );
+			}
+			// refresh meta data cache
+			$link->populate_meta();
+		}
 
 		// successful save event
 		do_action( 'bp_links_manage_link_save_success', $link, $args );
