@@ -691,7 +691,8 @@ function bp_links_screen_link_admin_edit_details() {
 						'status' => $data_valid['link-status'],
 						'embed_data' => $data_valid['link-url-embed-data'],
 						'embed_thidx' => $data_valid['link-url-embed-thidx'],
-						'group_id' => $data_valid['link-group-id']
+						'group_id' => $data_valid['link-group-id'],
+						'meta' => $data_valid['link-meta']
 					)
 				);
 
@@ -986,7 +987,8 @@ function bp_links_action_create_link() {
 						'status' => $data_valid['link-status'],
 						'embed_data' => $data_valid['link-url-embed-data'],
 						'embed_thidx' => $data_valid['link-url-embed-thidx'],
-						'group_id' => $data_valid['link-group-id']
+						'group_id' => $data_valid['link-group-id'],
+						'meta' => $data_valid['link-meta']
 					)
 				);
 
