@@ -1833,7 +1833,9 @@ function bp_links_get_linkmeta( $link_id, $meta_key = '') {
 			wp_cache_set( 'bp_links_linkmeta_' . $link_id . '_' . $meta_key, $metas, 'bp' );
 		}
 	} else {
-		$metas = $wpdb->get_results(
+		$metas = array();
+
+		$results = $wpdb->get_results(
 			$wpdb->prepare(
 				'SELECT meta_key, meta_value FROM ' .
 				$bp->links->table_name_linkmeta .
@@ -1842,6 +1844,10 @@ function bp_links_get_linkmeta( $link_id, $meta_key = '') {
 			),
 			ARRAY_A
 		);
+
+		foreach( $results as $result ) {
+			$metas[ $result['meta_key'] ] = $result['meta_value'];
+		}
 	}
 
 	if ( empty($metas) ) {
@@ -1854,7 +1860,7 @@ function bp_links_get_linkmeta( $link_id, $meta_key = '') {
 	if ( is_array( $metas ) )
 		$metas = array_map('maybe_unserialize', $metas);
 
-	if ( 1 == count($metas) )
+	if ( ($meta_key) && 1 == count($metas) )
 		return $metas[0];
 	else
 		return $metas;
