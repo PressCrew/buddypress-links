@@ -775,13 +775,12 @@ class BP_Links_Link {
 	}
 
 	function get_active( $args ) {
-		$args['meta_match'] = array(
-			'last_activity' => array(
+		$args['meta_match']['last_activity'] =
+			array(
 				'operator' => null,
 				'value' => null,
 				'order' => 'DESC'
-			)
-		);
+			);
 		return self::get_by_columns_filtered( $args );
 	}
 	
