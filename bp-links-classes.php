@@ -716,7 +716,21 @@ class BP_Links_Link {
 				// have operator and value?
 				if ( isset( $meta_rules['operator'] ) && isset( $meta_rules['value'] ) ) {
 					// build sql statement to match value
-					$meta_sql .= $wpdb->prepare( ' AND lm%1$d.meta_value ' . $meta_rules['operator'] . ' \'%2$s\'', $meta_table_num, $meta_rules['value'] );
+					switch( $meta_rules['operator'] ) {
+						case 'IN':
+							// array of IN strings
+							$in_values = array();
+							// loop all values and prep
+							foreach( $meta_rules['value'] as $value ) {
+								$in_values[] = $wpdb->prepare('%s', $value );
+							}
+							// build IN statement
+							$meta_sql .= $wpdb->prepare( ' AND lm%1$d.meta_value IN(' . implode( ',', $in_values ) . ')', $meta_table_num );
+							// all done
+							break;
+						default:
+							$meta_sql .= $wpdb->prepare( ' AND lm%1$d.meta_value ' . $meta_rules['operator'] . ' \'%2$s\'', $meta_table_num, $meta_rules['value'] );
+					}
 				}
 				// order set?
 				if ( isset( $meta_rules['order'] ) ) {
