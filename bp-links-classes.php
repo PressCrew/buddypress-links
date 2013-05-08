@@ -750,8 +750,16 @@ class BP_Links_Link {
 			$filter_sql = " AND ( l.name LIKE '%%{$search_terms}%%' OR l.description LIKE '%%{$search_terms}%%' )";
 		}
 
-		if ( is_numeric($category_id) && $category_id >= 1 )
+		if ( is_numeric($category_id) && $category_id >= 1 ) {
 			$category_sql = $wpdb->prepare( " AND l.category_id = %d", $category_id );
+		} elseif ( is_array($category_id) ) {
+			foreach( $category_id as $key => $the_cat_id ) {
+				if ( !is_numeric( $the_cat_id ) || $the_cat_id < 1 ) {
+					unset( $category_id[ $key ] );
+				}
+			}
+			$category_sql = $wpdb->prepare( " AND l.category_id IN( %s )", implode( ',', $category_id ) );
+		}
 
 		if ( $user_id ) {
 			$profile_sql =
