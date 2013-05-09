@@ -729,7 +729,14 @@ class BP_Links_Link {
 							// all done
 							break;
 						default:
-							$meta_sql .= $wpdb->prepare( ' AND lm%1$d.meta_value ' . $meta_rules['operator'] . ' \'%2$s\'', $meta_table_num, $meta_rules['value'] );
+							// determine value format
+							if ( is_numeric( $meta_rules['value'] ) ) {
+								$vformat = ' %2$d';
+							} else {
+								$vformat = ' \'%2$s\'';
+							}
+							// build dynamic expression
+							$meta_sql .= $wpdb->prepare( ' AND lm%1$d.meta_value ' . $meta_rules['operator'] . $vformat, $meta_table_num, $meta_rules['value'] );
 					}
 				}
 				// order set?
