@@ -94,7 +94,10 @@
 	?>
 	
 	<!-- Link Details Section 3: Advanced Settings -->
-	<?php do_action( 'bp_before_link_details_form_advanced' ); ?>
+	<?php
+		if ( true === BP_LINKS_CREATE_EDIT_ADVANCED ):
+			do_action( 'bp_before_link_details_form_advanced' );
+	?>
 
 	<fieldset>
 		<legend><a href="#edit-settings" id="link-settings-fields-toggle"><?php _e( 'Edit Advanced Settings', 'buddypress-links' ) ?></a></legend>
@@ -139,7 +142,10 @@
 
 	</fieldset>
 
-	<?php do_action( 'bp_after_link_details_form_advanced' ); ?>
+	<?php
+			do_action( 'bp_after_link_details_form_advanced' );
+		endif;
+	?>
 
 	<?php do_action( 'bp_before_link_details_form_buttons' ); ?>
 

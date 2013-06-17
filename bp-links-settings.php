@@ -108,6 +108,17 @@ $wpsf_settings[] = array(
 				1 => 'Yes',
 				0 => 'No'
 			)
+        ),
+		array(
+            'id' => 'editadvanced',
+            'title' => __( 'Show Advanced Settings?', 'buddypress-links' ),
+            'desc' => __( 'Set this to "No" to hide the Edit Advanced Settings.', 'buddypress-links' ),
+            'type' => 'radio',
+            'std' => true,
+			'choices' => array(
+				1 => 'Yes',
+				0 => 'No'
+			)
         )
     )
 );

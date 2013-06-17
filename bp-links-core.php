@@ -107,6 +107,10 @@ function bp_links_init_settings()
 	if ( !defined( 'BP_LINKS_CREATE_EDIT_AVATAR' ) )
 		define( 'BP_LINKS_CREATE_EDIT_AVATAR', (boolean) $settings['buddypress_links_content_editavatar'] );
 
+	// create advanced settings
+	if ( !defined( 'BP_LINKS_CREATE_EDIT_ADVANCED' ) )
+		define( 'BP_LINKS_CREATE_EDIT_ADVANCED', (boolean) $settings['buddypress_links_content_editadvanced'] );
+
 	// voting toggle
 	if ( !defined( 'BP_LINKS_VOTE_ENABLED' ) )
 		define( 'BP_LINKS_VOTE_ENABLED', (boolean) $settings['buddypress_links_voting_enabled'] );
