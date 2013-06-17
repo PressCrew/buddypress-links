@@ -75,7 +75,12 @@
 
 	<div class="action">
 		<?php do_action( 'bp_before_links_list_item_action_content' ) ?>
-		<div class="meta"><?php bp_link_type() ?> / <?php bp_link_vote_count_text() ?></div>
+		<div class="meta">
+			<?php bp_link_type() ?>
+			<?php if ( bp_links_is_voting_enabled() ): ?>
+				/ <?php bp_link_vote_count_text() ?>
+			<?php endif; ?>
+		</div>
 		<?php do_action( 'bp_after_links_list_item_action_content' ) ?>
 	</div>
 

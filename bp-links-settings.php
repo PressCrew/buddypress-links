@@ -109,6 +109,17 @@ $wpsf_settings[] = array(
     'section_order' => 15,
     'fields' => array(
         array(
+            'id' => 'enabled',
+            'title' => __( 'Allow members to vote on links?', 'buddypress-links' ),
+            'desc' => __( 'Voting is enabled by default.', 'buddypress-links' ),
+            'type' => 'radio',
+            'std' => true,
+			'choices' => array(
+				1 => 'Yes',
+				0 => 'No'
+			)
+        ),
+        array(
             'id' => 'change',
             'title' => __( 'Can members change their vote?', 'buddypress-links' ),
             'desc' => __( 'The default behavior is to allow members to change their vote. Set this to No to prevent vote changing.', 'buddypress-links' ),

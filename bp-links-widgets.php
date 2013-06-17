@@ -32,10 +32,13 @@ class BP_Links_Widget extends WP_Widget {
 			<div class="item-options" id="links-list-options">
 				<span class="ajax-loader" id="ajax-loader-links"></span>
 				<a href="<?php echo site_url() . '/' . bp_links_root_slug() ?>" id="newest-links"><?php _e("Newest", 'buddypress') ?></a> |
-				<!-- a href="<?php echo site_url() . '/' . bp_links_root_slug() ?>" id="recently-active-links"><?php _e("Active", 'buddypress') ?></a> | -->
+				<?php if ( bp_links_is_voting_enabled() ): ?>
 				<a href="<?php echo site_url() . '/' . bp_links_root_slug() ?>" id="most-votes"><?php _e("Votes", 'buddypress-links') ?></a> |
 				<a href="<?php echo site_url() . '/' . bp_links_root_slug() ?>" id="high-votes"><?php _e("Rating", 'buddypress-links') ?></a> |
 				<a href="<?php echo site_url() . '/' . bp_links_root_slug() ?>" id="popular-links" class="selected"><?php _e("Popular", 'buddypress') ?></a>
+				<?php else: ?>
+				<a href="<?php echo site_url() . '/' . bp_links_root_slug() ?>" id="active-links"><?php _e("Active", 'buddypress') ?></a>
+				<?php endif; ?>
 			</div>
 
 			<ul id="links-list" class="item-list">
@@ -47,7 +50,9 @@ class BP_Links_Widget extends WP_Widget {
 
 						<div class="item">
 							<div class="item-title"><a href="<?php bp_link_permalink() ?>" title="<?php bp_link_name() ?>"><?php bp_link_name() ?></a></div>
+							<?php if ( bp_links_is_voting_enabled() ): ?>
 							<div class="item-meta"><span class="activity"><?php printf( __( '%+d rating', 'buddypress-links' ), bp_get_link_vote_total() ) ?></span></div>
+							<?php endif; ?>
 						</div>
 					</li>
 
@@ -94,9 +99,9 @@ function bp_links_ajax_widget_links_list() {
 		case 'newest-links':
 			$type = 'newest';
 			break;
-//		case 'recently-active-links':
-//			$type = 'active';
-//			break;
+		case 'active-links':
+			$type = 'active';
+			break;
 		case 'popular-links':
 			$type = 'popular';
 			break;
@@ -125,8 +130,8 @@ function bp_links_ajax_widget_links_list() {
 								<?php
 								if ( 'newest-links' == $_POST['filter'] ) {
 									printf( __( 'created %s', 'buddypress' ), bp_get_link_time_since_created() );
-//								} else if ( 'recently-active-links' == $_POST['filter'] ) {
-//									printf( __( 'active %', 'buddypress-links' ), bp_get_link_last_active() );
+								} else if ( 'active-links' == $_POST['filter'] ) {
+									printf( __( 'active %s', 'buddypress-links' ), bp_get_link_last_active() );
 								} else if ( 'popular-links' == $_POST['filter'] || 'high-votes' == $_POST['filter'] ) {
 									printf( __( '%+d rating', 'buddypress-links' ), bp_get_link_vote_total() );
 								} else {

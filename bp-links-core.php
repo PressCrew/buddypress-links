@@ -103,6 +103,10 @@ function bp_links_init_settings()
 	if ( !defined( 'BP_LINKS_CREATE_CATEGORY_SELECT' ) )
 		define( 'BP_LINKS_CREATE_CATEGORY_SELECT', (boolean) $settings['buddypress_links_content_catselect'] );
 
+	// voting toggle
+	if ( !defined( 'BP_LINKS_VOTE_ENABLED' ) )
+		define( 'BP_LINKS_VOTE_ENABLED', (boolean) $settings['buddypress_links_voting_enabled'] );
+
 	// vote changing
 	if ( !defined( 'BP_LINKS_VOTE_ALLOW_CHANGE' ) )
 		define( 'BP_LINKS_VOTE_ALLOW_CHANGE', (boolean) $settings['buddypress_links_voting_change'] );
@@ -126,6 +130,15 @@ function bp_links_init_settings()
 	do_action( 'bp_links_init_settings' );
 }
 add_action( 'bp_links_init', 'bp_links_init_settings', 1 );
+
+/**
+ * Check if link voting is enabled
+ *
+ * @return boolean
+ */
+function bp_links_is_voting_enabled() {
+	return ( true === BP_LINKS_VOTE_ENABLED );
+}
 
 /**
  * Filter located template from bp_core_load_template
@@ -1784,7 +1797,9 @@ function bp_links_cast_vote( $link_id, $up_or_down ) {
 }
 
 function bp_links_recalculate_popularity_for_all() {
-	return BP_Links_Link::popularity_recalculate_all();
+	if ( bp_links_is_voting_enabled() ) {
+		return BP_Links_Link::popularity_recalculate_all();
+	}
 }
 add_action( 'bp_links_cron_popularity', 'bp_links_recalculate_popularity_for_all', 1 );
 

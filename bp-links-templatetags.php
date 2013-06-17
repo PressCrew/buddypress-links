@@ -1478,6 +1478,11 @@ function bp_links_notification_settings() {
 
 function bp_link_vote_panel( $show_count = true ) {
 
+	// abort if voting not enabled
+	if ( true !== bp_links_is_voting_enabled() ) {
+		return;
+	}
+	
 	$show_count = apply_filters( 'bp_get_link_vote_panel_show_count', $show_count );
 	
 	// render tags ?>
@@ -1510,9 +1515,11 @@ function bp_link_vote_panel_count( $show = true ) {
 }
 	
 function bp_link_vote_panel_form() {
-	printf( '<form action="%s/" method="post" id="link-vote-form">', site_url() );
-	wp_nonce_field( 'link_vote', '_wpnonce-link-vote' );
-	echo '</form>' . PHP_EOL;
+	if ( bp_links_is_voting_enabled() ) {
+		printf( '<form action="%s/" method="post" id="link-vote-form">', site_url() );
+		wp_nonce_field( 'link_vote', '_wpnonce-link-vote' );
+		echo '</form>' . PHP_EOL;
+	}
 }
 
 /*********************************
@@ -1696,10 +1703,13 @@ function bp_link_list_item_xtrabar_userlink_created() {
 function bp_links_link_order_options() { ?>
 
 	<option value="active"><?php _e( 'Last Active', 'buddypress' ) ?></option>
-	<option value="popular"><?php _e( 'Most Popular', 'buddypress-links' ) ?></option>
 	<option value="newest"><?php _e( 'Newly Created', 'buddypress' ) ?></option>
+
+	<?php if ( bp_links_is_voting_enabled() ): ?>
+	<option value="popular"><?php _e( 'Most Popular', 'buddypress-links' ) ?></option>
 	<option value="most-votes"><?php _e( 'Most Votes', 'buddypress-links' ) ?></option>
-	<option value="high-votes"><?php _e( 'Highest Rated', 'buddypress-links' ) ?></option> <?php
+	<option value="high-votes"><?php _e( 'Highest Rated', 'buddypress-links' ) ?></option>
+	<?php endif;
 
 	do_action( 'bp_links_link_order_options' );
 }
