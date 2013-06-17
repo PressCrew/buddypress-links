@@ -103,6 +103,10 @@ function bp_links_init_settings()
 	if ( !defined( 'BP_LINKS_CREATE_CATEGORY_SELECT' ) )
 		define( 'BP_LINKS_CREATE_CATEGORY_SELECT', (boolean) $settings['buddypress_links_content_catselect'] );
 
+	// create avatar options
+	if ( !defined( 'BP_LINKS_CREATE_EDIT_AVATAR' ) )
+		define( 'BP_LINKS_CREATE_EDIT_AVATAR', (boolean) $settings['buddypress_links_content_editavatar'] );
+
 	// voting toggle
 	if ( !defined( 'BP_LINKS_VOTE_ENABLED' ) )
 		define( 'BP_LINKS_VOTE_ENABLED', (boolean) $settings['buddypress_links_voting_enabled'] );

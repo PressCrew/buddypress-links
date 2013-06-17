@@ -58,7 +58,10 @@
 	<?php do_action( 'bp_after_link_details_form_base' ); ?>
 
 	<!-- Link Details Section 2: Avatar Options -->
-	<?php do_action( 'bp_before_link_details_form_avatar' ); ?>
+	<?php
+		if ( BP_LINKS_CREATE_EDIT_AVATAR ):
+			do_action( 'bp_before_link_details_form_avatar' );
+	?>
 
 	<fieldset>
 		<legend>
@@ -85,8 +88,11 @@
 		</div>
 	</fieldset>
 
-	<?php do_action( 'bp_after_link_details_form_avatar' ); ?>
-
+	<?php
+			do_action( 'bp_after_link_details_form_avatar' );
+		endif;
+	?>
+	
 	<!-- Link Details Section 3: Advanced Settings -->
 	<?php do_action( 'bp_before_link_details_form_advanced' ); ?>
 

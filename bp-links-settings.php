@@ -97,6 +97,17 @@ $wpsf_settings[] = array(
 				0 => 'Radio',
 				1 => 'Select'
 			)
+        ),
+		array(
+            'id' => 'editavatar',
+            'title' => __( 'Show Avatar Options?', 'buddypress-links' ),
+            'desc' => __( 'Set this to "No" to hide the Edit Avatar Options.', 'buddypress-links' ),
+            'type' => 'radio',
+            'std' => true,
+			'choices' => array(
+				1 => 'Yes',
+				0 => 'No'
+			)
         )
     )
 );
