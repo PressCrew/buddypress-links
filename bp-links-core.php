@@ -111,6 +111,10 @@ function bp_links_init_settings()
 	if ( !defined( 'BP_LINKS_VOTE_ALLOW_CHANGE' ) )
 		define( 'BP_LINKS_VOTE_ALLOW_CHANGE', (boolean) $settings['buddypress_links_voting_change'] );
 
+	// voting down
+	if ( !defined( 'BP_LINKS_VOTE_ALLOW_DOWN' ) )
+		define( 'BP_LINKS_VOTE_ALLOW_DOWN', (boolean) $settings['buddypress_links_voting_downvote'] );
+
 	// voting activity
 	if ( !defined( 'BP_LINKS_VOTE_RECORD_ACTIVITY' ) )
 		define( 'BP_LINKS_VOTE_RECORD_ACTIVITY', (boolean) $settings['buddypress_links_voting_activity'] );

@@ -1499,7 +1499,9 @@ function bp_link_vote_panel_clickers() {
 	<div class="clickers">
 		<a href="#vu" id="vote-up-<?php bp_link_id() ?>" class="vote up"></a>
 		<div id="vote-total-<?php bp_link_id() ?>" class="vote-total"><?php printf( '%+d', bp_get_link_vote_total() ) ?></div>
+		<?php if ( true === BP_LINKS_VOTE_ALLOW_DOWN ): ?>
 		<a href="#vd" id="vote-down-<?php bp_link_id() ?>" class="vote down"></a>
+		<?php endif; ?>
 	</div><?php
 }
 

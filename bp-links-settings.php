@@ -131,6 +131,17 @@ $wpsf_settings[] = array(
 			)
         ),
         array(
+            'id' => 'downvote',
+            'title' => __( 'What kind of voting would you like?', 'buddypress-links' ),
+            'desc' => __( 'The default behavior is to allow members to vote UP or DOWN. Set this to "Up Only" to disable down votes.', 'buddypress-links' ),
+            'type' => 'radio',
+            'std' => true,
+			'choices' => array(
+				1 => 'Up and Down',
+				0 => 'Up Only'
+			)
+        ),
+        array(
             'id' => 'activity',
             'title' => __( 'Record voting activity?', 'buddypress-links' ),
             'desc' => __( 'The default behavior is to record voting activity the first time a member votes on a link. Set this to No to disable voting activity recording.', 'buddypress-links' ),
