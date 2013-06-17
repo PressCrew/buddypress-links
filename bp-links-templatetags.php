@@ -764,8 +764,11 @@ function bp_link_admin_tabs() {
 		if ( !$bp->is_item_admin )
 			return false;
 	?>
-	<li<?php if ( 'link-avatar' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . bp_links_root_slug() ?>/<?php echo $link->slug ?>/admin/link-avatar"><?php _e( 'Link Avatar', 'buddypress-links' ) ?></a></li>
 
+	<?php if ( true === BP_LINKS_CREATE_EDIT_AVATAR ): ?>
+	<li<?php if ( 'link-avatar' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . bp_links_root_slug() ?>/<?php echo $link->slug ?>/admin/link-avatar"><?php _e( 'Link Avatar', 'buddypress-links' ) ?></a></li>
+	<?php endif; ?>
+	
 	<?php do_action( 'bp_link_admin_tabs', $current_tab, $link->slug ) ?>
 	
 	<li<?php if ( 'delete-link' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . bp_links_root_slug() ?>/<?php echo $link->slug ?>/admin/delete-link"><?php _e( 'Delete Link', 'buddypress-links' ) ?></a></li>
