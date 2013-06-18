@@ -755,6 +755,11 @@ function bp_links_screen_link_admin_avatar() {
 		return false;
 	}
 
+	// handle empty avatar admin property
+	if ( false === isset( $bp->avatar_admin ) ) {
+		$bp->avatar_admin = new stdClass();
+	}
+
 	// If the link admin has deleted the admin avatar
 	if ( 'delete' == $bp->action_variables[1] ) {
 
@@ -798,7 +803,7 @@ function bp_links_screen_link_admin_avatar() {
 			add_action( 'wp_enqueue_scripts', 'bp_core_add_jquery_cropper' );
 
 		} elseif ( isset( $_POST['upload'] ) && !empty( $_FILES ) ) {
-
+			
 			// Pass the file to the avatar upload handler
 			if ( bp_core_avatar_handle_upload( $_FILES, 'bp_links_avatar_upload_dir' ) ) {
 

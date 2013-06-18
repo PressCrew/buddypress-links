@@ -102,6 +102,11 @@ function bp_links_embed_download_avatar( $url ) {
 
 	require_once( ABSPATH . '/wp-admin/includes/image.php' );
 
+	// handle empty avatar admin property
+	if ( false === isset( $bp->avatar_admin ) ) {
+		$bp->avatar_admin = new stdClass();
+	}
+	
 	$bp->avatar_admin->original = bp_links_embed_upload_from_url( $url );
 
 	// Move the file to the correct upload location.
