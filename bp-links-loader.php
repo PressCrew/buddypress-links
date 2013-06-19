@@ -120,6 +120,7 @@ function bp_links_setup_globals() {
 	$bp->links->id = 'links';
 	$bp->links->slug = BP_LINKS_SLUG;
 	$bp->links->root_slug = isset( $bp->pages->links->slug ) ? $bp->pages->links->slug : BP_LINKS_SLUG;
+	$bp->links->name = __( 'Links', 'buddypress-links' );
 
 	$bp->links->table_name = $wpdb->base_prefix . 'bp_links';
 	$bp->links->table_name_categories = $wpdb->base_prefix . 'bp_links_categories';

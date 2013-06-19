@@ -994,6 +994,8 @@ function bp_links_action_create_link() {
 	// User must be logged in to create links
 	if ( !is_user_logged_in() )
 		return false;
+
+	$bp->is_directory = true;
 	
 	// If the save, upload or embed button is clicked, lets try to save
 	if ( isset( $_POST['save'] ) ) {
