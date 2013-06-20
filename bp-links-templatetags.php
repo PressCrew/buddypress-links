@@ -681,16 +681,18 @@ function bp_link_play_button() {
 	}
 
 function bp_link_is_admin() {
-	global $bp;
-	
-	return $bp->is_item_admin;
+	return (
+		true === bp_is_item_admin() ||
+		true === bp_links_is_admin()
+	);
 }
 
 // this is for future use
 function bp_link_is_mod() {
-	global $bp;
-	
-	return $bp->is_item_mod;
+	return (
+		true === bp_is_item_mod() ||
+		true === bp_links_is_mod()
+	);
 }
 
 function bp_link_show_no_links_message() {

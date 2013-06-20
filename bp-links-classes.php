@@ -851,7 +851,7 @@ class BP_Links_Link {
 	function get_total_link_count() {
 		global $wpdb, $bp;
 
-		if ( !is_super_admin() )
+		if ( false === bp_links_is_admin() )
 			$hidden_sql = sprintf( "WHERE status = %s", self::STATUS_PUBLIC );
 
 		return $wpdb->get_var( "SELECT COUNT(id) FROM {$bp->links->table_name} {$hidden_sql}" );
@@ -927,7 +927,7 @@ class BP_Links_Link {
 		global $bp;
 		
 		// if user is the site admin or is logged in and viewing their own links, then no limitations
-		if ( is_super_admin() || bp_is_my_profile() ) {
+		if ( bp_links_is_admin() || bp_is_my_profile() ) {
 			// return an empty string
 			return '';
 		} else {
