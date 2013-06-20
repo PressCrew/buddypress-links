@@ -66,10 +66,10 @@ jQuery(document).ready( function() {
 			var images = e_thpick.data("images");
 			var images_idx = e_thpick.data("images_idx");
 
-			if (local_idx == null) {
+			if (local_idx === null) {
 				local_idx = 0;
 				for (i = 0; i < images.length; i = i + 1) {
-					if(images[i][0] == images_idx) {
+					if(images[i][0] === images_idx) {
 						local_idx = i;
 						break;
 					}
@@ -220,7 +220,7 @@ jQuery(document).ready( function() {
 				e_name.val(response_split[1]);
 				e_desc.val(response_split[2]);
 
-				if (err_num == 1) {
+				if (err_num === 1) {
 
 					e_name.data('default_value', response_split[1]);
 					e_desc.data('default_value', response_split[2]);
@@ -256,7 +256,7 @@ jQuery(document).ready( function() {
 		function() {
 			jQuery("div#link-avatar-fields").toggle(500, function(){
 				var state = jQuery("input#link-avatar-fields-display");
-				state.val((1 == state.val()) ? 0 : 1);
+				state.val((1 === state.val()) ? 0 : 1);
 			});
 		}
 	);
@@ -266,7 +266,7 @@ jQuery(document).ready( function() {
 		function() {
 			jQuery("div#link-settings-fields").toggle(500, function(){
 				var state = jQuery("input#link-settings-fields-display");
-				state.val((1 == state.val()) ? 0 : 1);
+				state.val((1 === state.val()) ? 0 : 1);
 			});
 		}
 	);
