@@ -910,7 +910,7 @@ class BP_Links_Link {
 		if ( !$show_hidden )
 			$hidden_sql = " AND a.hide_sitewide = 0";
 
-		return $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(a.id) FROM {$bp->activity->table_name} a WHERE a.component = '%s' AND a.item_id = '%s' AND a.type = 'bp_link_comment'{$hidden_sql}", bp_links_id(), $this->cloud_id ) );
+		return $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(a.id) FROM {$bp->activity->table_name} a WHERE a.component = '%s' AND a.item_id = '%s' AND a.type = 'bp_link_comment'{$hidden_sql}", bp_links_id(), $this->id ) );
 	}
 
 	function get_activity_recent_ids_for_user( $user_id, $show_hidden = false ) {
@@ -920,7 +920,7 @@ class BP_Links_Link {
 		if ( !$show_hidden )
 			$hidden_sql = " AND a.hide_sitewide = 0";
 
-		return $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT l.cloud_id FROM {$bp->links->table_name} AS l JOIN {$bp->activity->table_name} AS a ON l.cloud_id = a.item_id WHERE l.user_id = %d AND a.component = %s{$hidden_sql} ORDER BY a.date_recorded DESC LIMIT %d", $user_id, bp_links_id(), BP_LINKS_PERSONAL_ACTIVITY_HISTORY ) );
+		return $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT l.id FROM {$bp->links->table_name} AS l JOIN {$bp->activity->table_name} AS a ON l.id = a.item_id WHERE l.user_id = %d AND a.component = %s{$hidden_sql} ORDER BY a.date_recorded DESC LIMIT %d", $user_id, bp_links_id(), BP_LINKS_PERSONAL_ACTIVITY_HISTORY ) );
 	}
 	
 	function get_status_sql( $link_owner_user_id = false, $format_string = '%s' ){

@@ -102,6 +102,7 @@ function bp_links_upgrade()
 	if ( $db_version ) {
 		// upgrades!
 		bp_links_upgrade_04( $db_version );
+		bp_links_upgrade_08( $db_version );
 	}
 
 	// update db version to current
@@ -127,8 +128,35 @@ function bp_links_upgrade_04( $db_version ) {
 	if ( false === $wpdb->query($sql_cloud) )
 		return false;
 
-	// update the activity table item_id column replacing the link_id with the cloud_id
-	$sql_activity = $wpdb->prepare( "UPDATE {$bp->links->table_name} AS l, {$bp->activity->table_name} AS a SET a.item_id = l.cloud_id WHERE l.id = a.item_id AND a.component = %s", bp_links_id() );
+	// success!
+	return true;
+}
+
+/**
+ * Perform upgrades for version 0.8
+ *
+ * @param integer $db_version
+ * @return boolean
+ */
+function bp_links_upgrade_08( $db_version ) {
+	global $bp, $wpdb;
+
+	// if DB version is 8 or higher, skip this upgrade
+	if ( $db_version >= 8 )
+		return true;
+
+	// make sure activity globals are initialized
+	bp_setup_activity();
+	$bp->activity->setup_globals();
+
+	// update the activity table item_id column replacing the link->cloud_id with the link->id.
+	// this reverses the poor decision to use the cloud_id in the activity table.
+	$sql_activity =
+		$wpdb->prepare(
+			"UPDATE {$bp->links->table_name} AS l, {$bp->activity->table_name} AS a SET a.item_id = l.id WHERE a.primary_link LIKE CONCAT( '%%/', REPLACE( l.slug, '%', '\%' ) ) AND a.component = %s",
+			$bp->links->id
+		);
+
 	if ( false === $wpdb->query($sql_activity) )
 		return false;
 

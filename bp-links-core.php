@@ -1029,7 +1029,7 @@ function bp_links_action_create_link() {
 				bp_links_update_linkmeta( $bp->links->current_link->id, 'last_activity', time() );
 
 				bp_links_record_activity( array(
-					'item_id' => $bp->links->current_link->cloud_id,
+					'item_id' => $bp->links->current_link->id,
 					'action' => apply_filters( 'bp_links_activity_created_link', sprintf( __( '%1$s created the link %2$s', 'buddypress-links'), bp_core_get_userlink( $bp->loggedin_user->id ), '<a href="' . bp_get_link_permalink( $bp->links->current_link ) . '">' . attribute_escape( $bp->links->current_link->name ) . '</a>' ) ),
 					'content' => apply_filters( 'bp_links_activity_created_link_content', bp_get_link_description_excerpt( $bp->links->current_link ) ),
 					'primary_link' => apply_filters( 'bp_links_activity_created_link_primary_link', bp_get_link_permalink( $bp->links->current_link ) ),
@@ -1330,7 +1330,7 @@ function bp_links_delete_link( $link_id ) {
 
 	/* Delete all link activity from activity streams */
 	if ( function_exists( 'bp_activity_delete_by_item_id' ) ) {
-		bp_activity_delete_by_item_id( array( 'item_id' => $link->cloud_id, 'component_name' => bp_links_id() ) );
+		bp_activity_delete_by_item_id( array( 'item_id' => $link->id, 'component_name' => bp_links_id() ) );
 	}	
  
 	// Remove all notifications for any user belonging to this link
@@ -1708,7 +1708,7 @@ function bp_links_post_update( $args = '' ) {
 		'action' => apply_filters( 'bp_links_activity_new_update_action', $activity_action ),
 		'content' => apply_filters( 'bp_links_activity_new_update_content', $content ),
 		'type' => $type,
-		'item_id' => $bp->links->current_link->cloud_id
+		'item_id' => $bp->links->current_link->id
 	) );
 
  	/* Require the notifications code so email notifications can be set on the 'bp_activity_posted_update' action. */
@@ -1796,7 +1796,7 @@ function bp_links_cast_vote( $link_id, $up_or_down ) {
 					'action' => apply_filters( 'bp_links_activity_voted', $activity_action ),
 					'primary_link' => apply_filters( 'bp_links_activity_voted_primary_link', bp_get_link_permalink( $bp->links->current_link ) ),
 					'type' => BP_LINKS_ACTIVITY_ACTION_VOTE,
-					'item_id' => $bp->links->current_link->cloud_id
+					'item_id' => $bp->links->current_link->id
 				) );
 
 			}

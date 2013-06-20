@@ -317,7 +317,7 @@ function bp_links_dtheme_activity_filter( $query_string, $object, $filter, $scop
 				$args['object'] = bp_links_id();
 				// set primary id to current link id if applicable
 				if ( $bp->links->current_link ) {
-					$args['primary_id'] = $bp->links->current_link->cloud_id;
+					$args['primary_id'] = $bp->links->current_link->id;
 				}
 				break;
 		}

@@ -6,7 +6,7 @@ Description: BuddyPress Links is a link sharing component for BuddyPress.
 Author: Marshall Sorenson (MrMaz)
 Author URI: http://marshallsorenson.com
 License: GNU GENERAL PUBLIC LICENSE 3.0 http://www.gnu.org/licenses/gpl.txt
-Version: 0.7.2
+Version: 0.8-beta
 Text Domain: buddypress-links
 */
 
@@ -47,8 +47,8 @@ if ( !defined( 'BP_LINKS_EMBED_FOTOGLIF_PUBID' ) )
 // *** DO NOT MODIFY THESE ***
 
 // Configuration
-define( 'BP_LINKS_VERSION', '0.7.2' );
-define( 'BP_LINKS_DB_VERSION', '7' );
+define( 'BP_LINKS_VERSION', '0.8-beta' );
+define( 'BP_LINKS_DB_VERSION', '8' );
 define( 'BP_LINKS_PLUGIN_NAME', 'buddypress-links' );
 define( 'BP_LINKS_PLUGIN_TEXTDOMAIN', 'buddypress-links' );
 define( 'BP_LINKS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -132,7 +132,7 @@ function bp_links_setup_globals() {
 	$bp->active_components[$bp->links->slug] = $bp->links->id;
 
 	$bp->links->forbidden_names = apply_filters( 'bp_links_forbidden_names', array( 'links', 'my-links', 'link-finder', 'create', 'delete', 'add', 'admin', 'popular', 'most-votes', 'high-votes', 'active', 'newest', 'all', 'submit', 'feed' ) );
-
+	
 	do_action( 'bp_links_setup_globals' );
 }
 
