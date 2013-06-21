@@ -333,17 +333,30 @@ add_action( 'admin_menu', 'bp_links_setup_admin' );
 function bp_links_setup_nav() {
 	global $bp;
 
-	if ( $link_id = BP_Links_Link::link_exists($bp->current_action) ) {
+	// is links component?
+	if ( bp_is_links_component() ) {
 
-		/* This is a single link page. */
-		$bp->is_single_item = true;
-		$bp->links->current_link = &new BP_Links_Link( $link_id );
+		// set some component defaults
+		$bp->is_item_admin = false;
+		$bp->is_single_item = false;
+		$bp->links->current_link = false;
 
-		/* Using "item" not "link" for generic support in other components. */
-		if ( bp_links_is_admin() ) {
-			$bp->is_item_admin = 1;
-		} else {
-			$bp->is_item_admin = ( $bp->loggedin_user->id == $bp->links->current_link->user_id ) ? true : false;
+		// try to get link id of current action
+		$link_id = BP_Links_Link::link_exists( $bp->current_action );
+
+		// have a link id?
+		if ( $link_id ) {
+
+			// this is a single link page.
+			$bp->is_single_item = true;
+			$bp->links->current_link = new BP_Links_Link( $link_id, true );
+
+			// determine if item admin
+			if ( bp_links_is_admin() ) {
+				$bp->is_item_admin = true;
+			} else {
+				$bp->is_item_admin = ( $bp->loggedin_user->id == $bp->links->current_link->user_id ) ? true : false;
+			}
 		}
 	}
 
