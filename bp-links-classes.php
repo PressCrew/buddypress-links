@@ -711,8 +711,13 @@ class BP_Links_Link {
 			$meta_table_num = 1;
 			// loop all match rules
 			foreach ( $meta_match as $meta_key => $meta_rules ) {
+				// determine join type
+				$join_stmt =
+					( isset( $meta_rules['left_join'] ) && ( $meta_rules['left_join'] ) )
+					? ' LEFT JOIN '
+					: ' INNER JOIN ';
 				// build join statement on link id and given meta key
-				$join_sql .= sprintf( ' INNER JOIN ' . $bp->links->table_name_linkmeta . ' AS lm%1$d ON l.id = lm%1$d.link_id AND lm%1$d.meta_key = \'%2$s\'', $meta_table_num, $meta_key );
+				$join_sql .= sprintf( $join_stmt . $bp->links->table_name_linkmeta . ' AS lm%1$d ON l.id = lm%1$d.link_id AND lm%1$d.meta_key = \'%2$s\'', $meta_table_num, $meta_key );
 				// have operator and value?
 				if ( isset( $meta_rules['operator'] ) && isset( $meta_rules['value'] ) ) {
 					// build sql statement to match value
@@ -730,13 +735,15 @@ class BP_Links_Link {
 							break;
 						default:
 							// determine value format
-							if ( is_numeric( $meta_rules['value'] ) ) {
-								$vformat = ' %2$d';
+							if ( 'NULL' === $meta_rules['value'] ) {
+								$vformatted = ' NULL';
+							} else if ( is_numeric( $meta_rules['value'] ) ) {
+								$vformatted = $wpdb->prepare( ' %d', $meta_rules['value'] );
 							} else {
-								$vformat = ' \'%2$s\'';
+								$vformatted = $wpdb->prepare(' %s', $meta_rules['value'] );
 							}
 							// build dynamic expression
-							$meta_sql .= $wpdb->prepare( ' AND lm%1$d.meta_value ' . $meta_rules['operator'] . $vformat, $meta_table_num, $meta_rules['value'] );
+							$meta_sql .= $wpdb->prepare( ' AND lm%d.meta_value ' . $meta_rules['operator'] . $vformatted, $meta_table_num );
 					}
 				}
 				// order set?
