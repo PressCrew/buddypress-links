@@ -165,7 +165,7 @@ class BP_Links_Template {
 		$this->link = $this->next_link();
 
 		if ( !$link = wp_cache_get( 'bp_links_link_nouserdata_' . $this->link->link_id, 'bp' ) ) {
-			$link = new BP_Links_Link( $this->link->link_id, false, false );
+			$link = new BP_Links_Link( $this->link->link_id, true );
 			wp_cache_set( 'bp_links_link_nouserdata_' . $this->link->link_id, $link, 'bp' );
 		}
 
