@@ -2,13 +2,13 @@
 Contributors: MrMaz
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8591311
 Tags: buddypress, social, networking, links, rich media, embed, youtube, flickr, metacafe
-Requires at least: 3.4
-Tested up to: 3.4.2
+Requires at least: 3.5
+Tested up to: 3.5.1
 Stable tag: 0.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-BuddyPress Links is a drop-in link, image, video and other rich media sharing component for BuddyPress 1.5 and 1.6
+BuddyPress Links is a drop-in link, image, video and other rich media sharing component for BuddyPress 1.6 and 1.7
 
 == Description ==
 
@@ -138,6 +138,18 @@ DO NOT attempt to install version 0.3 or higher on BP 1.1.X!  DO NOT try to use 
 This version contains the first support for rich media embedding. *Please make sure that you update the "links" directory in your theme (see Installation).*
 
 == Changelog ==
+
+= 0.8 =
+
+* Compatibility testing and tweaks to fully support BuddyPress 1.7
+* Added setting to completely disable voting
+* Added setting to disable down votes (only up vote clicker shows)
+* Added setting to hide avatar options box on create/edit link form
+* Added setting to hide advanced settings box on create/edit link form
+* Fixed broken custom avatar uploading that affected some BuddyPress 1.7 installs
+* Fixed missing links directory page title
+* Fixed broken comments issue
+* Misc performance tweaks
 
 = 0.7.2 =
 
