@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: buddypress, social, networking, links, rich media, embed, youtube, flickr, metacafe
 Requires at least: 3.5
 Tested up to: 3.5.2
-Stable tag: 0.7.2
+Stable tag: 0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,6 +87,7 @@ Other features include:
 
 == Installation ==
 
+* BuddyPress Links 0.8.x requires WordPress 3.5 or higher with BuddyPress 1.6 or higher installed.
 * BuddyPress Links 0.7.x requires WordPress 3.4 or higher with BuddyPress 1.6 or higher installed.
 * BuddyPress Links 0.6.x requires WordPress 3.3 or higher with BuddyPress 1.5 or higher installed.
 * BuddyPress Links 0.5.x requires WordPress 3.0 or higher with BuddyPress 1.2.6 or higher installed.
