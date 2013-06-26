@@ -54,7 +54,7 @@ jQuery(document).ready( function() {
 		var e_thpick_img = jQuery("div#link-url-embed-content img");
 
 		var local_idx = null;
-		var last_img_idx = e_thpick_idx.val();
+		var last_img_idx = parseInt( e_thpick_idx.val() );
 		var last_img_src = e_thpick_img.attr("src");
 
 		e_thpick_a.click(function() {
@@ -64,7 +64,7 @@ jQuery(document).ready( function() {
 			}
 
 			var images = e_thpick.data("images");
-			var images_idx = e_thpick.data("images_idx");
+			var images_idx = parseInt( e_thpick.data("images_idx") );
 
 			if (local_idx === null) {
 				local_idx = 0;
@@ -113,7 +113,7 @@ jQuery(document).ready( function() {
 
 			// swap out image with default if checked
 			if ( jQuery(this).attr('checked') ) {
-				last_img_idx = e_thpick_idx.val()
+				last_img_idx = parseInt( e_thpick_idx.val() );
 				last_img_src = e_thpick_img.attr("src");
 				e_thpick_idx.val(null);
 				e_thpick_img.attr("src", e_avimg_def.attr("src"));
@@ -208,7 +208,7 @@ jQuery(document).ready( function() {
 		function(response) {
 
 			var response_split = response.split('[[split]]');
-			var err_num = response_split[0];
+			var err_num = parseInt( response_split[0] );
 
 			jQuery('#message').remove();
 
@@ -256,7 +256,7 @@ jQuery(document).ready( function() {
 		function() {
 			jQuery("div#link-avatar-fields").toggle(500, function(){
 				var state = jQuery("input#link-avatar-fields-display");
-				state.val((1 === state.val()) ? 0 : 1);
+				state.val((1 === parseInt( state.val() )) ? 0 : 1);
 			});
 		}
 	);
@@ -266,7 +266,7 @@ jQuery(document).ready( function() {
 		function() {
 			jQuery("div#link-settings-fields").toggle(500, function(){
 				var state = jQuery("input#link-settings-fields-display");
-				state.val((1 === state.val()) ? 0 : 1);
+				state.val((1 === parseInt( state.val() )) ? 0 : 1);
 			});
 		}
 	);
