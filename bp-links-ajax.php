@@ -52,12 +52,17 @@ function bp_links_ajax_link_auto_embed_url() {
 
 		// did we get a rich media service?
 		if ( $embed_service instanceof BP_Links_Embed_From_Url ) {
+
+			// capture embed panel content
+			ob_start();
+			bp_links_auto_embed_panel_content( $embed_service );
+
 			// output response
 			bp_links_ajax_response_string(
 				1, // 0
 				$embed_service->title(), // 1
 				$embed_service->description(), // 2
-				bp_get_links_auto_embed_panel_content( $embed_service ) // 3
+				ob_get_clean() // 3
 			);
 		}
 

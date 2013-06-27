@@ -221,155 +221,125 @@ function bp_link_embed_html() {
  */
 
 function bp_links_auto_embed_panel( $embed_service = null, $display = false ) {
-	echo bp_get_links_auto_embed_panel( $embed_service, $display );
+
+	// inline style for display (or not)
+	$attr_display = ( $display === true ) ? null : ' style="display: none;"';
+
+	// render the markup ?>
+	<span id="link-url-embed-clear"<?php echo $attr_display ?>>
+		<a href="#clear"><?php _e( 'Clear', 'buddypress-links' ); ?></a>
+	</span>
+
+	<input type="submit" name="link-url-embed-enter" value="<?php _e( 'Fetch Page Details', 'buddypress-links' ) ?>" onclick="return false;">
+
+	<div id="link-url-embed" <?php echo $attr_display ?>>
+		<?php bp_links_auto_embed_panel_content( $embed_service ); ?>
+	</div><?php
 }
-	function bp_get_links_auto_embed_panel( $embed_service = null, $display = false ) {
-
-		$attr_display = ( $display === true ) ? null : ' style="display: none;"';
-
-		$clear_html =
-			sprintf(
-				'<span id="link-url-embed-clear"%1$s><a href="#clear">%2$s</a></span>%4$s
-				<input type="submit" name="link-url-embed-enter" value="%3$s" onclick="return false;">%4$s',
-				$attr_display, // arg 1
-				__( 'Clear', 'buddypress-links' ), // arg 2
-				__( 'Fetch Page Details', 'buddypress-links' ), // arg 3
-				PHP_EOL // arg 4
-			);
-
-		$wrapper_html =
-			sprintf(
-				'<div id="link-url-embed"%1$s>
-					%2$s
-				</div>',
-				$attr_display, // arg 1
-				bp_get_links_auto_embed_panel_content( $embed_service ) // arg 2
-			);
-
-		return $clear_html . $wrapper_html;
-	}
 
 function bp_links_auto_embed_panel_content( $embed_service = null ) {
-	echo bp_get_links_auto_embed_panel_content( $embed_service );
-}
-	function bp_get_links_auto_embed_panel_content( $embed_service = null ) {
 
-		if ( !$embed_service instanceof BP_Links_Embed_Service ) {
-			return null;
-		}
-
-		// no js html or selected image index by default
-		$js_html = null;
-		$image_idx = null;
-		$image_selected_idx = null;
-		$image_selection_count = 0;
-		$image_selection_diplay = null;
-
-		// multiple images to select from?
-		if ( $embed_service instanceof BP_Links_Embed_Has_Selectable_Image && count( $embed_service->image_selection() ) >= 1 ) {
-
-			// body of javascript array
-			$js_array = array();
-
-			// user selected image index
-			$image_idx = ( isset( $_POST['link-url-embed-thidx'] ) ) ? $_POST['link-url-embed-thidx'] : $embed_service->image_get_selected();
-
-			// selected image index from data storage
-			$image_selected_idx = $embed_service->image_get_selected();
-			
-			// count of images in selection
-			$image_selection_count = count( $embed_service->image_selection() );
-
-			foreach( $embed_service->image_selection() as $idx => $url ) {
-				if ( is_int( $idx ) ) {
-					$js_array[] = sprintf( '[%d,"%s"]', $idx, $url );
-				} else {
-					$js_array[] = sprintf( '["%s","%s"]', $idx, $url );
-				}
-			}
-
-			$js_html =
-				sprintf(
-					'<script type="text/javascript">
-						jQuery(document).ready( function() {
-							jQuery("div#link-url-embed-thpick").data("images", [ %1$s ] );
-							jQuery("div#link-url-embed-thpick").data("images_idx", %2$s );
-							return;
-						});
-					</script>%3$s',
-					join( ",", $js_array ), // arg 1
-					( is_null( $image_idx ) ) ? 'null' : $image_idx, // arg 2
-					PHP_EOL // arg 3
-				);
-		} else {
-			// don't display the thumb picker
-			$image_selection_diplay = ' style="display: none;"';
-		}
-
-		// determine output thumb url
-		$service_thumb_url = $embed_service->image_thumb_url();
-
-		if ( !empty( $service_thumb_url ) && bp_links_is_url_valid( $service_thumb_url ) ) {
-			$thumb_url = $service_thumb_url;
-		} else {
-			// service or owner chose not to have a thumb
-			$thumb_url = bp_links_default_avatar_uri();
-		}
-
-		return $js_html . sprintf(
-			'<label style="clear: right;">
-				%1$s %3$s
-			</label>
-			<div id="link-url-embed-content">
-				<div id="link-url-embed-avatar">
-					<img src="%4$s" class="avatar-current" alt="%5$s">
-					<div id="link-url-embed-thpick"%12$s>
-						<a href="#thprev" id="thprev">&lt;</a>
-						<span id="thcurrent">%13$d</span>/<span id="thcount">%14$d</span> %15$s
-						<a href="#thnext" id="thnext">&gt;</a>
-						<div id="thnone">
-							<input type="checkbox" name="link-url-embed-thskip" id="link-url-embed-thskip" value="1"%16$s /> %17$s
-						</div>
-					</div>
-				</div>
-				<a href="%7$s" target="_blank">%6$s</a>
-				<p>%8$s</p>
-				<div id="link-url-embed-options">
-					<label for="link-url-embed-edit-text"><input type="checkbox" name="link-url-embed-edit-text" id="link-url-embed-edit-text" value="1"%9$s /> %2$s</label>
-					<input type="hidden" name="link-url-embed-data" id="link-url-embed-data" value="%10$s" />
-					<input type="hidden" name="link-url-embed-thidx" id="link-url-embed-thidx" value="%11$s" />
-				</div>
-			</div>',
-			__( 'Rich Media Detected:', 'buddypress-links' ), // arg 1
-			__( 'Edit Name and Description', 'buddypress-links' ), // arg 2
-			esc_html( $embed_service->service_name() ), // arg 3
-			esc_url( $thumb_url ), // arg 4
-			esc_attr( $embed_service->title() ), // arg 5
-			esc_html( $embed_service->title() ), // arg 6
-			esc_url( $embed_service->url() ), // arg 7
-			esc_html( $embed_service->description() ), // arg 8
-			( !empty( $_POST['link-url-embed-edit-text'] ) ) ? ' checked="checked"' : null, // arg 9
-			$embed_service->export_data(), // arg 10
-			$image_selected_idx, // arg 11
-			$image_selection_diplay,  // arg 12
-			$image_idx + 1, // arg 13
-			$image_selection_count, // arg 14
-			__( 'Thumbs', 'buddypress-links' ), // arg 15
-			( is_null( $image_idx ) ) ? ' checked="checked"' : null, // arg 16
-			__( 'No Thumbnail', 'buddypress-links' ) // arg 17
-		);
+	if ( !$embed_service instanceof BP_Links_Embed_Service ) {
+		return;
 	}
+
+	// no selected image index by default
+	$image_idx = null;
+	$image_selected_idx = null;
+	$image_selection_count = 0;
+	$image_selection_diplay = null;
+
+	// multiple images to select from?
+	if ( $embed_service instanceof BP_Links_Embed_Has_Selectable_Image && count( $embed_service->image_selection() ) >= 1 ) {
+
+		// body of javascript array
+		$js_array = array();
+
+		// user selected image index
+		$image_idx = ( isset( $_POST['link-url-embed-thidx'] ) ) ? $_POST['link-url-embed-thidx'] : $embed_service->image_get_selected();
+
+		// selected image index from data storage
+		$image_selected_idx = $embed_service->image_get_selected();
+
+		// count of images in selection
+		$image_selection_count = count( $embed_service->image_selection() );
+
+		foreach( $embed_service->image_selection() as $idx => $url ) {
+			if ( is_int( $idx ) ) {
+				$js_array[] = sprintf( '[%d,"%s"]', $idx, $url );
+			} else {
+				$js_array[] = sprintf( '["%s","%s"]', $idx, $url );
+			}
+		}
+
+		// js syntax strings
+		$image_js_img = join( ",", $js_array );
+		$image_js_img_idx = ( is_null( $image_idx ) ) ? 'null' : $image_idx;
+
+		// render js element ?>
+		<script type="text/javascript">
+			jQuery(document).ready( function() {
+				jQuery("div#link-url-embed-thpick").data("images", [ <?php echo $image_js_img ?> ] );
+				jQuery("div#link-url-embed-thpick").data("images_idx", <?php echo $image_js_img_idx ?> );
+				return;
+			});
+		</script><?php
+
+	} else {
+		// don't display the thumb picker
+		$image_selection_diplay = ' style="display: none;"';
+	}
+
+	// determine output thumb url
+	$service_thumb_url = $embed_service->image_thumb_url();
+
+	if ( !empty( $service_thumb_url ) && bp_links_is_url_valid( $service_thumb_url ) ) {
+		$thumb_url = $service_thumb_url;
+	} else {
+		// service or owner chose not to have a thumb
+		$thumb_url = bp_links_default_avatar_uri();
+	}
+
+	// checkiness vars
+	$checked_edit = ( !empty( $_POST['link-url-embed-edit-text'] ) ) ? ' checked="checked"' : null;
+	$checked_thumb = ( is_null( $image_idx ) ) ? ' checked="checked"' : null;
+
+	// render the html ?>
+	<label style="clear: right;">
+		<?php _e( 'Rich Media Detected:', 'buddypress-links' ) ?>
+		<?php echo esc_html( $embed_service->service_name() ) ?>
+	</label>
+	<div id="link-url-embed-content">
+		<div id="link-url-embed-avatar">
+			<img src="<?php echo esc_url( $thumb_url ) ?>" class="avatar-current" alt="<?php echo esc_attr( $embed_service->title() ) ?>">
+			<div id="link-url-embed-thpick"<?php echo $image_selection_diplay ?>>
+				<a href="#thprev" id="thprev">&lt;</a>
+				<span id="thcurrent"><?php echo $image_idx + 1 ?></span>/<span id="thcount"><?php echo $image_selection_count ?></span> <?php _e( 'Thumbs', 'buddypress-links' ) ?>
+				<a href="#thnext" id="thnext">&gt;</a>
+				<div id="thnone">
+					<input type="checkbox" name="link-url-embed-thskip" id="link-url-embed-thskip" value="1"<?php echo $checked_thumb ?>> <?php _e( 'No Thumbnail', 'buddypress-links' ) ?>
+				</div>
+			</div>
+		</div>
+		<a href="<?php echo esc_url( $embed_service->url() ) ?>" target="_blank"><?php echo esc_html( $embed_service->title() ) ?></a>
+		<p><?php echo esc_html( $embed_service->description() ) ?></p>
+		<div id="link-url-embed-options">
+			<label for="link-url-embed-edit-text">
+				<input type="checkbox" name="link-url-embed-edit-text" id="link-url-embed-edit-text" value="1"<?php echo $checked_edit ?>>
+				<?php _e( 'Edit Name and Description', 'buddypress-links' ) ?>
+			</label>
+			<input type="hidden" name="link-url-embed-data" id="link-url-embed-data" value="<?php echo $embed_service->export_data() ?>">
+			<input type="hidden" name="link-url-embed-thidx" id="link-url-embed-thidx" value="<?php echo esc_attr( $image_selected_idx ) ?>">
+		</div>
+	</div><?php
+}
 
 function bp_links_auto_embed_panel_from_data( $embed_data = null ) {
-	echo bp_get_links_auto_embed_panel_from_data( $embed_data );
-}
-	function bp_get_links_auto_embed_panel_from_data( $embed_data = null ) {
 
-		if ( !empty( $embed_data ) ) {
-			$service = BP_Links_Embed::LoadService( $embed_data );
-			return bp_get_links_auto_embed_panel( $service, true );
-		} else {
-			return bp_get_links_auto_embed_panel();
-		}
+	if ( !empty( $embed_data ) ) {
+		$service = BP_Links_Embed::LoadService( $embed_data );
+		bp_links_auto_embed_panel( $service, true );
+	} else {
+		bp_links_auto_embed_panel();
 	}
-?>
+}
