@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: buddypress, social, networking, links, rich media, embed, youtube, flickr, metacafe
 Requires at least: 3.5
 Tested up to: 3.5.2
-Stable tag: 0.8
+Stable tag: 0.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -139,6 +139,10 @@ DO NOT attempt to install version 0.3 or higher on BP 1.1.X!  DO NOT try to use 
 This version contains the first support for rich media embedding. *Please make sure that you update the "links" directory in your theme (see Installation).*
 
 == Changelog ==
+
+= 0.8.1 =
+
+* Fixed broken page details fetching
 
 = 0.8 =
 
