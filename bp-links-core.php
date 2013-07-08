@@ -1623,7 +1623,7 @@ function bp_links_fetch_avatar( $args = '', $link = false ) {
 		$avatar_url = null;
 
 		// check if we can use thumb from embedded content
-		if ( !empty( $link ) && $link->embed_status_enabled() ) {
+		if ( $link instanceof BP_Links_Link && $link->embed_status_enabled() ) {
 
 			$image_thumb_url = $link->embed()->image_thumb_url();
 
