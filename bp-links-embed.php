@@ -235,6 +235,9 @@ function bp_links_auto_embed_panel( $embed_service = null, $display = false ) {
 	<div id="link-url-embed" <?php echo $attr_display ?>>
 		<?php bp_links_auto_embed_panel_content( $embed_service ); ?>
 	</div><?php
+
+	// spit out nonce field
+	wp_nonce_field( 'bp_links_save_link-auto-embed', '_wpnonce-link-auto-embed' );
 }
 
 function bp_links_auto_embed_panel_content( $embed_service = null ) {

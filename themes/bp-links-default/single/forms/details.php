@@ -36,7 +36,6 @@
 		<?php do_action( 'bp_before_link_details_form_base_embed' ); ?>
 
 		<?php bp_links_auto_embed_panel_from_data( bp_get_link_details_form_url_embed_data() ) ?>
-		<?php wp_nonce_field( 'bp_links_save_link-auto-embed', '_wpnonce-link-auto-embed' ) ?>
 
 		<?php do_action( 'bp_before_link_details_form_base_desc_fields' ); ?>
 
