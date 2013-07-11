@@ -44,6 +44,17 @@ $wpsf_settings[] = array(
 				1 => 'Yes',
 				0 => 'No'
 			)
+        ),
+        array(
+            'id' => 'linkslug',
+            'title' => __( 'Link to slug or ID?', 'buddypress-links' ),
+            'desc' => __( 'The default behavior is to use the link\'s unique text slug in permalink URLs. Set this to Numeric ID to use the link ID instead.', 'buddypress-links' ),
+            'type' => 'radio',
+            'std' => true,
+			'choices' => array(
+				1 => __( 'Text Slug', 'buddypress-links' ),
+				0 => __( 'Numeric ID', 'buddypress-links' )
+			)
         )
     )
 );

@@ -646,13 +646,25 @@ class BP_Links_Link {
 		$wpdb->query( $wpdb->prepare( "UPDATE {$bp->links->table_name} SET popularity = {$popularity_sql} WHERE popularity <= %d AND vote_total >= %d", self::POPULARITY_IGNORE, self::POPULARITY_THRESH  ) );
 	}
 		
-	function link_exists( $slug ) {
+	function link_exists( $slug_or_id ) {
 		global $wpdb, $bp;
-		
-		if ( !$slug )
+
+		// clean it up
+		$value = trim( $slug_or_id );
+
+		// empty value?
+		if ( empty( $value ) ) {
+			// yep, don't bother looking it up
 			return false;
-			
-		return $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$bp->links->table_name} WHERE slug = %s", $slug ) );
+		// is it numeric?
+		} elseif ( is_numeric( $value ) ) {
+			// yep, query for id
+			return $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$bp->links->table_name} WHERE id = %d", $value ) );
+		// other value
+		} else {
+			// query for slug
+			return $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$bp->links->table_name} WHERE slug = %s", $value ) );
+		}
 	}
 
 	function get_id_from_slug( $slug ) {

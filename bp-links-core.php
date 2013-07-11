@@ -97,6 +97,10 @@ function bp_links_init_settings()
 	if ( !defined( 'BP_LINKS_LIST_ITEM_URL_LOCAL' ) )
 		define( 'BP_LINKS_LIST_ITEM_URL_LOCAL', (boolean) $settings['buddypress_links_global_linklocal'] );
 
+	// link to slug (or ID)?
+	if ( !defined( 'BP_LINKS_PERMALINK_TO_SLUG' ) )
+		define( 'BP_LINKS_PERMALINK_TO_SLUG', (boolean) $settings['buddypress_links_global_linkslug'] );
+
 	// max url characters
 	if ( !defined( 'BP_LINKS_MAX_CHARACTERS_URL' ) )
 		define( 'BP_LINKS_MAX_CHARACTERS_URL', (integer) $settings['buddypress_links_content_maxurl'] );
@@ -440,8 +444,9 @@ function bp_links_setup_nav() {
 			$bp->bp_options_title = $bp->links->current_link->name;
 
 			$bp->bp_options_avatar = bp_links_fetch_avatar( array( 'type' => 'thumb' ), $bp->links->current_link );
-			
-			$link_link = $bp->root_domain . '/' . bp_links_root_slug() . '/' . $bp->links->current_link->slug . '/';
+
+			$link_link = bp_get_link_permalink( $bp->links->current_link ) . '/';
+			$link_slug = bp_get_link_permalink_slug( $bp->links->current_link );
 
 			/* New HIDDEN nav item */
 			$nav_name_single = apply_filters(
@@ -450,7 +455,7 @@ function bp_links_setup_nav() {
 			);
 			bp_core_new_nav_item( array(
 				'name' => $nav_name_single,
-				'slug' => $bp->links->current_link->slug,
+				'slug' => $link_slug,
 				'position' => -1,
 				'screen_function' => 'bp_links_screen_link_home',
 				'default_subnav_slug' => 'home',
@@ -466,7 +471,7 @@ function bp_links_setup_nav() {
 				'name' => $subnav_name_home,
 				'slug' => 'home',
 				'parent_url' => $link_link,
-				'parent_slug' => $bp->links->current_link->slug,
+				'parent_slug' => $link_slug,
 				'screen_function' => 'bp_links_screen_link_home',
 				'position' => 10,
 				'item_css_id' => 'link-home'
@@ -482,7 +487,7 @@ function bp_links_setup_nav() {
 					'name' => $subnav_name_admin,
 					'slug' => 'admin',
 					'parent_url' => $link_link,
-					'parent_slug' => $bp->links->current_link->slug,
+					'parent_slug' => $link_slug,
 					'screen_function' => 'bp_links_screen_link_admin',
 					'position' => 20,
 					'user_has_access' => $bp->is_item_admin,
@@ -1100,7 +1105,7 @@ function bp_links_action_redirect_to_random_link() {
 	
 		$link = bp_links_get_random();
 
-		bp_core_redirect( $bp->root_domain . '/' . bp_links_root_slug() . '/' . $link['links'][0]->slug );
+		bp_core_redirect( bp_get_link_permalink( $link['links'][0] ) );
 	}
 }
 add_action( 'bp_screens', 'bp_links_action_redirect_to_random_link' );
