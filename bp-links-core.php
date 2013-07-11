@@ -117,6 +117,10 @@ function bp_links_init_settings()
 	if ( !defined( 'BP_LINKS_CREATE_CATEGORY_SELECT' ) )
 		define( 'BP_LINKS_CREATE_CATEGORY_SELECT', (boolean) $settings['buddypress_links_content_catselect'] );
 
+	// create page content fetching toggle
+	if ( !defined( 'BP_LINKS_CREATE_PAGE_FETCH' ) )
+		define( 'BP_LINKS_CREATE_PAGE_FETCH', (boolean) $settings['buddypress_links_content_pagefetch'] );
+
 	// create avatar options
 	if ( !defined( 'BP_LINKS_CREATE_EDIT_AVATAR' ) )
 		define( 'BP_LINKS_CREATE_EDIT_AVATAR', (boolean) $settings['buddypress_links_content_editavatar'] );

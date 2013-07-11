@@ -99,6 +99,17 @@ $wpsf_settings[] = array(
 			)
         ),
 		array(
+            'id' => 'pagefetch',
+            'title' => __( 'Enable Page Fetching?', 'buddypress-links' ),
+            'desc' => __( 'Set this to "No" to disable page content fetching.', 'buddypress-links' ),
+            'type' => 'radio',
+            'std' => true,
+			'choices' => array(
+				1 => 'Yes',
+				0 => 'No'
+			)
+        ),
+		array(
             'id' => 'editavatar',
             'title' => __( 'Show Avatar Options?', 'buddypress-links' ),
             'desc' => __( 'Set this to "No" to hide the Edit Avatar Options.', 'buddypress-links' ),

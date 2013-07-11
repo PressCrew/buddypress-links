@@ -230,7 +230,7 @@ function bp_links_auto_embed_panel( $embed_service = null, $display = false ) {
 		<a href="#clear"><?php _e( 'Clear', 'buddypress-links' ); ?></a>
 	</span>
 
-	<input type="submit" name="link-url-embed-enter" value="<?php _e( 'Fetch Page Details', 'buddypress-links' ) ?>" onclick="return false;">
+	<input type="submit" id="link-url-embed-fetch" name="link-url-embed-fetch" value="<?php _e( 'Fetch Page Details', 'buddypress-links' ) ?>">
 
 	<div id="link-url-embed" <?php echo $attr_display ?>>
 		<?php bp_links_auto_embed_panel_content( $embed_service ); ?>
@@ -339,10 +339,14 @@ function bp_links_auto_embed_panel_content( $embed_service = null ) {
 
 function bp_links_auto_embed_panel_from_data( $embed_data = null ) {
 
-	if ( !empty( $embed_data ) ) {
-		$service = BP_Links_Embed::LoadService( $embed_data );
-		bp_links_auto_embed_panel( $service, true );
-	} else {
-		bp_links_auto_embed_panel();
+	// page fetching enabled?
+	if ( true === BP_LINKS_CREATE_PAGE_FETCH ) {
+		// yep, spit out embed panel if applicable
+		if ( !empty( $embed_data ) ) {
+			$service = BP_Links_Embed::LoadService( $embed_data );
+			bp_links_auto_embed_panel( $service, true );
+		} else {
+			bp_links_auto_embed_panel();
+		}
 	}
 }

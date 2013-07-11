@@ -182,9 +182,14 @@ jQuery(document).ready( function() {
 			bindThumbPickerClick();
 		}
 	}
+	
+	// fix url on input blur
+	e_url.blur( function() {
+		fixUrl();
+	});
 
 	// try to locate an auto embed service for the URL entered
-	e_url.blur( function()
+	jQuery('#link-url-embed-fetch').click( function(event)
 	{
 		e_url.addClass('loading');
 
@@ -196,6 +201,7 @@ jQuery(document).ready( function() {
 			e_clear.fadeIn(500, bindClearUrlClick);
 		} else {
 			e_url.removeClass('loading');
+			event.preventDefault();
 			return;
 		}
 
@@ -249,6 +255,8 @@ jQuery(document).ready( function() {
 			}
 			e_url.removeClass('loading');
 		});
+
+		event.preventDefault();
 	});
 
 	// toggle avatar options panel

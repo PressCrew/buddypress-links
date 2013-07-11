@@ -821,30 +821,40 @@ function bp_link_details_form_link_url_readonly() {
 	echo bp_get_link_details_form_link_url_readonly();
 }
 	function bp_get_link_details_form_link_url_readonly() {
-		global $bp;
 
-		if ( isset( $_POST['link-url-readonly'] ) ) {
-			return ( empty( $_POST['link-url-readonly'] ) ) ? 0 : 1;
-		} elseif ( bp_links_current_link_embed_enabled() )  {
-			return ( bp_links_current_link_embed_service() instanceof BP_Links_Embed_From_Url ) ? 1 : 0;
-		} else {
-			return 0;
+		// page fetching enabled?
+		if ( true === BP_LINKS_CREATE_PAGE_FETCH ) {
+			// yep, determine read only toggle
+			if ( isset( $_POST['link-url-readonly'] ) ) {
+				return ( empty( $_POST['link-url-readonly'] ) ) ? 0 : 1;
+			} elseif ( bp_links_current_link_embed_enabled() )  {
+				return ( bp_links_current_link_embed_service() instanceof BP_Links_Embed_From_Url ) ? 1 : 0;
+			}
 		}
+		
+		// read only is off by default
+		return 0;
 	}
 
 function bp_link_details_form_name_desc_fields_display() {
 	echo bp_get_link_details_form_name_desc_fields_display();
 }
 	function bp_get_link_details_form_name_desc_fields_display() {
-		global $bp;
 
-		if ( isset( $_POST['link-url-embed-data'] ) ) {
-			return ( !empty( $_POST['link-url-embed-data'] ) && empty( $_POST['link-url-embed-edit-text'] ) ) ? 0 : 1;
-		} elseif ( bp_links_current_link_embed_enabled() )  {
-			return ( bp_links_current_link_embed_service() instanceof BP_Links_Embed_From_Url ) ? 0 : 1;
-		} else {
-			return 0;
+		// page fetching enabled?
+		if ( true === BP_LINKS_CREATE_PAGE_FETCH ) {
+			// yep, determing display status
+			if ( isset( $_POST['link-url-embed-data'] ) ) {
+				return ( !empty( $_POST['link-url-embed-data'] ) && empty( $_POST['link-url-embed-edit-text'] ) ) ? 0 : 1;
+			} elseif ( bp_links_current_link_embed_enabled() )  {
+				return ( bp_links_current_link_embed_service() instanceof BP_Links_Embed_From_Url ) ? 0 : 1;
+			} else {
+				return 0;
+			}
 		}
+
+		// display fields by default
+		return 1;
 	}
 
 function bp_link_details_form_avatar_fields_display() {
