@@ -141,6 +141,18 @@ $wpsf_settings[] = array(
 				1 => 'Yes',
 				0 => 'No'
 			)
+        ),
+		array(
+            'id' => 'modsuspend',
+            'title' => __( 'Suspend New Links?', 'buddypress-links' ) . $dagger,
+            'desc' => __( 'Set this to "Yes" to mark all new links as suspended when they are first created.', 'buddypress-links' ),
+            'type' => 'radio',
+			'class' => $pro_field_class,
+            'std' => false,
+			'choices' => array(
+				1 => 'Yes',
+				0 => 'No'
+			)
         )
     )
 );

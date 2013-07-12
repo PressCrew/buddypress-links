@@ -133,6 +133,10 @@ function bp_links_init_settings()
 	if ( !defined( 'BP_LINKS_CREATE_EDIT_ADVANCED' ) )
 		define( 'BP_LINKS_CREATE_EDIT_ADVANCED', (boolean) $settings['buddypress_links_content_editadvanced'] );
 
+	// create suspended by default
+	if ( !defined( 'BP_LINKS_CREATE_MOD_SUSPEND' ) )
+		define( 'BP_LINKS_CREATE_MOD_SUSPEND', (boolean) $settings['buddypress_links_content_modsuspend'] );
+
 	// voting toggle
 	if ( !defined( 'BP_LINKS_VOTE_ENABLED' ) )
 		define( 'BP_LINKS_VOTE_ENABLED', (boolean) $settings['buddypress_links_voting_enabled'] );
