@@ -103,6 +103,7 @@ function bp_links_upgrade()
 		// upgrades!
 		bp_links_upgrade_04( $db_version );
 		bp_links_upgrade_08( $db_version );
+		bp_links_upgrade_082( $db_version );
 	}
 
 	// update db version to current
@@ -158,6 +159,29 @@ function bp_links_upgrade_08( $db_version ) {
 		);
 
 	if ( false === $wpdb->query($sql_activity) )
+		return false;
+
+	// success!
+	return true;
+}
+
+/**
+ * Perform upgrades for version 0.8.2
+ *
+ * @param integer $db_version
+ * @return boolean
+ */
+function bp_links_upgrade_082( $db_version ) {
+	global $bp, $wpdb;
+
+	// if DB version is 9 or higher, skip this upgrade
+	if ( $db_version >= 9 )
+		return true;
+
+	// rehash all links table urls, repairs bad values after fix: cb93db6b
+	$sql_rehash = "UPDATE {$bp->links->table_name} SET url_hash = MD5( url )";
+
+	if ( false === $wpdb->query($sql_rehash) )
 		return false;
 
 	// success!

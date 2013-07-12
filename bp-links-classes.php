@@ -667,6 +667,16 @@ class BP_Links_Link {
 		}
 	}
 
+	function link_url_exists( $url ) {
+		global $wpdb, $bp;
+
+		if ( empty( $url ) ) {
+			return false;
+		} else {
+			return $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$bp->links->table_name} WHERE url_hash = MD5(%s)", $url ) );
+		}
+	}
+
 	function get_id_from_slug( $slug ) {
 		return self::link_exists( $slug );
 	}

@@ -67,6 +67,17 @@ $wpsf_settings[] = array(
     'section_order' => 10,
     'fields' => array(
         array(
+            'id' => 'dupeurl',
+            'title' => __( 'Allow Duplicate URLs?', 'buddypress-links' ),
+            'desc' => __( 'Set this to "No" to prevent duplicate URLs from being added to the directory.', 'buddypress-links' ),
+            'type' => 'radio',
+            'std' => true,
+			'choices' => array(
+				1 => 'Yes',
+				0 => 'No'
+			)
+        ),
+        array(
             'id' => 'maxurl',
             'title' => __( 'Max. URL Characters', 'buddypress-links' ),
             'desc' => __( 'Set this to the maximum number of characters allowed for a link URL. (Must be 255 or lower)', 'buddypress-links' ),

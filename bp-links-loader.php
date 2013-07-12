@@ -48,7 +48,7 @@ if ( !defined( 'BP_LINKS_EMBED_FOTOGLIF_PUBID' ) )
 
 // Configuration
 define( 'BP_LINKS_VERSION', '0.8.2' );
-define( 'BP_LINKS_DB_VERSION', '8' );
+define( 'BP_LINKS_DB_VERSION', '9' );
 define( 'BP_LINKS_PLUGIN_NAME', 'buddypress-links' );
 define( 'BP_LINKS_PLUGIN_TEXTDOMAIN', 'buddypress-links' );
 define( 'BP_LINKS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );

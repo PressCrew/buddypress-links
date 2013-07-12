@@ -101,6 +101,10 @@ function bp_links_init_settings()
 	if ( !defined( 'BP_LINKS_PERMALINK_TO_SLUG' ) )
 		define( 'BP_LINKS_PERMALINK_TO_SLUG', (boolean) $settings['buddypress_links_global_linkslug'] );
 
+	// allow duplicate urls?
+	if ( !defined( 'BP_LINKS_CREATE_DUPE_URL' ) )
+		define( 'BP_LINKS_CREATE_DUPE_URL', (boolean) $settings['buddypress_links_content_dupeurl'] );
+
 	// max url characters
 	if ( !defined( 'BP_LINKS_MAX_CHARACTERS_URL' ) )
 		define( 'BP_LINKS_MAX_CHARACTERS_URL', (integer) $settings['buddypress_links_content_maxurl'] );
@@ -931,6 +935,12 @@ function bp_links_validate_create_form_input() {
 		} elseif ( bp_links_is_url_valid( $bp_new_link_url ) !== true ) {
 			bp_core_add_message( __( 'The URL you entered is not valid.', 'buddypress-links' ), 'error' );
 			return false;
+		} elseif ( false === BP_LINKS_CREATE_DUPE_URL ) {
+			// check for dupeness
+			if ( bp_links_check_link_url_exists( $bp_new_link_url ) ) {
+				bp_core_add_message( __( 'The URL you entered already exists.', 'buddypress-links' ), 'error' );
+				return false;
+			}
 		}
 
 		$return_data['link-url'] = $bp_new_link_url;
@@ -1523,6 +1533,10 @@ function bp_links_is_url_valid( $url ) {
 
 function bp_links_check_link_exists( $link_id ) {
 	return BP_Links_Link::link_exists( $link_id );
+}
+
+function bp_links_check_link_url_exists( $link_url ) {
+	return BP_Links_Link::link_url_exists( $link_url );
 }
 
 /*** Link Fetching, Filtering & Searching  *************************************/
