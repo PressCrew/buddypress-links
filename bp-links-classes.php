@@ -454,7 +454,7 @@ class BP_Links_Link {
 					$this->user_id,
 					$this->category_id,
 					$this->url,
-					$this->url_hash,
+					$this->url,
 					$this->target,
 					$this->rel,
 					$this->slug,
