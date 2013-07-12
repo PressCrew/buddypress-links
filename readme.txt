@@ -114,31 +114,27 @@ The links data from the 0.2.x branch is compatible with 0.3.x and higher, except
 
 == Upgrade Notice ==
 
+= 0.8.2 =
+
+On activation, all URL hashes will be regenerated to fix database values which were being inserted incorrectly.
+
+= 0.8 =
+
+No changes that affect data were made, however it is always a good idea to back up your data just in case!
+
 = 0.7 =
 
 No changes that affect data were made, however it is always a good idea to back up your data just in case!
 
-= 0.6 =
-
-No changes that affect data were made, however it is always a good idea to back up your data just in case!
-
-= 0.5 =
-
-No changes that affect data were made, however it is always a good idea to back up your data just in case!
-
-= 0.4 =
-
-BACK UP YOUR DATA! DO NOT attempt to install version 0.3 or higher on BP 1.1.X!  DO NOT try to use this plugin with the classic theme!
-
-= 0.3 =
-
-DO NOT attempt to install version 0.3 or higher on BP 1.1.X!  DO NOT try to use this plugin with the classic theme!
-
-= 0.2 =
-
-This version contains the first support for rich media embedding. *Please make sure that you update the "links" directory in your theme (see Installation).*
-
 == Changelog ==
+
+= 0.8.2 =
+
+* Compatibility testing up to BuddyPress 1.7.3
+* Added new setting to disable page fetching
+* Added new setting to use numeric ids in permalinks instead of slugs
+* Added new setting to prevent duplicate URLs from being submitted to directory
+* Several minor bug fixes
 
 = 0.8.1 =
 
