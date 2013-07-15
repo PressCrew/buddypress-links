@@ -134,6 +134,7 @@ No changes that affect data were made, however it is always a good idea to back 
 * Added new setting to disable page fetching
 * Added new setting to use numeric ids in permalinks instead of slugs
 * Added new setting to prevent duplicate URLs from being submitted to directory
+* Link Manager (dashboard) now shows newest links first
 * Several minor bug fixes
 
 = 0.8.1 =
