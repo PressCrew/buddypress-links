@@ -744,7 +744,7 @@ function bp_links_screen_link_admin_edit_details() {
 			return false;
 
 		// validate the data fields
-		$data_valid = bp_links_validate_create_form_input();
+		$data_valid = bp_links_validate_create_form_input( $bp->links->current_link );
 
 		if ( !empty( $data_valid ) ) {
 
@@ -908,7 +908,7 @@ add_action( 'bp_screens', 'bp_links_screen_link_admin_delete_link' );
 /**
  * Validate new/udpate link form data and format errors
  */
-function bp_links_validate_create_form_input() {
+function bp_links_validate_create_form_input( $link = null ) {
 	
 	$message_required = __( 'Please fill in all of the required fields', 'buddypress-links' );
 
@@ -935,7 +935,10 @@ function bp_links_validate_create_form_input() {
 		} elseif ( bp_links_is_url_valid( $bp_new_link_url ) !== true ) {
 			bp_core_add_message( __( 'The URL you entered is not valid.', 'buddypress-links' ), 'error' );
 			return false;
-		} elseif ( false === BP_LINKS_CREATE_DUPE_URL ) {
+		} elseif (
+			( false === BP_LINKS_CREATE_DUPE_URL ) &&
+			( false === $link instanceof BP_Links_Link || $bp_new_link_url != $link->url )
+		) {
 			// check for dupeness
 			if ( bp_links_check_link_url_exists( $bp_new_link_url ) ) {
 				bp_core_add_message( __( 'The URL you entered already exists.', 'buddypress-links' ), 'error' );
@@ -1014,12 +1017,12 @@ function bp_links_validate_create_form_input() {
 	
 	// process meta data
 	if ( isset( $_POST['link-meta'] ) ) {
-		$return_data['link-meta'] = apply_filters( 'bp_links_validate_create_form_input_meta', $_POST['link-meta'] );
+		$return_data['link-meta'] = apply_filters( 'bp_links_validate_create_form_input_meta', $_POST['link-meta'], $link );
 	} else{
 		$return_data['link-meta'] = array();
 	}
 
-	return apply_filters( 'bp_links_validate_create_form_input', $return_data );
+	return apply_filters( 'bp_links_validate_create_form_input', $return_data, $link );
 }
 
 /********************************************************************************
