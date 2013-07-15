@@ -24,7 +24,7 @@
 		</p>
 	</form>
 
-	<?php if ( bp_has_links( 'type=active&per_page=10' ) ) : ?>
+	<?php if ( bp_has_links( 'type=newest&per_page=10' ) ) : ?>
 		<form id="bp-link-admin-list" method="post" action="">
 			<div class="tablenav">
 				<div class="tablenav-pages">
