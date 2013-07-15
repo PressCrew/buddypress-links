@@ -927,7 +927,7 @@ function bp_links_validate_create_form_input() {
 	// link url
 	if ( !empty( $_POST['link-url'] ) ) {
 
-		$bp_new_link_url = trim( stripslashes( $_POST['link-url'] ) );
+		$bp_new_link_url = rtrim( trim( stripslashes( $_POST['link-url'] ) ), '/' );
 
 		if ( strlen( $bp_new_link_url ) > BP_LINKS_MAX_CHARACTERS_URL ) {
 			bp_core_add_message( sprintf( __( 'Link URL must be %1$d characters or less, please make corrections and re-submit.', 'buddypress-links' ), BP_LINKS_MAX_CHARACTERS_URL ), 'error' );
