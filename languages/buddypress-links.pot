@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/buddypress-links\n"
-"POT-Creation-Date: 2013-06-25 19:12:12+00:00\n"
+"POT-Creation-Date: 2013-07-18 17:31:57+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -43,8 +43,8 @@ msgstr ""
 #: bp-links-admin.php:73 bp-links-admin.php:121 bp-links-admin.php:175
 #: bp-links-admin.php:182 bp-links-admin.php:187 bp-links-admin.php:201
 #: bp-links-admin.php:214 bp-links-admin.php:219 bp-links-admin.php:235
-#: bp-links-core.php:763 bp-links-core.php:799 bp-links-core.php:815
-#: bp-links-core.php:1075 bp-links-embed.php:161 bp-links-embed.php:165
+#: bp-links-core.php:780 bp-links-core.php:816 bp-links-core.php:832
+#: bp-links-core.php:1101 bp-links-embed.php:161 bp-links-embed.php:165
 msgid "Please try again."
 msgstr ""
 
@@ -140,164 +140,168 @@ msgstr ""
 msgid "You must be logged in to vote!"
 msgstr ""
 
-#: bp-links-ajax.php:87
+#: bp-links-ajax.php:92
 msgid "Auto-fill not available for this URL."
 msgstr ""
 
-#: bp-links-ajax.php:106
+#: bp-links-ajax.php:111
 msgid "Invalid request"
 msgstr ""
 
-#: bp-links-core.php:367 bp-links-core.php:445 bp-links-core.php:512
-#: bp-links-core.php:542 bp-links-loader.php:123
-#: bp-links-templatetags.php:1464 bp-links-widgets.php:13
+#: bp-links-core.php:383 bp-links-core.php:462 bp-links-core.php:529
+#: bp-links-core.php:559 bp-links-loader.php:123
+#: bp-links-templatetags.php:1491 bp-links-widgets.php:13
 #: themes/bp-links-admin/category-list.php:70
 msgid "Links"
 msgstr ""
 
-#: bp-links-core.php:387 bp-links-core.php:404 bp-links-dtheme.php:73
+#: bp-links-core.php:403 bp-links-core.php:420 bp-links-dtheme.php:73
 #: themes/bp-links-default/index.php:21
 msgid "My Links"
 msgstr ""
 
-#: bp-links-core.php:408 bp-links-core.php:528 bp-links-dtheme.php:119
+#: bp-links-core.php:424 bp-links-core.php:545 bp-links-dtheme.php:119
 msgid "Create"
 msgstr ""
 
-#: bp-links-core.php:459
+#: bp-links-core.php:476
 msgid "Home"
 msgstr ""
 
-#: bp-links-core.php:475
+#: bp-links-core.php:492
 msgid "Admin"
 msgstr ""
 
-#: bp-links-core.php:520
+#: bp-links-core.php:537
 msgid "List"
 msgstr ""
 
-#: bp-links-core.php:576
+#: bp-links-core.php:593
 msgid "Admin Options"
 msgstr ""
 
-#: bp-links-core.php:579 bp-links-templatetags.php:776
+#: bp-links-core.php:596 bp-links-templatetags.php:793
 #: themes/bp-links-default/single/forms/delete.php:5
 #: themes/bp-links-default/single/forms/delete.php:16
 msgid "Delete Link"
 msgstr ""
 
-#: bp-links-core.php:590
+#: bp-links-core.php:607
 msgid "Random Link"
 msgstr ""
 
-#: bp-links-core.php:754
+#: bp-links-core.php:771
 msgid "Link details were successfully updated."
 msgstr ""
 
-#: bp-links-core.php:763
+#: bp-links-core.php:780
 msgid "There was an error updating link details."
 msgstr ""
 
-#: bp-links-core.php:797
+#: bp-links-core.php:814
 msgid "Your avatar was deleted successfully!"
 msgstr ""
 
-#: bp-links-core.php:799
+#: bp-links-core.php:816
 msgid "There was a problem deleting that avatar"
 msgstr ""
 
-#: bp-links-core.php:813
+#: bp-links-core.php:830
 msgid "The link avatar was uploaded successfully!"
 msgstr ""
 
-#: bp-links-core.php:815 bp-links-embed.php:161
+#: bp-links-core.php:832 bp-links-embed.php:161
 msgid "There was an error saving link avatar."
 msgstr ""
 
-#: bp-links-core.php:876
+#: bp-links-core.php:893
 msgid "The link was deleted successfully"
 msgstr ""
 
-#: bp-links-core.php:879
+#: bp-links-core.php:896
 msgid "There was an error deleting the link, please try again."
 msgstr ""
 
-#: bp-links-core.php:896
+#: bp-links-core.php:913
 msgid "Please fill in all of the required fields"
 msgstr ""
 
-#: bp-links-core.php:916
+#: bp-links-core.php:933
 msgid ""
 "Link URL must be %1$d characters or less, please make corrections and re-"
 "submit."
 msgstr ""
 
-#: bp-links-core.php:919
+#: bp-links-core.php:936
 msgid "The URL you entered is not valid."
 msgstr ""
 
-#: bp-links-core.php:936
+#: bp-links-core.php:944
+msgid "The URL you entered already exists."
+msgstr ""
+
+#: bp-links-core.php:962
 msgid ""
 "Link Name must be %1$d characters or less, please make corrections and re-"
 "submit."
 msgstr ""
 
-#: bp-links-core.php:953
+#: bp-links-core.php:979
 msgid ""
 "Link Description must be %1$d characters or less, please make corrections "
 "and re-submit."
 msgstr ""
 
-#: bp-links-core.php:1060
+#: bp-links-core.php:1086
 msgid "%1$s created the link %2$s"
 msgstr ""
 
-#: bp-links-core.php:1075
+#: bp-links-core.php:1101
 msgid "There was an error saving link details."
 msgstr ""
 
-#: bp-links-core.php:1163
+#: bp-links-core.php:1189
 msgid "Created a link"
 msgstr ""
 
-#: bp-links-core.php:1164
+#: bp-links-core.php:1190
 msgid "Voted on a link"
 msgstr ""
 
-#: bp-links-core.php:1165
+#: bp-links-core.php:1191
 msgid "Commented on a link"
 msgstr ""
 
-#: bp-links-core.php:1221
+#: bp-links-core.php:1247
 msgid "Link Example Event"
 msgstr ""
 
-#: bp-links-core.php:1221
+#: bp-links-core.php:1247
 msgid "%d number of example events happened for the link \"%s\""
 msgstr ""
 
-#: bp-links-core.php:1224
+#: bp-links-core.php:1250
 msgid "%1$s triggered a notification for the link \"%2$s\""
 msgstr ""
 
-#: bp-links-core.php:1600 bp-links-templatetags.php:771
+#: bp-links-core.php:1630 bp-links-templatetags.php:788
 #: themes/bp-links-default/single/forms/avatar.php:5
 msgid "Link Avatar"
 msgstr ""
 
-#: bp-links-core.php:1731
+#: bp-links-core.php:1761
 msgid "%s posted a comment on the link %s:"
 msgstr ""
 
-#: bp-links-core.php:1817
+#: bp-links-core.php:1847
 msgid "up"
 msgstr ""
 
-#: bp-links-core.php:1817
+#: bp-links-core.php:1847
 msgid "down"
 msgstr ""
 
-#: bp-links-core.php:1820
+#: bp-links-core.php:1850
 msgid "%1$s voted %2$s the link %3$s"
 msgstr ""
 
@@ -337,7 +341,7 @@ msgstr ""
 msgid "Category:"
 msgstr ""
 
-#: bp-links-dtheme.php:138 bp-links-templatetags.php:1420
+#: bp-links-dtheme.php:138 bp-links-templatetags.php:1447
 msgid "All"
 msgstr ""
 
@@ -394,28 +398,28 @@ msgstr ""
 msgid "The embedding code you entered was not recognized."
 msgstr ""
 
-#: bp-links-embed.php:235
+#: bp-links-embed.php:230
 msgid "Clear"
 msgstr ""
 
-#: bp-links-embed.php:236
+#: bp-links-embed.php:233
 msgid "Fetch Page Details"
 msgstr ""
 
-#: bp-links-embed.php:343
+#: bp-links-embed.php:312
 msgid "Rich Media Detected:"
 msgstr ""
 
-#: bp-links-embed.php:344
-msgid "Edit Name and Description"
-msgstr ""
-
-#: bp-links-embed.php:357
+#: bp-links-embed.php:320
 msgid "Thumbs"
 msgstr ""
 
-#: bp-links-embed.php:359
+#: bp-links-embed.php:323
 msgid "No Thumbnail"
+msgstr ""
+
+#: bp-links-embed.php:332
+msgid "Edit Name and Description"
 msgstr ""
 
 #: bp-links-notifications.php:19
@@ -474,146 +478,192 @@ msgid ""
 "link is clicked. Set this to No to send them directly to the external url."
 msgstr ""
 
-#: bp-links-settings.php:54
+#: bp-links-settings.php:50
+msgid "Link to slug or ID?"
+msgstr ""
+
+#: bp-links-settings.php:51
+msgid ""
+"The default behavior is to use the link's unique text slug in permalink "
+"URLs. Set this to Numeric ID to use the link ID instead."
+msgstr ""
+
+#: bp-links-settings.php:55
+msgid "Text Slug"
+msgstr ""
+
+#: bp-links-settings.php:56
+msgid "Numeric ID"
+msgstr ""
+
+#: bp-links-settings.php:65
 msgid "Content Settings"
 msgstr ""
 
-#: bp-links-settings.php:60
+#: bp-links-settings.php:71
+msgid "Allow Duplicate URLs?"
+msgstr ""
+
+#: bp-links-settings.php:72
+msgid ""
+"Set this to \"No\" to prevent duplicate URLs from being added to the "
+"directory."
+msgstr ""
+
+#: bp-links-settings.php:82
 msgid "Max. URL Characters"
 msgstr ""
 
-#: bp-links-settings.php:61
+#: bp-links-settings.php:83
 msgid ""
 "Set this to the maximum number of characters allowed for a link URL. (Must "
 "be 255 or lower)"
 msgstr ""
 
-#: bp-links-settings.php:67
+#: bp-links-settings.php:89
 msgid "Max. Name Characters"
 msgstr ""
 
-#: bp-links-settings.php:68
+#: bp-links-settings.php:90
 msgid ""
 "Set this to the maximum number of characters allowed for a link name/title. "
 "(Must be 255 or lower)"
 msgstr ""
 
-#: bp-links-settings.php:74
+#: bp-links-settings.php:96
 msgid "Max. Description Characters"
 msgstr ""
 
-#: bp-links-settings.php:75
+#: bp-links-settings.php:97
 msgid ""
 "Set this to the maximum number of characters allowed for a link description."
 msgstr ""
 
-#: bp-links-settings.php:81
+#: bp-links-settings.php:103
 msgid "Is description required?"
 msgstr ""
 
-#: bp-links-settings.php:82
+#: bp-links-settings.php:104
 msgid ""
 "By default, every link must have a description. Set this to No to allow "
 "empty descriptions."
 msgstr ""
 
-#: bp-links-settings.php:92
+#: bp-links-settings.php:114
 msgid "Category Input Type"
 msgstr ""
 
-#: bp-links-settings.php:93
+#: bp-links-settings.php:115
 msgid ""
 "The default behavior is to use radio buttons to display categories on the "
 "create form. Set this to Select to use a select box instead."
 msgstr ""
 
-#: bp-links-settings.php:103
-msgid "Show Avatar Options?"
+#: bp-links-settings.php:125
+msgid "Enable Page Fetching?"
 msgstr ""
 
-#: bp-links-settings.php:104
-msgid "Set this to \"No\" to hide the Edit Avatar Options."
-msgstr ""
-
-#: bp-links-settings.php:114
-msgid "Show Advanced Settings?"
-msgstr ""
-
-#: bp-links-settings.php:115
-msgid "Set this to \"No\" to hide the Edit Advanced Settings."
-msgstr ""
-
-#: bp-links-settings.php:129
-msgid "Voting Settings"
-msgstr ""
-
-#: bp-links-settings.php:135
-msgid "Allow members to vote on links?"
+#: bp-links-settings.php:126
+msgid "Set this to \"No\" to disable page content fetching."
 msgstr ""
 
 #: bp-links-settings.php:136
-msgid "Voting is enabled by default."
+msgid "Show Avatar Options?"
 msgstr ""
 
-#: bp-links-settings.php:146
-msgid "Can members change their vote?"
+#: bp-links-settings.php:137
+msgid "Set this to \"No\" to hide the Edit Avatar Options."
 msgstr ""
 
 #: bp-links-settings.php:147
+msgid "Show Advanced Settings?"
+msgstr ""
+
+#: bp-links-settings.php:148
+msgid "Set this to \"No\" to hide the Edit Advanced Settings."
+msgstr ""
+
+#: bp-links-settings.php:158
+msgid "Suspend New Links?"
+msgstr ""
+
+#: bp-links-settings.php:159
+msgid ""
+"Set this to \"Yes\" to mark all new links as suspended when they are first "
+"created."
+msgstr ""
+
+#: bp-links-settings.php:174
+msgid "Voting Settings"
+msgstr ""
+
+#: bp-links-settings.php:180
+msgid "Allow members to vote on links?"
+msgstr ""
+
+#: bp-links-settings.php:181
+msgid "Voting is enabled by default."
+msgstr ""
+
+#: bp-links-settings.php:191
+msgid "Can members change their vote?"
+msgstr ""
+
+#: bp-links-settings.php:192
 msgid ""
 "The default behavior is to allow members to change their vote. Set this to "
 "No to prevent vote changing."
 msgstr ""
 
-#: bp-links-settings.php:157
+#: bp-links-settings.php:202
 msgid "What kind of voting would you like?"
 msgstr ""
 
-#: bp-links-settings.php:158
+#: bp-links-settings.php:203
 msgid ""
 "The default behavior is to allow members to vote UP or DOWN. Set this to "
 "\"Up Only\" to disable down votes."
 msgstr ""
 
-#: bp-links-settings.php:168
+#: bp-links-settings.php:213
 msgid "Record voting activity?"
 msgstr ""
 
-#: bp-links-settings.php:169
+#: bp-links-settings.php:214
 msgid ""
 "The default behavior is to record voting activity the first time a member "
 "votes on a link. Set this to No to disable voting activity recording."
 msgstr ""
 
-#: bp-links-settings.php:183
+#: bp-links-settings.php:228
 msgid "Profile Settings"
 msgstr ""
 
-#: bp-links-settings.php:189 bp-links-settings.php:232
+#: bp-links-settings.php:234 bp-links-settings.php:277
 msgid "Nav Position"
 msgstr ""
 
-#: bp-links-settings.php:190
+#: bp-links-settings.php:235
 msgid ""
 "Enter a number to set the position of the Links tab in the profile main "
 "navigation."
 msgstr ""
 
-#: bp-links-settings.php:196
+#: bp-links-settings.php:241
 msgid "Activity Nav Position"
 msgstr ""
 
-#: bp-links-settings.php:197
+#: bp-links-settings.php:242
 msgid ""
 "Enter a number to set the position of the Links tab in the profile activity "
 "navigation."
 msgstr ""
 
-#: bp-links-settings.php:203 bp-links-settings.php:240
+#: bp-links-settings.php:248 bp-links-settings.php:285
 msgid "Max. Activity History"
 msgstr ""
 
-#: bp-links-settings.php:204
+#: bp-links-settings.php:249
 msgid ""
 "Limitations of the activity API require that we pass all link ids that we "
 "want to display activity for if we are limiting results to links owned by a "
@@ -622,26 +672,26 @@ msgid ""
 "the activity API."
 msgstr ""
 
-#: bp-links-settings.php:214
+#: bp-links-settings.php:259
 msgid "Groups Settings"
 msgstr ""
 
-#: bp-links-settings.php:220
+#: bp-links-settings.php:265
 msgid "Groups integration"
 msgstr ""
 
-#: bp-links-settings.php:221
+#: bp-links-settings.php:266
 msgid ""
 "Integration with the groups component is On by default. Set this to Off to "
 "disable all integration with groups."
 msgstr ""
 
-#: bp-links-settings.php:233
+#: bp-links-settings.php:278
 msgid ""
 "Enter a number to set the position of the Links tab in the groups navigation."
 msgstr ""
 
-#: bp-links-settings.php:241
+#: bp-links-settings.php:286
 msgid ""
 "This setting is identical to Profile Max Activity history, except it applies "
 "to links that have been shared with a single group."
@@ -818,87 +868,87 @@ msgstr ""
 msgid "not yet active"
 msgstr ""
 
-#: bp-links-templatetags.php:602
+#: bp-links-templatetags.php:619
 msgid "%s vote"
 msgstr ""
 
-#: bp-links-templatetags.php:604 bp-links-widgets.php:138
+#: bp-links-templatetags.php:621 bp-links-widgets.php:138
 msgid "%s votes"
 msgstr ""
 
-#: bp-links-templatetags.php:725
+#: bp-links-templatetags.php:742
 msgid "Viewing link %1$d to %2$d (of %3$d links)"
 msgstr ""
 
-#: bp-links-templatetags.php:762
+#: bp-links-templatetags.php:779
 msgid "Edit Details"
 msgstr ""
 
-#: bp-links-templatetags.php:787
+#: bp-links-templatetags.php:804
 msgid "This is a hidden link. Only the user who owns it can view it."
 msgstr ""
 
-#: bp-links-templatetags.php:789
+#: bp-links-templatetags.php:806
 msgid "This is a friends only link. Only the owner's friends can view it."
 msgstr ""
 
-#: bp-links-templatetags.php:791
+#: bp-links-templatetags.php:808
 msgid "You do not have permission to access this link."
 msgstr ""
 
-#: bp-links-templatetags.php:1275
+#: bp-links-templatetags.php:1302
 msgid "Viewing category %1$d to %2$d (of %3$d categories)"
 msgstr ""
 
-#: bp-links-templatetags.php:1465
+#: bp-links-templatetags.php:1492
 msgid "Yes"
 msgstr ""
 
-#: bp-links-templatetags.php:1466
+#: bp-links-templatetags.php:1493
 msgid "No"
 msgstr ""
 
-#: bp-links-templatetags.php:1470
+#: bp-links-templatetags.php:1497
 msgid "A member posts a comment on a link you created"
 msgstr ""
 
-#: bp-links-templatetags.php:1519 bp-links-widgets.php:36
+#: bp-links-templatetags.php:1546 bp-links-widgets.php:36
 msgid "Votes"
 msgstr ""
 
-#: bp-links-templatetags.php:1628
+#: bp-links-templatetags.php:1655
 msgid "External Link"
 msgstr ""
 
-#: bp-links-templatetags.php:1663
+#: bp-links-templatetags.php:1690
 msgid "more..."
 msgstr ""
 
-#: bp-links-templatetags.php:1697
+#: bp-links-templatetags.php:1724
 msgid "Comments"
 msgstr ""
 
-#: bp-links-templatetags.php:1704 bp-links-widgets.php:132
+#: bp-links-templatetags.php:1731 bp-links-widgets.php:132
 msgid "created %s"
 msgstr ""
 
-#: bp-links-templatetags.php:1712 themes/bp-links-admin/link-manager.php:74
+#: bp-links-templatetags.php:1739 themes/bp-links-admin/link-manager.php:74
 msgid "Last Active"
 msgstr ""
 
-#: bp-links-templatetags.php:1713
+#: bp-links-templatetags.php:1740
 msgid "Newly Created"
 msgstr ""
 
-#: bp-links-templatetags.php:1716
+#: bp-links-templatetags.php:1743
 msgid "Most Popular"
 msgstr ""
 
-#: bp-links-templatetags.php:1717
+#: bp-links-templatetags.php:1744
 msgid "Most Votes"
 msgstr ""
 
-#: bp-links-templatetags.php:1718
+#: bp-links-templatetags.php:1745
 msgid "Highest Rated"
 msgstr ""
 
@@ -966,6 +1016,101 @@ msgstr ""
 msgid "My Links - Public Activity"
 msgstr ""
 
+#: lib/wp-sdl/classes/html/wp_sdl_html_1_0.php:103
+msgid "The $atts parameter must be an array."
+msgstr ""
+
+#: lib/wp-sdl/classes/html/wp_sdl_html_1_0.php:128
+msgid "The attribute \"%s\" is not valid."
+msgstr ""
+
+#: lib/wp-sdl/classes/html/wp_sdl_html_1_0.php:222
+#: lib/wp-sdl/classes/html/wp_sdl_html_1_0.php:252
+msgid "Argument must be true/false (boolean)."
+msgstr ""
+
+#: lib/wp-sdl/classes/html/wp_sdl_html_1_0.php:302
+msgid "The \"%s\" element is not valid."
+msgstr ""
+
+#: lib/wp-sdl/classes/html/wp_sdl_html_1_0.php:345
+msgid "The $tag parameter cannot be empty unless auto close is enabled."
+msgstr ""
+
+#: lib/wp-sdl/classes/html/wp_sdl_html_1_0.php:399
+msgid "The \"%s\" element is not supported by auto close."
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:168
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:187
+msgid "Safe mode must be an integer."
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:210
+msgid "Index must be an integer."
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:412
+msgid "The key does not exist."
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:442
+msgid "Invalid key"
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:479
+msgid "Safe mode strict is enabled and data already exists for the key."
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:512
+msgid "The key cannot be null."
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:533
+msgid "Safe mode strict is enabled and the key does not exist."
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:574
+msgid "The \"%s\" class does not support setting values with ArrayAccess."
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:589
+msgid "The \"%s\" class does not support unsetting values with ArrayAccess."
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:636
+msgid "Length must be an integer >= one."
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:661
+msgid "Index is out of range."
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:1229
+msgid "Priority must be an integer"
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:1360
+msgid "Key does not exist"
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:1364
+msgid "Key cannot be null"
+msgstr ""
+
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:1511
+#: lib/wp-sdl/classes/struct/wp_sdl_struct_1_0.php:1620
+msgid "Index must be a string."
+msgstr ""
+
+#: lib/wp-sdl/classes/wp_sdl_1_0.php:42
+msgid "%1$s was called <strong>incorrectly</strong>. %2$s %3$s"
+msgstr ""
+
+#: lib/wp-sdl/classes/wp_sdl_helper_1_0.php:34
+msgid "Compat instance cannot be overwritten once set."
+msgstr ""
+
 #: lib/wp-settings-framework.php:282
 msgid "Save Changes"
 msgstr ""
@@ -1005,12 +1150,12 @@ msgid "Categories matching:"
 msgstr ""
 
 #: themes/bp-links-admin/category-list.php:58
-#: themes/bp-links-default/single/forms/details.php:45
+#: themes/bp-links-default/single/forms/details.php:44
 msgid "Name"
 msgstr ""
 
 #: themes/bp-links-admin/category-list.php:61
-#: themes/bp-links-default/single/forms/details.php:49
+#: themes/bp-links-default/single/forms/details.php:48
 msgid "Description"
 msgstr ""
 
@@ -1431,80 +1576,80 @@ msgstr ""
 msgid "I understand the consequences of deleting this link."
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:68
+#: themes/bp-links-default/single/forms/details.php:67
 msgid "Edit Avatar Options"
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:74
+#: themes/bp-links-default/single/forms/details.php:73
 msgid "Current"
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:84
+#: themes/bp-links-default/single/forms/details.php:83
 msgid "Customize"
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:86
+#: themes/bp-links-default/single/forms/details.php:85
 msgid ""
 "After saving this link you will be directed to a page where you can "
 "customize the avatar."
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:103
+#: themes/bp-links-default/single/forms/details.php:102
 msgid "Edit Advanced Settings"
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:107
+#: themes/bp-links-default/single/forms/details.php:106
 msgid "Privacy Options"
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:111
+#: themes/bp-links-default/single/forms/details.php:110
 msgid "This is a public link"
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:114
+#: themes/bp-links-default/single/forms/details.php:113
 msgid "Any site member can see this link, and comment on it."
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:115
+#: themes/bp-links-default/single/forms/details.php:114
 msgid "This link will be listed in the links directory and in search results."
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:116
+#: themes/bp-links-default/single/forms/details.php:115
 msgid "Link content and activity will be visible to any site member."
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:122
+#: themes/bp-links-default/single/forms/details.php:121
 msgid "This is a friends-only link"
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:125
+#: themes/bp-links-default/single/forms/details.php:124
 msgid ""
 "Only users who are in your friends list can see the link and comment on it."
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:126
-#: themes/bp-links-default/single/forms/details.php:137
+#: themes/bp-links-default/single/forms/details.php:125
+#: themes/bp-links-default/single/forms/details.php:136
 msgid ""
 "This link will NOT be listed in the links directory or in search results."
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:127
+#: themes/bp-links-default/single/forms/details.php:126
 msgid "Link content and activity will only be visible to your friends."
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:133
+#: themes/bp-links-default/single/forms/details.php:132
 msgid "This is a hidden link"
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:136
+#: themes/bp-links-default/single/forms/details.php:135
 msgid "Only you can see the link."
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:138
+#: themes/bp-links-default/single/forms/details.php:137
 msgid "Link content and activity will only be visible to you."
 msgstr ""
 
-#: themes/bp-links-default/single/forms/details.php:152
+#: themes/bp-links-default/single/forms/details.php:151
 msgid "Save Link"
 msgstr ""
 
