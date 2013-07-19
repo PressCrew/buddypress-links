@@ -33,8 +33,6 @@
 
 	<?php do_action( 'bp_after_directory_links_list' ) ?>
 
-	<?php do_action( 'bp_after_links_loop' ) ?>
-
 <?php else: ?>
 
 	<div id="message" class="info">
@@ -42,3 +40,5 @@
 	</div>
 
 <?php endif; ?>
+
+<?php do_action( 'bp_after_links_loop' ) ?>
