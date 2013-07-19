@@ -100,6 +100,10 @@ function bp_links_init_settings()
 	// link to slug (or ID)?
 	if ( !defined( 'BP_LINKS_PERMALINK_TO_SLUG' ) )
 		define( 'BP_LINKS_PERMALINK_TO_SLUG', (boolean) $settings['buddypress_links_global_linkslug'] );
+	
+	// category url slug
+	if ( !defined( 'BP_LINKS_CAT_URL_SLUG' ) )
+		define( 'BP_LINKS_CAT_URL_SLUG', (string) $settings['buddypress_links_global_catslug'] );
 
 	// allow duplicate urls?
 	if ( !defined( 'BP_LINKS_CREATE_DUPE_URL' ) )
@@ -567,18 +571,6 @@ function bp_links_setup_activity_nav() {
 }
 add_action( 'bp_activity_setup_nav', 'bp_links_setup_activity_nav' );
 
-function bp_links_directory_links_setup() {
-	global $bp;
-
-	if ( bp_is_current_component( 'links') && !bp_current_action() && !bp_current_item() ) {
-		bp_update_is_directory( true, 'links' );
-		
-		do_action( 'bp_links_directory_links_setup' );
-		bp_links_load_template( 'index' );
-	}
-}
-add_action( 'bp_screens', 'bp_links_directory_links_setup', 2 );
-
 function bp_links_setup_adminbar_menu() {
 	global $bp;
 
@@ -628,6 +620,19 @@ add_action( 'wp_head', 'bp_links_add_meta' );
  * specific URL is caught. They will first save or manipulate data using business
  * functions, then pass on the user to a template file.
  */
+
+//
+// Directory
+//
+
+function bp_links_screen_directory() {
+	// links component and is directory?
+	if ( bp_is_current_component( 'links' ) && bp_is_directory() ) {
+		// load index template
+		bp_links_load_template( 'index' );
+	}
+}
+add_action( 'bp_screens', 'bp_links_screen_directory', 2 );
 
 //
 // Profile Pages

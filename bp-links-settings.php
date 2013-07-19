@@ -55,6 +55,13 @@ $wpsf_settings[] = array(
 				1 => __( 'Text Slug', 'buddypress-links' ),
 				0 => __( 'Numeric ID', 'buddypress-links' )
 			)
+        ),
+        array(
+            'id' => 'catslug',
+            'title' => __( 'Category URL Slug', 'buddypress-links' ),
+            'desc' => __( 'The default slug is "category"; Enter a different term to customize the category URL slug.', 'buddypress-links' ),
+            'type' => 'text',
+            'std' => 'category'
         )
     )
 );
@@ -291,4 +298,28 @@ $wpsf_settings[] = array(
     )
 );
 
-?>
+//
+// Validation callbacks
+//
+
+/**
+ * Validate settings data.
+ *
+ * @param array $input
+ * @return array
+ */
+function bp_links_settings_validate_filter( $input )
+{
+	// sanitize category slug
+	if ( isset( $input['buddypress_links_global_catslug'] ) ) {
+		$input['buddypress_links_global_catslug'] =
+			sanitize_title(
+				$input['buddypress_links_global_catslug'],
+				'category'
+			);
+	}
+
+	// return entire input array
+	return $input;
+}
+add_filter( 'buddypress_links_settings_validate', 'bp_links_settings_validate_filter' );
