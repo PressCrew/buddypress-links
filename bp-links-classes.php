@@ -718,6 +718,7 @@ class BP_Links_Link {
 		$user_id = false;
 		$search_terms = false;
 		$category_id = null;
+		$category_slug = null;
 		$meta_match = array();
 
 		// extract 'em
@@ -784,15 +785,42 @@ class BP_Links_Link {
 			$filter_sql = " AND ( l.name LIKE '%%{$search_terms}%%' OR l.description LIKE '%%{$search_terms}%%' )";
 		}
 
-		if ( is_numeric($category_id) && $category_id >= 1 ) {
-			$category_sql = $wpdb->prepare( " AND l.category_id = %d", $category_id );
-		} elseif ( is_array($category_id) ) {
-			foreach( $category_id as $key => $the_cat_id ) {
-				if ( !is_numeric( $the_cat_id ) || $the_cat_id < 1 ) {
-					unset( $category_id[ $key ] );
+		// category filter defaults
+		$category_slugs = array();
+		$category_ids = array();
+		$category_sql = '';
+
+		// filter by category slugs?
+		if ( is_string( $category_slug ) && false === empty( $category_slug ) ) {
+			$category_slugs = array( $category_slug );
+		} elseif ( is_array( $category_slug ) ) {
+			foreach( $category_slug as $key => $the_cat_slug ) {
+				if ( is_string( $the_cat_slug ) && false === empty( $the_cat_slug ) ) {
+					$category_slugs[] = $the_cat_slug;
 				}
 			}
-			$category_sql = $wpdb->prepare( " AND l.category_id IN( %s )", implode( ',', $category_id ) );
+		}
+
+		// maybe build category slug sql
+		if ( count( $category_slugs ) ) {
+			$join_sql .= " INNER JOIN {$bp->links->table_name_categories} AS lc ON l.category_id = lc.id";
+			$category_sql .= $wpdb->prepare( " AND lc.slug IN( '" . implode( "','", array_filter( $category_slugs, 'addslashes' ) ) .  "' )" );
+		}
+
+		// filter by category ids?
+		if ( is_numeric( $category_id ) && $category_id >= 1 ) {
+			$category_ids = array( $category_id );
+		} elseif ( is_array( $category_id ) ) {
+			foreach( $category_id as $key => $the_cat_id ) {
+				if ( is_numeric( $the_cat_id ) && $the_cat_id >= 1 ) {
+					$category_ids[] = (integer) $the_cat_id;
+				}
+			}
+		}
+
+		// maybe build category id sql
+		if ( count( $category_ids ) ) {
+			$category_sql .= $wpdb->prepare( " AND l.category_id IN( %s )", implode( ',', $category_ids ) );
 		}
 
 		if ( $user_id ) {
