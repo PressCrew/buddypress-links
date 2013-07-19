@@ -171,7 +171,8 @@ function bp_links_setup_directory() {
 		// category slug is action, or no action at all?
 		if (
 			BP_LINKS_CAT_URL_SLUG === $action ||
-			true === empty( $action )
+			false === bp_is_group() &&
+			false === bp_is_user()
 		) {
 			// toggle directory on
 			bp_update_is_directory( true, 'links' );
