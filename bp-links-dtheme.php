@@ -264,6 +264,21 @@ function bp_links_dtheme_directory_filter( $query_string, $object, $filter, $sco
 			$args['user_id'] = ( bp_is_user() ) ? $bp->displayed_user->id : $bp->loggedin_user->id;
 
 			return http_build_query( $args );
+
+		} elseif ( 'cat_' == substr( $scope, 0, 4 ) ) {
+
+			// split at underscore
+			$parts = explode( '_', $scope );
+
+			// parse query string
+			$args = array();
+			parse_str( $query_string, $args );
+
+			// inject category id
+			$args['category_id'] = (integer) $parts[1];
+
+			// return modified query
+			return http_build_query( $args );
 		}
 	}
 
