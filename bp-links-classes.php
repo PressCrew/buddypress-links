@@ -911,6 +911,20 @@ class BP_Links_Link {
 		return $wpdb->get_var( "SELECT COUNT(id) FROM {$bp->links->table_name} WHERE " . self::get_status_sql() );
 	}
 
+	function get_total_link_count_for_category( $category_id ) {
+		global $wpdb, $bp;
+
+		$sql =
+			$wpdb->prepare(
+				"SELECT COUNT(l.id) FROM {$bp->links->table_name} AS l INNER JOIN {$bp->links->table_name_categories} AS lc ON l.category_id = lc.id WHERE l.category_id = %d ",
+				$category_id
+			);
+
+		$sql .= self::get_status_sql( false, 'AND l.%s' );
+
+		return $wpdb->get_var( $sql );
+	}
+
 	function get_total_link_count_for_user( $user_id = false ) {
 		global $bp, $wpdb;
 
