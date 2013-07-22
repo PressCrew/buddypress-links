@@ -121,6 +121,18 @@ function bp_links_dtheme_creation_tabs() {
 	do_action( 'bp_links_dtheme_creation_tabs' );
 }
 
+function bp_links_dtheme_directory_mylinks_tab()
+{
+	if (
+		true === BP_LINKS_ENABLE_MYLINKS_TAB &&
+		true === is_user_logged_in()
+	) {
+		// render tab ?>
+		<li id="links-mylinks"><a href="<?php echo bp_loggedin_user_domain() . bp_links_slug() . '/my-links/' ?>"><?php _e( 'My Links', 'buddypress-links' ) ?> <span><?php echo bp_links_total_links_for_user( bp_loggedin_user_id() ) ?></span></a></li><?php
+	}
+}
+add_action( 'bp_links_directory_link_types', 'bp_links_dtheme_directory_mylinks_tab' );
+
 function bp_links_dtheme_link_order_options_list( $echo = true )
 {	
 	// maybe capture output

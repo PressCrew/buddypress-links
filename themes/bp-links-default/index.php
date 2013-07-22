@@ -16,13 +16,7 @@
 			<div class="item-list-tabs">
 				<ul>
 					<li class="selected" id="links-all"><a href="<?php bp_root_domain() ?>"><?php _e( 'All Links', 'buddypress-links' ) ?> <span><?php echo bp_get_links_total_link_count() ?></span></a></li>
-
-					<?php if ( is_user_logged_in() && bp_links_total_links_for_user( bp_loggedin_user_id() ) ) : ?>
-						<li id="links-mylinks"><a href="<?php echo bp_loggedin_user_domain() . bp_links_slug() . '/my-links/' ?>"><?php _e( 'My Links', 'buddypress-links' ) ?> <span><?php echo bp_links_total_links_for_user( bp_loggedin_user_id() ) ?></span></a></li>
-					<?php endif; ?>
-
 					<?php do_action( 'bp_links_directory_link_types' ) ?>
-		
 				</ul>
 			</div><!-- .item-list-tabs -->
 

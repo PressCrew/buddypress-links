@@ -74,6 +74,17 @@ $wpsf_settings[] = array(
     'section_order' => 7,
     'fields' => array(
         array(
+            'id' => 'mylinks',
+            'title' => __( 'My Links Tab', 'buddypress-links' ),
+            'desc' => __( 'The default behavior is to show the My Links tab. Set this to "No" to hide the My Links tab.', 'buddypress-links' ),
+            'type' => 'radio',
+            'std' => true,
+			'choices' => array(
+				1 => 'Yes',
+				0 => 'No'
+			)
+        ),
+        array(
             'id' => 'cattabs',
             'title' => __( 'Category Tabs', 'buddypress-links' ) . $dagger,
             'desc' => __( 'The default behavior is to filter categories using a select box. Set this to "Yes" to add a tab for each category to the directory navigation instead.', 'buddypress-links' ),

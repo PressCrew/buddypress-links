@@ -105,6 +105,10 @@ function bp_links_init_settings()
 	if ( !defined( 'BP_LINKS_CAT_URL_SLUG' ) )
 		define( 'BP_LINKS_CAT_URL_SLUG', (string) $settings['buddypress_links_global_catslug'] );
 
+	// show my links tab
+	if ( !defined( 'BP_LINKS_ENABLE_MYLINKS_TAB' ) )
+		define( 'BP_LINKS_ENABLE_MYLINKS_TAB', (boolean) $settings['buddypress_links_directory_mylinks'] );
+
 	// allow duplicate urls?
 	if ( !defined( 'BP_LINKS_CREATE_DUPE_URL' ) )
 		define( 'BP_LINKS_CREATE_DUPE_URL', (boolean) $settings['buddypress_links_content_dupeurl'] );
