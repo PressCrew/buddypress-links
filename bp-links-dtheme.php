@@ -130,6 +130,8 @@ function bp_links_dtheme_link_order_options_list() { ?>
 		</select>
 	</li> <?php
 }
+add_action( 'bp_links_item_list_tabs', 'bp_links_dtheme_link_order_options_list' );
+add_action( 'bp_links_group_item_list_tabs', 'bp_links_dtheme_link_order_options_list' );
 
 function bp_links_dtheme_link_category_filter_options_list() { ?>
 		<li id="links-category-select" class="last">
@@ -141,6 +143,8 @@ function bp_links_dtheme_link_category_filter_options_list() { ?>
 			</select>
 		</li> <?php
 }
+add_action( 'bp_links_item_list_tabs', 'bp_links_dtheme_link_category_filter_options_list' );
+add_action( 'bp_links_group_item_list_tabs', 'bp_links_dtheme_link_category_filter_options_list' );
 
 //
 // AJAX Actions and Filters

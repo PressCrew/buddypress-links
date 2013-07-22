@@ -30,9 +30,7 @@
 				<ul>
 					<li class="feed"><a href="<?php bp_directory_links_feed_link() ?>" title="RSS Feed"><?php _e( 'RSS', 'buddypress' ) ?></a></li>
 					<?php do_action( 'bp_links_syndication_options' ) ?>
-
-					<?php bp_links_dtheme_link_order_options_list() ?>
-					<?php bp_links_dtheme_link_category_filter_options_list() ?>
+					<?php do_action( 'bp_links_item_list_tabs' ) ?>
 				</ul>
 			</div><!-- .item-list-tabs -->
 
