@@ -89,6 +89,7 @@ $wpsf_settings[] = array(
             'title' => __( 'Category Tabs', 'buddypress-links' ) . $dagger,
             'desc' => __( 'The default behavior is to filter categories using a select box. Set this to "Yes" to add a tab for each category to the directory navigation instead.', 'buddypress-links' ),
             'type' => 'radio',
+            'class' => $pro_field_class,
             'std' => false,
 			'choices' => array(
 				1 => 'Yes',
