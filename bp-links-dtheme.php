@@ -121,27 +121,43 @@ function bp_links_dtheme_creation_tabs() {
 	do_action( 'bp_links_dtheme_creation_tabs' );
 }
 
-function bp_links_dtheme_link_order_options_list() { ?>
+function bp_links_dtheme_link_order_options_list( $echo = true )
+{	
+	// maybe capture output
+	if ( false === $echo ) ob_start();
+
+	// render list ?>
 	<li id="links-order-select" class="last filter">
 		<?php _e( 'Order By:', 'buddypress' ) ?>
 		<select id="links-order-by">
 			<?php bp_links_link_order_options() ?>
 			<?php do_action( 'bp_links_dtheme_link_order_options_list' ) ?>
 		</select>
-	</li> <?php
+	</li><?php
+
+	// maybe return output
+	if ( false === $echo ) return ob_get_clean();
 }
 add_action( 'bp_links_item_list_tabs', 'bp_links_dtheme_link_order_options_list' );
 add_action( 'bp_links_group_item_list_tabs', 'bp_links_dtheme_link_order_options_list' );
 
-function bp_links_dtheme_link_category_filter_options_list() { ?>
-		<li id="links-category-select" class="last">
-			<?php _e( 'Category:', 'buddypress-links' ) ?>
-			<select id="links-category-filter">
-				<option value="-1"><?php _e( 'All', 'buddypress' ) ?></option>
-				<?php bp_links_category_select_options() ?>
-				<?php do_action( 'bp_links_category_filter_options' ) ?>
-			</select>
-		</li> <?php
+function bp_links_dtheme_link_category_filter_options_list( $echo = true )
+{
+	// maybe capture output
+	if ( false === $echo ) ob_start();
+
+	// render list ?>
+	<li id="links-category-select" class="last">
+		<?php _e( 'Category:', 'buddypress-links' ) ?>
+		<select id="links-category-filter">
+			<option value="-1"><?php _e( 'All', 'buddypress' ) ?></option>
+			<?php bp_links_category_select_options() ?>
+			<?php do_action( 'bp_links_category_filter_options' ) ?>
+		</select>
+	</li><?php
+
+	// maybe return output
+	if ( false === $echo ) return ob_get_clean();
 }
 add_action( 'bp_links_item_list_tabs', 'bp_links_dtheme_link_category_filter_options_list' );
 add_action( 'bp_links_group_item_list_tabs', 'bp_links_dtheme_link_category_filter_options_list' );
@@ -164,8 +180,8 @@ add_action( 'wp_ajax_nopriv_links_filter', 'bp_links_dtheme_template_loader' );
  * Augment profile Links page sub-navigation
  */
 function bp_links_dtheme_personal_links_subnav( $html ) {
-	$html .= bp_links_dtheme_link_order_options_list();
-	$html .= bp_links_dtheme_link_category_filter_options_list();
+	$html .= bp_links_dtheme_link_order_options_list( false );
+	$html .= bp_links_dtheme_link_category_filter_options_list( false );
 
 	return $html;
 }
