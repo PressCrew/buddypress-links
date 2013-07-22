@@ -1594,6 +1594,10 @@ function bp_links_total_links_for_user( $user_id = false ) {
 	return BP_Links_Link::get_total_link_count_for_user( $user_id );
 }
 
+function bp_links_total_links_for_category( $category_id ) {
+	return BP_Links_Link::get_total_link_count_for_category( $category_id );
+}
+
 function bp_links_recent_activity_item_ids_for_user( $user_id = false ) {
 	global $bp;
 
