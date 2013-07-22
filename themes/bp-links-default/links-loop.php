@@ -4,6 +4,8 @@
 
 	<div class="pagination no-ajax">
 
+		<?php do_action( 'bp_before_links_loop_pagination' ) ?>
+
 		<div class="pag-count" id="link-dir-count">
 			<?php bp_links_pagination_count() ?>
 		</div>
@@ -11,6 +13,8 @@
 		<div class="pagination-links" id="link-dir-pag">
 			<?php bp_links_pagination_links() ?>
 		</div>
+
+		<?php do_action( 'bp_after_links_loop_pagination' ) ?>
 
 	</div>
 
