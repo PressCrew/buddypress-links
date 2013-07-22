@@ -66,6 +66,27 @@ $wpsf_settings[] = array(
     )
 );
 
+// directory settings section
+$wpsf_settings[] = array(
+    'section_id' => 'directory',
+    'section_title' => __( 'Directory Settings', 'buddypress-links' ),
+//    'section_description' => '',
+    'section_order' => 7,
+    'fields' => array(
+        array(
+            'id' => 'cattabs',
+            'title' => __( 'Category Tabs', 'buddypress-links' ) . $dagger,
+            'desc' => __( 'The default behavior is to filter categories using a select box. Set this to "Yes" to add a tab for each category to the directory navigation instead.', 'buddypress-links' ),
+            'type' => 'radio',
+            'std' => false,
+			'choices' => array(
+				1 => 'Yes',
+				0 => 'No'
+			)
+        )
+    )
+);
+
 // content settings section
 $wpsf_settings[] = array(
     'section_id' => 'content',
