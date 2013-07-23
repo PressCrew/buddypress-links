@@ -92,6 +92,30 @@ $wpsf_settings[] = array(
 			)
         ),
         array(
+            'id' => 'maxtabs',
+            'title' => __( 'Maximum Tabs', 'buddypress-links' ) . $dagger,
+            'desc' => __( 'Set the maximum number of tabs to display on directory top navigation to enable magic tabs.', 'buddypress-links' ),
+            'type' => 'select',
+            'class' => $pro_field_class,
+            'std' => false,
+			'choices' => array(
+				0 => 'Disabled',
+				3 => 3,
+				4 => 4,
+				5 => 5,
+				6 => 6,
+				7 => 7,
+				8 => 8,
+				9 => 9,
+				10 => 10,
+				11 => 11,
+				12 => 12,
+				13 => 13,
+				14 => 14,
+				15 => 15
+			)
+        ),
+        array(
             'id' => 'cattabs',
             'title' => __( 'Category Tabs', 'buddypress-links' ) . $dagger,
             'desc' => __( 'The default behavior is to filter categories using a select box. Set this to "Yes" to add a tab for each category to the directory navigation instead.', 'buddypress-links' ),
