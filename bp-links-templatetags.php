@@ -43,6 +43,14 @@ class BP_Links_Template {
 		// extract 'em
 		extract( $args );
 
+		// handle empty type
+		if ( empty( $type ) ) {
+			// get order options
+			$order_options = bp_links_get_order_options();
+			// default type is first key
+			$type = key( $order_options );
+		}
+
 		// set avatar size
 		$this->avatar_display_size( $avatar_size );
 
@@ -225,7 +233,7 @@ function bp_has_links( $args = array() ) {
 
 	// default args to use IF args is not empty
 	$defaults = array(
-		'type' => 'active',
+		'type' => false,
 		'page' => 1,
 		'per_page' => 10,
 		'max' => false,
