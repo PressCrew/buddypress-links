@@ -514,6 +514,32 @@ function bp_links_setup_nav() {
 }
 add_action( 'bp_setup_nav', 'bp_links_setup_nav' );
 
+/**
+ * Toggle directory flag on if applicable.
+ */
+function bp_links_setup_directory() {
+
+	// get action and item
+	$action = bp_current_action();
+	$item = bp_current_item();
+
+	// links must be current component
+	if ( bp_is_current_component( 'links' ) ) {
+		// category slug is action, or no action and item?
+		if (
+			BP_LINKS_CAT_URL_SLUG === $action ||
+			true === empty( $action ) &&
+			true === empty( $item )
+		) {
+			// toggle directory on
+			bp_update_is_directory( true, 'links' );
+		}
+	}
+
+	do_action( 'bp_links_setup_directory' );
+}
+add_action( 'bp_links_setup_nav', 'bp_links_setup_directory', 1 );
+
 function bp_links_setup_admin_bar() {
 	global $bp, $wp_admin_bar;
 

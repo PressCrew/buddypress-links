@@ -159,30 +159,6 @@ function bp_links_setup_globals() {
 }
 
 /**
- * Toggle directory flag on if applicable.
- */
-function bp_links_setup_directory() {
-
-	// get action and item
-	$action = bp_current_action();
-
-	// links must be current component
-	if ( bp_is_current_component( 'links' ) ) {
-		// category slug is action, or no action at all?
-		if (
-			BP_LINKS_CAT_URL_SLUG === $action ||
-			false === bp_is_group() &&
-			false === bp_is_user()
-		) {
-			// toggle directory on
-			bp_update_is_directory( true, 'links' );
-		}
-	}
-	
-	do_action( 'bp_links_setup_directory' );
-}
-
-/**
  * Handle special BP initialization
  */
 function bp_links_init() {
@@ -190,7 +166,6 @@ function bp_links_init() {
 	// setup actions
 	add_action( 'bp_setup_root_components', 'bp_links_setup_root_component' );
 	add_action( 'bp_setup_globals', 'bp_links_setup_globals' );
-	add_action( 'bp_links_setup_globals', 'bp_links_setup_directory' );
 
 	// load core
 	require_once 'bp-links-core.php';
