@@ -1750,18 +1750,12 @@ function bp_link_list_item_xtrabar_userlink_created() {
 /****
  * Link list filter template tags
  */
-function bp_links_link_order_options() { ?>
+function bp_links_link_order_options() {
 
-	<option value="active"><?php _e( 'Last Active', 'buddypress' ) ?></option>
-	<option value="newest"><?php _e( 'Newly Created', 'buddypress' ) ?></option>
-
-	<?php if ( bp_links_is_voting_enabled() ): ?>
-	<option value="popular"><?php _e( 'Most Popular', 'buddypress-links' ) ?></option>
-	<option value="most-votes"><?php _e( 'Most Votes', 'buddypress-links' ) ?></option>
-	<option value="high-votes"><?php _e( 'Highest Rated', 'buddypress-links' ) ?></option>
-	<?php endif;
+	// loop all order options
+	foreach ( bp_links_get_order_options() as $slug => $title ) { ?>
+		<option value="<?php echo esc_attr( $slug ) ?>"><?php echo esc_html( $title ) ?></option><?php
+	}
 
 	do_action( 'bp_links_link_order_options' );
 }
-
-?>

@@ -105,6 +105,10 @@ function bp_links_init_settings()
 	if ( !defined( 'BP_LINKS_CAT_URL_SLUG' ) )
 		define( 'BP_LINKS_CAT_URL_SLUG', (string) $settings['buddypress_links_global_catslug'] );
 
+	// order by text
+	if ( !defined( 'BP_LINKS_ORDER_BY_TEXT' ) )
+		define( 'BP_LINKS_ORDER_BY_TEXT', (string) $settings['buddypress_links_global_ordertext'] );
+
 	// show my links tab
 	if ( !defined( 'BP_LINKS_ENABLE_MYLINKS_TAB' ) )
 		define( 'BP_LINKS_ENABLE_MYLINKS_TAB', (boolean) $settings['buddypress_links_directory_mylinks'] );
@@ -176,6 +180,35 @@ function bp_links_init_settings()
 	do_action( 'bp_links_init_settings' );
 }
 add_action( 'bp_links_init', 'bp_links_init_settings', 1 );
+
+/**
+ * Return order by options config.
+ *
+ * @return array
+ */
+function bp_links_get_order_options()
+{
+	// cache statically so we only have to parse text once
+	static $options = null;
+
+	// not parsed yet?
+	if ( null === $options ) {
+		// nope parse it
+		$options = bp_links_settings_parse_order_text( BP_LINKS_ORDER_BY_TEXT );
+		// voting disabled?
+		if ( false === bp_links_is_voting_enabled() ) {
+			// yep, kill voting related options
+			unset(
+				$options['popular'],
+				$options['most-votes'],
+				$options['high-votes']
+			);
+		}
+	}
+
+	// return config
+	return $options;
+}
 
 /**
  * Check if link voting is enabled
