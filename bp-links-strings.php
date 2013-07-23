@@ -41,4 +41,9 @@ __( 'This link was previously removed from the %s group by an admin or moderator
 __( 'You are not a member of the %s group.', 'buddypress-links' );
 __( 'You must be logged in to remove links.', 'buddypress-links' );
 __( 'You must be logged in to share links.', 'buddypress-links' );
+
+// misc
+__( '&laquo; more', 'buddypress-links' );
+__( 'more &raquo;', 'buddypress-links' );
+
 ?>
