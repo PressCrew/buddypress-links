@@ -253,6 +253,7 @@ function bp_has_links( $args = array() ) {
 
 	// category slug in path overrides any category id that is set
 	if (
+		false === defined( 'DOING_AJAX' ) &&
 		true === bp_is_directory() &&
 		BP_LINKS_CAT_URL_SLUG == bp_current_action()
 	) {
