@@ -203,12 +203,15 @@ class BP_Links_Template {
 function bp_has_links( $args = array() ) {
 	global $links_template, $bp;
 
-	if ( empty( $args ) && bp_is_directory() ) {
+	if ( empty( $args ) ) {
 		// The following code will auto set parameters based on the page being viewed.
 		// for example on example.com/members/marshall/links/my-links/popular/
 		// $type = 'popular'
 		//
-		if ( 'my-links' == $bp->current_action ) {
+		if (
+			true === bp_is_directory() &&
+			'my-links' == $bp->current_action
+		) {
 			$order = $bp->action_variables[0];
 			if ( 'active' == $order )
 				$type = 'active';
