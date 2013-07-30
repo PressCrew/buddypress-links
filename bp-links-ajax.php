@@ -38,6 +38,7 @@ function bp_links_ajax_link_vote() {
 	}
 }
 add_action( 'wp_ajax_link_vote', 'bp_links_ajax_link_vote' );
+add_action( 'wp_ajax_nopriv_link_vote', 'bp_links_ajax_link_vote' );
 
 /**
  * Display auto-embed panel on the create/admin form
