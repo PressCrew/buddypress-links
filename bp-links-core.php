@@ -230,8 +230,8 @@ function bp_links_is_voting_enabled() {
 function bp_links_filter_template( $located_template, $template_names ) {
 	global $bp;
 	
-	// template already located, skip
-	if ( !empty( $located_template ) )
+	// no theme support or template already located, skip
+	if ( !current_theme_supports( 'buddypress' ) || !empty( $located_template ) )
 		return $located_template;
 
 	// only filter for our component
@@ -270,6 +270,66 @@ function bp_links_setup_theme() {
 	}
 }
 add_action( 'bp_init', 'bp_links_setup_theme' );
+
+/**
+ * Setup WordPress theme compat
+ */
+function bp_links_setup_theme_compat() {
+	// links component and is directory?
+	if ( bp_is_current_component( 'links' ) ) {
+		// no action and no item?
+		if ( !bp_current_action() && !bp_current_item() ) {
+			// set up dummy post
+			bp_theme_compat_reset_post( array(
+				'ID'             => 0,
+				'post_title'     => __( 'Links', 'buddypress' ),
+				'post_author'    => 0,
+				'post_date'      => 0,
+				'post_content'   => '',
+				'post_type'      => 'bp_link',
+				'post_status'    => 'publish',
+				'is_archive'     => true,
+				'comment_status' => 'closed'
+			) );
+			// hook up replace content filter
+			add_filter( 'bp_replace_the_content', 'bp_links_screen_directory_index' );
+
+		} elseif ( bp_is_current_action( 'create' ) ) {
+			// set up dummy post
+			bp_theme_compat_reset_post( array(
+				'ID'             => 0,
+				'post_title'     => __( 'Links', 'buddypress' ),
+				'post_author'    => 0,
+				'post_date'      => 0,
+				'post_content'   => '',
+				'post_type'      => 'bp_link',
+				'post_status'    => 'publish',
+				'is_archive'     => true,
+				'comment_status' => 'closed'
+			) );
+			// hook up replace content filter
+			add_filter( 'bp_replace_the_content', 'bp_links_screen_directory_create' );
+
+		} elseif ( bp_is_single_item() ) {
+
+			// set up dummy post
+			bp_theme_compat_reset_post( array(
+				'ID'             => 0,
+				'post_title'     => __( 'Links', 'buddypress' ),
+				'post_author'    => 0,
+				'post_date'      => 0,
+				'post_content'   => '',
+				'post_type'      => 'bp_link',
+				'post_status'    => 'publish',
+				'is_archive'     => true,
+				'comment_status' => 'closed'
+			) );
+			// hook up replace content filter
+			add_filter( 'bp_replace_the_content', 'bp_links_screen_directory_single' );
+		}
+	}
+}
+add_action( 'bp_setup_theme_compat', 'bp_links_setup_theme_compat' );
 
 /**
  * Check if template exists in style path, then check custom plugin location
@@ -692,6 +752,24 @@ function bp_links_screen_directory() {
 	}
 }
 add_action( 'bp_screens', 'bp_links_screen_directory', 2 );
+
+function bp_links_screen_directory_index() {
+	ob_start();
+	bp_links_locate_template( array('index.php'), true );
+	return ob_get_clean();
+}
+
+function bp_links_screen_directory_create() {
+	ob_start();
+	bp_links_locate_template( array('create.php'), true );
+	return ob_get_clean();
+}
+
+function bp_links_screen_directory_single() {
+	ob_start();
+	bp_links_locate_template( array('single/home.php'), true );
+	return ob_get_clean();
+}
 
 //
 // Profile Pages
