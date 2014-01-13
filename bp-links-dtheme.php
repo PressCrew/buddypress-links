@@ -251,6 +251,7 @@ function bp_links_dtheme_category_filter( $query_string, $object, $object_filter
 	return $query_string;
 }
 add_filter( 'bp_dtheme_ajax_querystring', 'bp_links_dtheme_category_filter', 1, 7 );
+add_filter( 'bp_legacy_theme_ajax_querystring', 'bp_links_dtheme_category_filter', 1, 7 );
 
 /**
  * Filter all AJAX bp_filter_request() calls to user ids to profile page calls
@@ -297,6 +298,7 @@ function bp_links_dtheme_directory_filter( $query_string, $object, $filter, $sco
 	return $query_string;
 }
 add_filter( 'bp_dtheme_ajax_querystring', 'bp_links_dtheme_directory_filter', 1, 4 );
+add_filter( 'bp_legacy_theme_ajax_querystring', 'bp_links_dtheme_directory_filter', 1, 4 );
 
 /**
  * Filter all AJAX bp_activity_request() calls for the 'activity' object with the 'links' scope
@@ -377,6 +379,7 @@ function bp_links_dtheme_activity_filter( $query_string, $object, $filter, $scop
 	return $query_string;
 }
 add_filter( 'bp_dtheme_ajax_querystring', 'bp_links_dtheme_activity_filter', 1, 7 );
+add_filter( 'bp_legacy_theme_ajax_querystring', 'bp_links_dtheme_activity_filter', 1, 7 );
 
 /**
  * Return "my links" feed URL on activity home page
