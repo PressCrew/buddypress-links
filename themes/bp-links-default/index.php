@@ -1,7 +1,14 @@
-<?php get_header( 'buddypress' ) ?>
-
-	<div id="content">
-		<div class="padder">
+<?php
+	if ( current_theme_supports( 'buddypress' ) ):
+		get_header( 'buddypress' );
+		// spit out old containers ?>
+		<div id="content">
+			<div class="padder"><?php
+	else:
+		// spit out legacy container ?>
+		<div id="buddypress"><?php
+	endif;
+?>
 
 		<form action="" method="post" id="links-directory-form" class="dir-form">
 
@@ -43,5 +50,14 @@
 		</div><!-- .padder -->
 	</div><!-- #content -->
 
-<?php get_sidebar( 'buddypress' ); ?>
-<?php get_footer( 'buddypress' ); ?>
+<?php
+	if ( current_theme_supports( 'buddypress' ) ):
+		// close old containers ?>
+		</div></div><?php	
+		get_sidebar( 'buddypress' );
+		get_footer( 'buddypress' );
+	else:
+		// close legacy container ?>
+		</div><?php
+	endif;
+?>
