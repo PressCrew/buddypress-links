@@ -1,6 +1,6 @@
 jQuery(document).ready( function() {
 	jQuery(".widget div#links-list-options a").live('click',
-		function() {
+		function(e) {
 			jQuery('#ajax-loader-links').toggle();
 
 			jQuery(".widget div#links-list-options a").removeClass("selected");
@@ -19,7 +19,8 @@ jQuery(document).ready( function() {
 				links_widget_response(response);
 			});
 
-			return false;
+			e.preventDefault();
+			return;
 		}
 	);
 });

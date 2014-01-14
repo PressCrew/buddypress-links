@@ -57,10 +57,11 @@ jQuery(document).ready( function() {
 		var last_img_idx = parseInt( e_thpick_idx.val() );
 		var last_img_src = e_thpick_img.attr("src");
 
-		e_thpick_a.click(function() {
+		e_thpick_a.click(function(e) {
 
 			if (e_thpick_skip.attr('checked')) {
-				return false;
+				e.preventDefault();
+				return;
 			}
 
 			var images = e_thpick.data("images");
@@ -82,15 +83,18 @@ jQuery(document).ready( function() {
 						local_idx = local_idx - 1;
 						break;
 					}
-					return false;
+					e.preventDefault();
+					return;
 				case 'thnext':
 					if (local_idx < (images.length - 1)) {
 						local_idx = local_idx + 1;
 						break;
 					}
-					return false;
+					e.preventDefault();
+					return;
 				default:
-					return false;
+					e.preventDefault();
+					return;
 			}
 
 			// swap out the image
@@ -103,7 +107,8 @@ jQuery(document).ready( function() {
 				e_avimg_cur.attr("src", images[local_idx][1]);
 			});
 
-			return false;
+			e.preventDefault();
+			return;
 		});
 
 		e_thpick_skip.click(function() {
@@ -281,8 +286,9 @@ jQuery(document).ready( function() {
 
 	// disable right click for avatars that are based on embeded images to comply with their TOS
 	jQuery("img.avatar-embed").bind("contextmenu",
-		function(){
-			return false;
+		function(e){
+			e.preventDefault();
+			return;
 		}
 	);
 	

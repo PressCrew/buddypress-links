@@ -75,7 +75,7 @@ jQuery(document).ready( function() {
 	/**** Lightbox ****************************/
 
 	j("a.link-play").live('click',
-		function() {
+		function(e) {
 
 			var link = j(this).attr('id')
 			link = link.split('-');
@@ -108,14 +108,15 @@ jQuery(document).ready( function() {
 				}
 			});
 
-			return false;
+			e.preventDefault();
+			return;
 		}
 	);
 
 	/**** Voting ******************************/
 
 	j("div.link-vote-panel a.vote").live('click',
-		function() {
+		function(e) {
 
 			bpl_get_loader().toggle();
 
@@ -154,7 +155,8 @@ jQuery(document).ready( function() {
 				bpl_get_loader().toggle();
 			});
 
-			return false;
+			e.preventDefault();
+			return;
 		}
 	);
 
