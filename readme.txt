@@ -2,13 +2,13 @@
 Contributors: MrMaz
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8591311
 Tags: buddypress, social, networking, links, rich media, embed, youtube, flickr, metacafe
-Requires at least: 3.5
-Tested up to: 3.5.3
+Requires at least: 3.6
+Tested up to: 3.8
 Stable tag: 0.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-BuddyPress Links is a drop-in link, image, video and other rich media sharing component for BuddyPress 1.6 and 1.7
+BuddyPress Links is a drop-in link, image, video and other rich media sharing component for BuddyPress 1.8 and higher
 
 == Description ==
 
@@ -87,6 +87,7 @@ Other features include:
 
 == Installation ==
 
+* BuddyPress Links 0.9.x requires WordPress 3.6 or higher with BuddyPress 1.8 or higher installed.
 * BuddyPress Links 0.8.x requires WordPress 3.5 or higher with BuddyPress 1.6 or higher installed.
 * BuddyPress Links 0.7.x requires WordPress 3.4 or higher with BuddyPress 1.6 or higher installed.
 * BuddyPress Links 0.6.x requires WordPress 3.3 or higher with BuddyPress 1.5 or higher installed.
@@ -114,6 +115,10 @@ The links data from the 0.2.x branch is compatible with 0.3.x and higher, except
 
 == Upgrade Notice ==
 
+= 0.9 =
+
+Several templates were modified.
+
 = 0.8.2 =
 
 On activation, all URL hashes will be regenerated to fix database values which were being inserted incorrectly.
@@ -127,6 +132,18 @@ No changes that affect data were made, however it is always a good idea to back 
 No changes that affect data were made, however it is always a good idea to back up your data just in case!
 
 == Changelog ==
+
+= 0.9 =
+
+* Compatibility testing up to BuddyPress 1.9.1
+* Added BuddyPress "legacy" theme support (1.8 and higher)
+* Compatibility testing with the Twenty Thirteen and Twenty Fourteen themes
+* Added new setting to allow disabling of the my links tab on the main directory navigation
+* Added new setting for customizing order by items, their wording, and order
+* Added new setting for customizing the default order by selection
+* Added new setting for max tabs to show in directory navigation
+* Fixed non-logged in user trying to vote error message
+* Additional minor bug fixes
 
 = 0.8.2 =
 
