@@ -154,39 +154,31 @@ function bp_links_setup_globals() {
 				BP_LINKS_CAT_URL_SLUG
 			)
 		);
-	
-	do_action( 'bp_links_setup_globals' );
 }
 
 /**
  * Handle special BP initialization
  */
-function bp_links_init() {
+function bp_links_init()
+{
+	// load links component
+	require_once BP_LINKS_PLUGIN_DIR . '/bp-links-component.php';
 
-	// setup actions
-	add_action( 'bp_setup_root_components', 'bp_links_setup_root_component' );
-	add_action( 'bp_setup_globals', 'bp_links_setup_globals' );
-
-	// load core
-	require_once 'bp-links-core.php';
-
+	// post init hook
 	do_action( 'bp_links_init' );
 }
+add_action( 'bp_include', 'bp_links_init' );
 
 /**
  * Handle activation
  */
 function bp_links_activate()
 {
+	// load upgrade tools
 	require_once( 'bp-links-upgrade.php' );
-	bp_links_setup_globals();
+	// make sure its initialized
+	bp_links_init();
+	// run upgrader
 	bp_links_upgrade();
 }
 add_action( 'activate_' . BP_LINKS_PLUGIN_BASENAME, 'bp_links_activate' );
-
-//
-// Hook into BuddyPress!
-//
-add_action( 'bp_include', 'bp_links_init' );
-
-?>

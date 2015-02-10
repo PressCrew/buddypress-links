@@ -1,13 +1,5 @@
 <?php
 
-require ( BP_LINKS_PLUGIN_DIR . '/bp-links-embed.php' );
-require ( BP_LINKS_PLUGIN_DIR . '/bp-links-classes.php' );
-require ( BP_LINKS_PLUGIN_DIR . '/bp-links-ajax.php' );
-require ( BP_LINKS_PLUGIN_DIR . '/bp-links-templatetags.php' );
-require ( BP_LINKS_PLUGIN_DIR . '/bp-links-widgets.php' );
-require ( BP_LINKS_PLUGIN_DIR . '/bp-links-filters.php' );
-require ( BP_LINKS_PLUGIN_DIR . '/bp-links-dtheme.php' );
-
 /**
  * Return the links unique component id
  * 
@@ -179,7 +171,6 @@ function bp_links_init_settings()
 
 	do_action( 'bp_links_init_settings' );
 }
-add_action( 'bp_links_init', 'bp_links_init_settings', 1 );
 
 /**
  * Return order by options config.
@@ -670,7 +661,7 @@ function bp_links_setup_admin_bar() {
 	));
 	
 }
-add_action( 'bp_setup_admin_bar', 'bp_links_setup_admin_bar' );
+add_action( 'bp_setup_admin_bar', 'bp_links_setup_admin_bar', 99 );
 
 function bp_links_setup_activity_nav() {
 	global $bp;
