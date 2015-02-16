@@ -6,7 +6,7 @@ Description: BuddyPress Links is a link sharing component for BuddyPress.
 Author: Marshall Sorenson (MrMaz)
 Author URI: http://marshallsorenson.com
 License: GNU GENERAL PUBLIC LICENSE 3.0 http://www.gnu.org/licenses/gpl.txt
-Version: 0.9
+Version: 0.9.1a
 Text Domain: buddypress-links
 */
 
@@ -47,7 +47,7 @@ if ( !defined( 'BP_LINKS_EMBED_FOTOGLIF_PUBID' ) )
 // *** DO NOT MODIFY THESE ***
 
 // Configuration
-define( 'BP_LINKS_VERSION', '0.9' );
+define( 'BP_LINKS_VERSION', '0.9.1a' );
 define( 'BP_LINKS_DB_VERSION', '9' );
 define( 'BP_LINKS_PLUGIN_NAME', 'buddypress-links' );
 define( 'BP_LINKS_PLUGIN_TEXTDOMAIN', 'buddypress-links' );
@@ -154,39 +154,31 @@ function bp_links_setup_globals() {
 				BP_LINKS_CAT_URL_SLUG
 			)
 		);
-	
-	do_action( 'bp_links_setup_globals' );
 }
 
 /**
  * Handle special BP initialization
  */
-function bp_links_init() {
+function bp_links_init()
+{
+	// load links component
+	require_once BP_LINKS_PLUGIN_DIR . '/bp-links-component.php';
 
-	// setup actions
-	add_action( 'bp_setup_root_components', 'bp_links_setup_root_component' );
-	add_action( 'bp_setup_globals', 'bp_links_setup_globals' );
-
-	// load core
-	require_once 'bp-links-core.php';
-
+	// post init hook
 	do_action( 'bp_links_init' );
 }
+add_action( 'bp_include', 'bp_links_init' );
 
 /**
  * Handle activation
  */
 function bp_links_activate()
 {
+	// load upgrade tools
 	require_once( 'bp-links-upgrade.php' );
-	bp_links_setup_globals();
+	// make sure its initialized
+	bp_links_init();
+	// run upgrader
 	bp_links_upgrade();
 }
 add_action( 'activate_' . BP_LINKS_PLUGIN_BASENAME, 'bp_links_activate' );
-
-//
-// Hook into BuddyPress!
-//
-add_action( 'bp_include', 'bp_links_init' );
-
-?>
