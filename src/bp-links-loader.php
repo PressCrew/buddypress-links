@@ -60,7 +60,7 @@ define( 'BP_LINKS_ACTIVITY_ACTION_VOTE', 'bp_link_vote' );
 define( 'BP_LINKS_ACTIVITY_ACTION_COMMENT', 'bp_link_comment' );
 
 // Core Paths
-define( 'BP_LINKS_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . BP_LINKS_PLUGIN_NAME );
+define( 'BP_LINKS_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'BP_LINKS_PLUGIN_URL', WP_PLUGIN_URL . '/' . BP_LINKS_PLUGIN_NAME );
 define( 'BP_LINKS_LIB_DIR', BP_LINKS_PLUGIN_DIR . '/lib' );
 
