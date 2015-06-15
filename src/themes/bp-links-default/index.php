@@ -47,13 +47,11 @@
 
 		<?php do_action( 'bp_after_directory_links_content' ) ?>
 
-		</div><!-- .padder -->
-	</div><!-- #content -->
-
 <?php
 	if ( current_theme_supports( 'buddypress' ) ):
 		// close old containers ?>
-		</div></div><?php	
+		</div><!-- .padder -->
+		</div><!-- #content --><?php
 		get_sidebar( 'buddypress' );
 		get_footer( 'buddypress' );
 	else:
