@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="buildinfo">
+
+	<!-- Target: all -->
+	<target name="all" depends="ant, bamboo">
+		<echo message="Done writing build info..." />
+	</target>
+
+	<!-- Target: ant -->
+	<target name="ant">
+		<echo message="Writing ant build info..." />
+		<tstamp />
+		<copy file="${etc.dir}/build.ant.txt" tofile="${build.dist}/BUILD.txt" overwrite="true">
+			<filterchain>
+				<replacetokens>
+					<token key="BUILD_WHEN" value="${TODAY} ${TSTAMP}" />
+					<token key="BUILD_ANT_VER" value="${ant.version}" />
+					<token key="BUILD_ANT_PROJ" value="${ant.project.name}" />
+					<token key="BUILD_ANT_TARG" value="${ant.project.invoked-targets}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+	</target>
+
+	<!-- Target: bamboo -->
+	<target name="bamboo" if="bamboo.plan" depends="ant">
+		<echo message="Writing bamboo build info..." />
+		<concat destfile="${build.dist}/BUILD.txt" overwrite="yes" append="yes">
+			<fileset dir="${etc.dir}" includes="build.bamboo.txt" />
+			<filterchain>
+				<replacetokens>
+					<token key="BUILD_BAM_PLAN" value="${bamboo.plan}" />
+					<token key="BUILD_BAM_URL" value="${bamboo.url}" />
+				</replacetokens>
+			</filterchain>
+		</concat>
+	</target>
+
+</project>

@@ -6,9 +6,16 @@
 	<property name="slug" value="buddypress-links" />
 
 	<!-- Paths -->
+	<property name="phpunitpath" value="/usr/local/bin/phpunit" />
+	<property name="wpclipath" value="/usr/local/bin/wp" />
+	<property name="etc.dir" location="${basedir}/etc" />
 	<property name="source.dir" location="${basedir}/src" />
 	<property name="build.dir" location="${basedir}/build" />
 	<property name="build.dist" location="${build.dir}/dist" />
+	<property name="build.doc" location="${build.dir}/doc" />
+	<property name="build.env" location="${build.dir}/env" />
+
+	<include file="buildinfo.xml" as="buildinfo" />
 
 	<!-- Target: prepare -->
 	<target name="prepare">
@@ -29,10 +36,11 @@
 	</target>
 
 	<!-- Target: dist (default) -->
-	<target name="dist" depends="dist-prepare">
+	<target name="dist" depends="dist-prepare, buildinfo.all">
 		<echo message="Creating zip archive..." />
 		<zip destfile="${build.dist}/${slug}.zip">
 			<zipfileset dir="${source.dir}" prefix="${slug}" />
+			<zipfileset file="${build.dist}/BUILD.txt" prefix="${slug}" />
 		</zip>
 		<echo message="Files copied and compressed!" />
 	</target>
