@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="buildinfo">
+<project name="info">
 
 	<!-- Target: all -->
 	<target name="all" depends="ant, bamboo">

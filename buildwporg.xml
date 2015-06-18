@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="wporg">
+
+	<!-- Target: checkout -->
+	<target name="checkout">
+		<echo message="Checking out wporg-trunk..." />
+		<exec executable="${gitpath}" timeout="30000" failonerror="true">
+			<arg value="checkout"/>
+			<arg value="wporg-trunk"/>
+		</exec>
+	</target>
+
+	<!-- Target: wporg-merge -->
+	<target name="merge" depends="checkout">
+		<input message="Please enter branch/tag/hash to merge INTO trunk:" addproperty="mergehash"/>
+		<echo message="Merging ${mergehash} into wporg-trunk..." />
+		<exec executable="${gitpath}" timeout="30000" failonerror="true">
+			<arg value="merge"/>
+			<arg value="-X subtree=src/"/>
+			<arg value="-X theirs"/>
+			<arg value="${mergehash}"/>
+		</exec>
+		<echo message="Done merging ${mergehash} into wporg-trunk..." />
+	</target>
+
+	<!-- Target: commit -->
+	<target name="commit" depends="checkout">
+		<echo message="Committing wporg-trunk..." />
+		<exec executable="${gitpath}" timeout="300000" failonerror="true">
+			<arg value="svn"/>
+			<arg value="dcommit"/>
+			<arg value="--username=MrMaz"/>
+		</exec>
+		<echo message="Done committing to wporg-trunk..." />
+	</target>
+
+	<!-- Target: tag -->
+	<target name="tag">
+		<input message="Enter branch/tag/hash to tag:" addproperty="tagref" defaultvalue="wporg-trunk"/>
+		<exec executable="${gitpath}" timeout="30000" failonerror="true">
+			<arg value="checkout"/>
+			<arg value="${tagref}"/>
+		</exec>
+		<input message="Enter tag name:" addproperty="tagname"/>
+		<echo message="Tagging ${tagref} as ${tagname}..." />
+		<exec executable="${gitpath}" timeout="300000" failonerror="true">
+			<arg value="svn"/>
+			<arg value="tag"/>
+			<arg value="--username=MrMaz"/>
+			<arg value="-m 'tagging {$tagname}'"/>
+			<arg value="${tagname}"/>
+		</exec>
+		<echo message="Tagged ${tagref} as ${tagname}..." />
+	</target>
+
+</project>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="BuddyPress Links" default="dist">
+<project name="buddypress-links" default="dist">
 
 	<!-- Vars -->
 	<property name="slug" value="buddypress-links" />
 
 	<!-- Paths -->
+	<property name="gitpath" value="/usr/bin/git" />
 	<property name="phpunitpath" value="/usr/local/bin/phpunit" />
 	<property name="wpclipath" value="/usr/local/bin/wp" />
 	<property name="etc.dir" location="${basedir}/etc" />
@@ -15,7 +16,8 @@
 	<property name="build.doc" location="${build.dir}/doc" />
 	<property name="build.env" location="${build.dir}/env" />
 
-	<include file="buildinfo.xml" as="buildinfo" />
+	<include file="buildinfo.xml"/>
+	<include file="buildwporg.xml"/>
 
 	<!-- Target: prepare -->
 	<target name="prepare">
@@ -36,7 +38,7 @@
 	</target>
 
 	<!-- Target: dist (default) -->
-	<target name="dist" depends="dist-prepare, buildinfo.all">
+	<target name="dist" depends="dist-prepare, info.all">
 		<echo message="Creating zip archive..." />
 		<zip destfile="${build.dist}/${slug}.zip">
 			<zipfileset dir="${source.dir}" prefix="${slug}" />
