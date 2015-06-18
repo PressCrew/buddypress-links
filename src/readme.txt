@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: buddypress, social, networking, links, rich media, embed, youtube, flickr, metacafe
 Requires at least: 4.0
 Tested up to: 4.1
-Stable tag: 0.9.1
+Stable tag: 0.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -132,6 +132,13 @@ No changes that affect data were made, however it is always a good idea to back 
 No changes that affect data were made, however it is always a good idea to back up your data just in case!
 
 == Changelog ==
+
+= 0.9.2 =
+
+** Bug
+    * [BPL-2] - Broken sidebar
+    * [BPL-3] - Issue with multi-network installation tables
+    * [BPL-4] - Pro settings are frozen with BP 2.2
 
 = 0.9.1 =
 
