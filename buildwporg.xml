@@ -48,7 +48,7 @@
 			<arg value="svn"/>
 			<arg value="tag"/>
 			<arg value="--username=MrMaz"/>
-			<arg value="-m 'tagging {$tagname}'"/>
+			<arg value="-m 'tagging ${tagname}'"/>
 			<arg value="${tagname}"/>
 		</exec>
 		<echo message="Tagged ${tagref} as ${tagname}..." />
