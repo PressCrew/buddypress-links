@@ -133,11 +133,8 @@ function bp_links_dtheme_directory_mylinks_tab()
 }
 add_action( 'bp_links_directory_link_types', 'bp_links_dtheme_directory_mylinks_tab' );
 
-function bp_links_dtheme_link_order_options_list( $echo = true )
+function bp_links_dtheme_link_order_options_list()
 {	
-	// maybe capture output
-	if ( false === $echo ) ob_start();
-
 	// render list ?>
 	<li id="links-order-select" class="last filter">
 		<?php _e( 'Order By:', 'buddypress' ) ?>
@@ -146,18 +143,12 @@ function bp_links_dtheme_link_order_options_list( $echo = true )
 			<?php do_action( 'bp_links_dtheme_link_order_options_list' ) ?>
 		</select>
 	</li><?php
-
-	// maybe return output
-	if ( false === $echo ) return ob_get_clean();
 }
 add_action( 'bp_links_item_list_tabs', 'bp_links_dtheme_link_order_options_list' );
 add_action( 'bp_links_group_item_list_tabs', 'bp_links_dtheme_link_order_options_list' );
 
-function bp_links_dtheme_link_category_filter_options_list( $echo = true )
+function bp_links_dtheme_link_category_filter_options_list()
 {
-	// maybe capture output
-	if ( false === $echo ) ob_start();
-
 	// render list ?>
 	<li id="links-category-select" class="last">
 		<?php _e( 'Category:', 'buddypress-links' ) ?>
@@ -167,9 +158,6 @@ function bp_links_dtheme_link_category_filter_options_list( $echo = true )
 			<?php do_action( 'bp_links_category_filter_options' ) ?>
 		</select>
 	</li><?php
-
-	// maybe return output
-	if ( false === $echo ) return ob_get_clean();
 }
 add_action( 'bp_links_item_list_tabs', 'bp_links_dtheme_link_category_filter_options_list' );
 add_action( 'bp_links_group_item_list_tabs', 'bp_links_dtheme_link_category_filter_options_list' );
@@ -191,13 +179,16 @@ add_action( 'wp_ajax_nopriv_links_filter', 'bp_links_dtheme_template_loader' );
 /**
  * Augment profile Links page sub-navigation
  */
-function bp_links_dtheme_personal_links_subnav( $html ) {
-	$html .= bp_links_dtheme_link_order_options_list( false );
-	$html .= bp_links_dtheme_link_category_filter_options_list( false );
-
-	return $html;
+function bp_links_dtheme_personal_links_subnav()
+{
+	// are we the current component?
+	if ( BP_LINKS_SLUG === bp_current_component() ) {
+		// yep, spit out special subnav items
+		bp_links_dtheme_link_order_options_list();
+		bp_links_dtheme_link_category_filter_options_list();
+	}
 }
-add_filter( 'bp_get_options_nav_links-my-links', 'bp_links_dtheme_personal_links_subnav' );
+add_action( 'bp_member_plugin_options_nav', 'bp_links_dtheme_personal_links_subnav' );
 
 /**
  * Parse the custom delimeted extras string into an array
