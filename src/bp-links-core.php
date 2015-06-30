@@ -593,8 +593,6 @@ function bp_links_setup_nav() {
 
 		}
 	}
-
-	do_action( 'bp_links_setup_nav', $bp->is_item_admin );
 }
 add_action( 'bp_setup_nav', 'bp_links_setup_nav' );
 
