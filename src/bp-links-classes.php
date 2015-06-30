@@ -804,7 +804,7 @@ class BP_Links_Link {
 		// maybe build category slug sql
 		if ( count( $category_slugs ) ) {
 			$join_sql .= " INNER JOIN {$bp->links->table_name_categories} AS lc ON l.category_id = lc.id";
-			$category_sql .= $wpdb->prepare( " AND lc.slug IN( '" . implode( "','", array_filter( $category_slugs, 'addslashes' ) ) .  "' )" );
+			$category_sql .= " AND lc.slug IN( '" . implode( "','", array_filter( $category_slugs, 'addslashes' ) ) .  "' )";
 		}
 
 		// filter by category ids?
