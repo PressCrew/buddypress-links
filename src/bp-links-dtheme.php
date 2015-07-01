@@ -150,7 +150,7 @@ add_action( 'bp_links_group_item_list_filters', 'bp_links_dtheme_link_order_opti
 function bp_links_dtheme_link_category_filter_options_list()
 {
 	// render list ?>
-	<li id="links-category-select" class="last">
+	<li id="links-category-select" class="last filter">
 		<?php _e( 'Category:', 'buddypress-links' ) ?>
 		<select id="links-category-filter">
 			<option value="-1"><?php _e( 'All', 'buddypress' ) ?></option>
