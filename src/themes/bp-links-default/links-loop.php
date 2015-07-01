@@ -2,7 +2,7 @@
 
 <?php if ( bp_has_links( bp_ajax_querystring( 'links' ) ) ) : ?>
 
-	<div class="pagination no-ajax">
+	<div id="pag-top" class="pagination no-ajax">
 
 		<?php do_action( 'bp_before_links_loop_pagination' ) ?>
 
