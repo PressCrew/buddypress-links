@@ -26,6 +26,12 @@ div.item-avatar a.link-play {
 	border-width: 8px;
 }
 
+/**** Navigation *******/
+
+.buddypress.groups ul li#links-order-select {
+	clear: left;
+}
+
 /**** Links List *******/
 
 ul#link-list li {
