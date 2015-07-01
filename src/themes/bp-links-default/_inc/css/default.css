@@ -34,36 +34,39 @@ div.item-avatar a.link-play {
 
 /**** Links List *******/
 
-ul#link-list li {
+#buddypress ul#link-list li {
 	/* no styles yet */
 }
-	ul#link-list li div#message,
-	ul#link-list li div#message p {
+	#buddypress ul#link-list li div#message,
+	#buddypress ul#link-list li div#message p {
 		margin-top: 0px;
 		width: 90%;
 	}
-	ul#link-list li div.item-title {
-		margin: 0 0 4px 0px;
+	#buddypress ul#link-list li div.item-title {
+		width: 65%;
 	}
-	ul#link-list li div.item-desc {
+	#buddypress ul#link-list li div.item-desc {
 		color: black;
 		margin: 8px 50px 5px 0px;
 		width: 65%;
+		padding-left: 91px;
 	}
-	ul#link-list li div.item-desc span.domain {
+	#buddypress ul#link-list li div.item-desc span.domain {
 		color: gray;
 	}
-	ul#link-list li img.avatar {
+	#buddypress ul#link-list li img.avatar {
 		float: none;
 		position: relative;
 		z-index: 2;
 		margin: 0;
 		padding: 0;
+		width: auto;
+		height: auto;
 	}
 
-ul#link-list div.link-list-left {
+#buddypress ul#link-list div.link-list-left {
 	float: left;
-	margin: 0 20px 0 0;
+	margin: 0 10px 10px 0;
 	padding: 0;
 	position: relative;
 	z-index: 1;
@@ -72,192 +75,210 @@ ul#link-list div.link-list-left {
 	text-align: center;
 	vertical-align: middle;
 }
-	ul#link-list div.link-list-left a.link-play-video {
+	#buddypress ul#link-list div.link-list-left a.link-play-video {
 		background: url(../images/play_video_32.png) no-repeat 50% 50%;
 	}
-	ul#link-list div.link-list-left a.link-play-photo {
+	#buddypress ul#link-list div.link-list-left a.link-play-photo {
 		background: url(../images/play_photo_32.png) no-repeat 50% 50%;
 	}
-	ul#link-list li.avmax-50 div.link-list-left a.link-play-video,
-	ul#link-list li.avmax-60 div.link-list-left a.link-play-video,
-	ul#link-list li.avmax-70 div.link-list-left a.link-play-video,
-	ul#link-list li.avmax-80 div.link-list-left a.link-play-video {
+	#buddypress ul#link-list li.avmax-50 div.link-list-left a.link-play-video,
+	#buddypress ul#link-list li.avmax-60 div.link-list-left a.link-play-video,
+	#buddypress ul#link-list li.avmax-70 div.link-list-left a.link-play-video,
+	#buddypress ul#link-list li.avmax-80 div.link-list-left a.link-play-video {
 		background: url(../images/play_video_20.png) no-repeat 50% 50%;
 	}
-	ul#link-list li.avmax-50 div.link-list-left a.link-play-photo,
-	ul#link-list li.avmax-60 div.link-list-left a.link-play-photo,
-	ul#link-list li.avmax-70 div.link-list-left a.link-play-photo,
-	ul#link-list li.avmax-80 div.link-list-left a.link-play-photo {
+	#buddypress ul#link-list li.avmax-50 div.link-list-left a.link-play-photo,
+	#buddypress ul#link-list li.avmax-60 div.link-list-left a.link-play-photo,
+	#buddypress ul#link-list li.avmax-70 div.link-list-left a.link-play-photo,
+	#buddypress ul#link-list li.avmax-80 div.link-list-left a.link-play-photo {
 		background: url(../images/play_photo_20.png) no-repeat 50% 50%;
 	}
 
-ul#link-list div.link-list-right {
+#buddypress ul#link-list div.link-list-right {
 	/* no styles yet */
 }
-	ul#link-list div.link-list-right a.link-external {
+	#buddypress ul#link-list div.link-list-right a.link-external {
 		padding-left: 16px;
 		margin-left: 6px;
 		background: url(../images/icons/link.png) 0% no-repeat;
 	}
-ul#link-list div.link-list-footer {
+#buddypress ul#link-list div.link-list-footer {
 	clear: left;
 	padding-top: 5px;
 }
-	ul#link-list div.link-list-footer-left {
+	#buddypress ul#link-list div.link-list-footer-left {
 		float: left;
 		width: 86px;
 	}
-	ul#link-list div.link-list-footer-right {
+	#buddypress ul#link-list div.link-list-footer-right {
 		margin-left: 106px;
 	}
 
-ul#link-list li.avmax-50 div.link-list-left {
+#buddypress ul#link-list li.avmax-50 div.link-list-left {
 	margin-right: 5px;
 }
-	ul#link-list li.avmax-50 div.link-list-left img.avatar {
+	#buddypress ul#link-list li.avmax-50 div.link-list-left img.avatar {
 		max-width: 50px;
 		max-height: 50px;
 	}
 
-ul#link-list li.avmax-60 div.link-list-left {
+#buddypress ul#link-list li.avmax-60 div.link-list-left {
 	margin-right: 10px;
 }
-	ul#link-list li.avmax-60 div.link-list-left img.avatar {
+	#buddypress ul#link-list li.avmax-60 div.link-list-left img.avatar {
 		max-width: 60px;
 		max-height: 60px;
 	}
 
-ul#link-list li.avmax-70 div.link-list-left {
+#buddypress ul#link-list li.avmax-70 div.link-list-left {
 	margin-right: 15px;
 }
-	ul#link-list li.avmax-70 div.link-list-left img.avatar {
+	#buddypress ul#link-list li.avmax-70 div.link-list-left img.avatar {
 		max-width: 70px;
 		max-height: 70px;
 	}
 
-ul#link-list li.avmax-80 div.link-list-left {
+#buddypress ul#link-list li.avmax-80 div.link-list-left {
 	margin-right: 15px;
 }
-	ul#link-list li.avmax-80 div.link-list-left img.avatar {
+	#buddypress ul#link-list li.avmax-80 div.link-list-left img.avatar {
 		max-width: 80px;
 		max-height: 80px;
 	}
+	#buddypress ul#link-list li.avmax-80 div.link-list-right div.item-desc {
+		padding-left: 100px;
+	}
 
-ul#link-list li.avmax-90 div.link-list-left,
-ul#link-list li.avmax-90 div.link-list-footer-left {
-	width: 96px;
+#buddypress ul#link-list li.avmax-90 div.link-list-left,
+#buddypress ul#link-list li.avmax-90 div.link-list-footer-left {
+	width: 95px;
 }
-	ul#link-list li.avmax-90 div.link-list-left img.avatar {
+	#buddypress ul#link-list li.avmax-90 div.link-list-left img.avatar {
 		max-width: 90px;
 		max-height: 90px;
 	}
-	ul#link-list li.avmax-90 div.link-list-footer-right {
-		margin-left: 116px;
+	#buddypress ul#link-list li.avmax-90 div.link-list-right div.item-desc {
+		padding-left: 105px;
+	}
+	#buddypress ul#link-list li.avmax-90 div.link-list-footer-right {
+		margin-left: 115px;
 	}
 
-ul#link-list li.avmax-100 div.link-list-left,
-ul#link-list li.avmax-100 div.link-list-footer-left {
-	width: 106px;
+#buddypress ul#link-list li.avmax-100 div.link-list-left,
+#buddypress ul#link-list li.avmax-100 div.link-list-footer-left {
+	width: 105px;
 }
-	ul#link-list li.avmax-100 div.link-list-left img.avatar {
+	#buddypress ul#link-list li.avmax-100 div.link-list-left img.avatar {
 		max-width: 100px;
 		max-height: 100px;
 	}
-	ul#link-list li.avmax-100 div.link-list-footer-right {
+	#buddypress ul#link-list li.avmax-100 div.link-list-right div.item-desc {
+		padding-left: 115px;
+	}
+	#buddypress ul#link-list li.avmax-100 div.link-list-footer-right {
 		margin-left: 125px;
 	}
 
-ul#link-list li.avmax-110 div.link-list-left,
-ul#link-list li.avmax-110 div.link-list-footer-left {
-	width: 116px;
+#buddypress ul#link-list li.avmax-110 div.link-list-left,
+#buddypress ul#link-list li.avmax-110 div.link-list-footer-left {
+	width: 115px;
 }
-	ul#link-list li.avmax-110 div.link-list-left img.avatar {
+	#buddypress ul#link-list li.avmax-110 div.link-list-left img.avatar {
 		max-width: 110px;
 		max-height: 110px;
 	}
-	ul#link-list li.avmax-110 div.link-list-footer-right {
+	#buddypress ul#link-list li.avmax-110 div.link-list-right div.item-desc {
+		padding-left: 125px;
+	}
+	#buddypress ul#link-list li.avmax-110 div.link-list-footer-right {
 		margin-left: 135px;
 	}
 
-ul#link-list li.avmax-120 div.link-list-left,
-ul#link-list li.avmax-120 div.link-list-footer-left {
-	width: 126px;
+#buddypress ul#link-list li.avmax-120 div.link-list-left,
+#buddypress ul#link-list li.avmax-120 div.link-list-footer-left {
+	width: 125px;
 }
-	ul#link-list li.avmax-120 div.link-list-left img.avatar {
+	#buddypress ul#link-list li.avmax-120 div.link-list-left img.avatar {
 		max-width: 120px;
 		max-height: 120px;
 	}
-	ul#link-list li.avmax-120 div.link-list-footer-right {
+	#buddypress ul#link-list li.avmax-120 div.link-list-right div.item-desc {
+		padding-left: 135px;
+	}
+	#buddypress ul#link-list li.avmax-120 div.link-list-footer-right {
 		margin-left: 145px;
 	}
 
-ul#link-list li.avmax-130 div.link-list-left,
-ul#link-list li.avmax-130 div.link-list-footer-left {
-	width: 136px;
+#buddypress ul#link-list li.avmax-130 div.link-list-left,
+#buddypress ul#link-list li.avmax-130 div.link-list-footer-left {
+	width: 135px;
 }
-	ul#link-list li.avmax-130 div.link-list-left img.avatar {
+	#buddypress ul#link-list li.avmax-130 div.link-list-left img.avatar {
 		max-width: 130px;
 		max-height: 130px;
 	}
-	ul#link-list li.avmax-130 div.link-list-footer-right {
+	#buddypress ul#link-list li.avmax-130 div.link-list-right div.item-desc {
+		padding-left: 145px;
+	}
+	#buddypress ul#link-list li.avmax-130 div.link-list-footer-right {
 		margin-left: 155px;
 	}
 
-ul#link-list li div.xtrabar {
+#buddypress ul#link-list li div.xtrabar {
 	/* no styles yet */
 }
-	ul#link-list li div.xtrabar a.comments {
+	#buddypress ul#link-list li div.xtrabar a.comments {
 		display: block;
 		float: left;
 		padding-left: 2em;
 		margin-right: 0.5em;
 	}
-	ul#link-list li div.xtrabar a.comments {
+	#buddypress ul#link-list li div.xtrabar a.comments {
 		background: url(../images/icons/comments.png) 5% no-repeat;
 	}
-	ul#link-list li div.xtrabar div.owner {
+	#buddypress ul#link-list li div.xtrabar div.owner {
 		float: left;
 		margin: 0 0.5em 0 0.2em;
 		white-space: nowrap;
 	}
-	ul#link-list li div.xtrabar div.owner img.owner-avatar {
+	#buddypress ul#link-list li div.xtrabar div.owner img.owner-avatar {
 		vertical-align: -0.6em;
 		border: 1px solid #c0c0c0;
 	}
 
-ul#link-list li div.link-remove-button {
+#buddypress ul#link-list li div.link-remove-button {
 	margin-bottom: 8px;
 }
 
 /**** Vote Panel *******/
 
-div.link-vote-panel {
+#buddypress div.link-vote-panel {
 	width: auto;
 }
-	div.link-vote-panel div.clickers {
+	#buddypress div.link-vote-panel div.clickers {
 		float: left;
 		clear: right;
 		width: 100%;
 		text-align: center;
 	}
-	div.link-vote-panel div.clickers a.up,
-	div.link-vote-panel div.clickers a.down {
+	#buddypress div.link-vote-panel div.clickers a.up,
+	#buddypress div.link-vote-panel div.clickers a.down {
 		display: block;
 		float: left;
 		height: 20px;
 		width: 20%;
 	}
-	div.link-vote-panel div.clickers a.up {
+	#buddypress div.link-vote-panel div.clickers a.up {
 		background: url(../images/icons/thumb_up.png) 50% 100% no-repeat;
 	}
-	div.link-vote-panel div.clickers a.down {
+	#buddypress div.link-vote-panel div.clickers a.down {
 		background: url(../images/icons/thumb_down.png) 50% 100% no-repeat;
 	}
-	div.link-vote-panel div.clickers div.vote-total {
+	#buddypress div.link-vote-panel div.clickers div.vote-total {
 		float: left;
 		width: 60%;
 	}
-	div.link-vote-panel div.vote-count {
+	#buddypress div.link-vote-panel div.vote-count {
 		float: left;
 		width: 100%;
 		line-height: 150%;
@@ -269,14 +290,14 @@ div.link-vote-panel {
 
 /* Link home page */
 
-div.link-home div#item-header div.item-avatar {
+#buddypress div.link-home div#item-header div.item-avatar {
 	width: 154px;
 	position: relative;
 	z-index: 1;
 	float: left;
 	margin: 0 15px 5px 0;
 }
-	div.link-home div#item-header div.item-avatar img.avatar {
+	#buddypress div.link-home div#item-header div.item-avatar img.avatar {
 		margin-bottom: 5px;
 		position: relative;
 		z-index: 2;
@@ -284,32 +305,32 @@ div.link-home div#item-header div.item-avatar {
 		margin: 0;
 		padding: 0;
 	}
-	div.link-home div#item-header div.item-avatar a.link-play-video {
+	#buddypress div.link-home div#item-header div.item-avatar a.link-play-video {
 		background: url(../images/play_video_48.png) no-repeat 50% 50%;
 	}
-	div.link-home div#item-header div.item-avatar a.link-play-photo {
+	#buddypress div.link-home div#item-header div.item-avatar a.link-play-photo {
 		background: url(../images/play_photo_48.png) no-repeat 50% 50%;
 	}
 
-div.link-home div#item-header div.link-vote-panel {
+#buddypress div.link-home div#item-header div.link-vote-panel {
 	float: left;
 	clear: left;
 	width: 150px;
 	margin-bottom: 15px;
 }
 
-div.link-home div#item-header div#item-meta {
+#buddypress div.link-home div#item-header div#item-meta {
 	padding-left: 15px;
 }
 
-div.link-home div#item-header div#item-actions img.owner-avatar {
+#buddypress div.link-home div#item-header div#item-actions img.owner-avatar {
 	/*float: left;*/
 }
-div.link-home div#item-header div#item-actions div.link-owner-text {
+#buddypress div.link-home div#item-header div#item-actions div.link-owner-text {
 	/*padding-left: 60px;*/
 }
 
 /***** Widget *****/
-ul#links-list li div.item-title {
+#buddypress ul#links-list li div.item-title {
 	width: 95%;
 }
