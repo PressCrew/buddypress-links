@@ -12,8 +12,6 @@
 
 		<form action="" method="post" id="links-directory-form" class="dir-form">
 
-			<h3><?php _e( 'Links Directory', 'buddypress-links' ) ?><?php if ( is_user_logged_in() ) : ?> &nbsp;<a class="button" href="<?php echo bp_get_root_domain() . '/' . bp_links_root_slug() . '/create/' ?>"><?php _e( 'Create a Link', 'buddypress-links' ) ?></a><?php endif; ?></h3>
-
 			<?php do_action( 'bp_before_directory_links_content' ) ?>
 
 			<div id="link-dir-search" class="dir-search">

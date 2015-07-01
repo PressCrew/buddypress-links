@@ -133,6 +133,15 @@ function bp_links_dtheme_directory_mylinks_tab()
 }
 add_action( 'bp_links_directory_link_types', 'bp_links_dtheme_directory_mylinks_tab' );
 
+function bp_links_dtheme_directory_create_tab()
+{
+	if ( true === is_user_logged_in() ) {
+		// render tab ?>
+		<li id="links-create"><a href="<?php echo bp_get_root_domain() . '/' . bp_links_root_slug() . '/create/'; ?>" class="no-ajax"><?php _e( 'Create a Link', 'buddypress-links' ) ?></a></li><?php
+	}
+}
+add_action( 'bp_links_directory_link_types', 'bp_links_dtheme_directory_create_tab' );
+
 function bp_links_dtheme_link_order_options_list()
 {	
 	// render list ?>
