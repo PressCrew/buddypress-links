@@ -267,6 +267,7 @@ div.item-avatar a.link-play {
 		float: left;
 		height: 20px;
 		width: 20%;
+		border: none;
 	}
 	#buddypress div.link-vote-panel div.clickers a.up {
 		background: url(../images/icons/thumb_up.png) 50% 100% no-repeat;
