@@ -7,6 +7,9 @@ function bp_links_upgrade()
 {
 	global $wpdb, $bp;
 
+	// make sure globals are set up
+	$bp->links->setup_globals();
+
 	// get db version
 	$db_version = get_site_option( 'bp-links-db-version' );
 	

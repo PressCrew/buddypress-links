@@ -51,7 +51,6 @@ define( 'BP_LINKS_VERSION', '0.9.3' );
 define( 'BP_LINKS_DB_VERSION', '9' );
 define( 'BP_LINKS_PLUGIN_NAME', 'buddypress-links' );
 define( 'BP_LINKS_PLUGIN_TEXTDOMAIN', 'buddypress-links' );
-define( 'BP_LINKS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'BP_LINKS_THEMES_PATH', 'themes' );
 define( 'BP_LINKS_DEFAULT_THEME', 'bp-links-default' );
 define( 'BP_LINKS_ADMIN_THEME', 'bp-links-admin' );
@@ -181,7 +180,9 @@ function bp_links_activate()
 	require_once( 'bp-links-upgrade.php' );
 	// make sure its initialized
 	bp_links_init();
+	// make sure component is set up
+	bp_links_setup_component();
 	// run upgrader
 	bp_links_upgrade();
 }
-add_action( 'activate_' . BP_LINKS_PLUGIN_BASENAME, 'bp_links_activate' );
+register_activation_hook( __FILE__, 'bp_links_activate' );
