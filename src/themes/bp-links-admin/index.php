@@ -12,7 +12,7 @@ if ( defined( 'BP_LINKS_PRO_VERSION' ) ) {
 }
 
 ?>
-<div class="wrap buddypress-links-admin-general">
+<div class="wrap">
 
 	<h2><?php _e( 'BuddyPress Links', 'buddypress-links' ) ?></h2>
 

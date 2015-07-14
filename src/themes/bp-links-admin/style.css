@@ -2,17 +2,28 @@
  * Admin Styles
  */
 
-/* Menu */
-span.buddypress-links-admin-menu-header {
-	font-weight: bold;
-	border-top: 1px solid gray;
-	padding-top: 3px;
-}
-span.buddypress-links-admin-menu-item {
-	padding-left: 10px;
+/* Content */
+
+div.buddypress-links-admin-content {
+	float: left;
+	margin-top: 20px;
+	max-width: 800px;
 }
 
-/* Content */
+div.buddypress-links-admin-content > h3 {
+	margin-top: 30px;
+}
+
+div.buddypress-links-admin-content table.widefat {
+	width: 400px;
+}
+
+div.buddypress-links-admin-content ul li {
+	margin-left: 30px;
+	list-style: disc;
+}
+
+/* Sidebar */
 
 div.buddypress-links-admin-sidebar {
 	padding: 0 30px;
@@ -47,36 +58,4 @@ div.buddypress-links-admin-sidebar > div {
 div.buddypress-links-admin-sidebar ul {
 	list-style: circle;
 	margin-left: 25px;
-}
-
-div.buddypress-links-admin-content {
-	float: left;
-	margin-top: 20px;
-	max-width: 800px;
-}
-
-div.buddypress-links-admin-general > h3 {
-	margin-top: 25px;
-}
-
-div.buddypress-links-admin-general table.widefat {
-	width: 400px;
-}
-
-div.buddypress-links-admin-general ul li {
-	margin-left: 30px;
-	list-style: disc;
-}
-
-div.buddypress-links-admin-settings table.form-table th {
-	width: 150px;
-	font-weight: bold;
-}
-
-div.buddypress-links-admin-cats table.widefat{
-	width: 100%;
-}
-
-div.buddypress-links-admin-manage ul {
-	list-style: disc outside none;
 }

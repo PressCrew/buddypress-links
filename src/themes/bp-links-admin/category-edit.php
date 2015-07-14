@@ -4,7 +4,7 @@
  */
 ?>
 
-<div class="wrap nosubsub buddypress-links-admin-cats">
+<div class="wrap">
 
 	<?php screen_icon( 'bp-links' ); ?>
 	

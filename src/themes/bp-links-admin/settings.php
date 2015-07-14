@@ -10,7 +10,7 @@
 	</div>
 <?php } ?>
 
-<div class="wrap buddypress-links-admin-settings" style="position: relative">
+<div class="wrap" style="position: relative">
 
 	<h2 class="nav-tab-wrapper">
 		<?php bp_links_admin_settings_tabs(); ?>
