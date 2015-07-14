@@ -20,6 +20,13 @@ class BP_Links_Settings extends WordPressSettingsFramework
 	const OPTION_GROUP = 'buddypress_links';
 
 	/**
+	 * Id of the section to display.
+	 *
+	 * @var string
+	 */
+	private $display_section = null;
+
+	/**
 	 * Singleton instance
 	 *
 	 * @var BP_Links_Settings
@@ -51,17 +58,35 @@ class BP_Links_Settings extends WordPressSettingsFramework
 		return self::$instance;
 	}
 
-	final public static function init( $the_plugin_page )
+	/**
+	 * Initialize the settings.
+	 * 
+	 * @param string $the_plugin_page The admin page the settings live on.
+	 * @param string $display_section Only show this section id.
+	 * @return BP_Links_Settings|false
+	 */
+	final public static function init( $the_plugin_page, $display_section = null )
 	{
 		global $plugin_page, $pagenow;
 
 		// init settings
 		if (
-			( 'options.php' == $pagenow && isset( $_POST['option_page'] ) && self::OPTION_GROUP == $_POST['option_page'] ) ||
+			(
+				'options.php' == $pagenow &&
+				true === isset( $_POST['option_page'] ) &&
+				self::OPTION_GROUP == $_POST['option_page']
+			) ||
 			$the_plugin_page == $plugin_page
 		) {
-			return self::instance();
+			// set up instance
+			$instance = self::instance();
+			// maybe set display section
+			$instance->set_display_section( $display_section );
+			// return instance
+			return $instance;
 		}
+
+		return false;
 	}
 
 	final public static function get_defaults()
@@ -97,10 +122,41 @@ class BP_Links_Settings extends WordPressSettingsFramework
 		);
 	}
 
-	public function validate_settings( $input )
+	final public function process_settings()
+	{
+		global $wpsf_settings;
+
+		if (
+			false === empty( $this->display_section ) &&
+			false === empty( $wpsf_settings ) &&
+			true === empty( $_POST['option_page'] )
+		) {
+			foreach ( $wpsf_settings as $section_key => $section_config ) {
+				if (
+					true === isset( $section_config['section_id'] ) &&
+					$this->display_section !== $section_config['section_id']
+				) {
+					// don't display it
+					unset( $wpsf_settings[ $section_key ] );
+				}
+			}
+		}
+
+		// as you were
+		parent::process_settings();
+	}
+
+	final public function validate_settings( $input )
 	{
 		// Same as $sanitize_callback from http://codex.wordpress.org/Function_Reference/register_setting
 		return $input;
+	}
+
+	final public function set_display_section( $section_id )
+	{
+		if ( false === empty( $section_id ) ) {
+			$this->display_section = $section_id;
+		}
 	}
 
 }

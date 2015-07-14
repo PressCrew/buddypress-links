@@ -5,17 +5,16 @@
 
 function bp_links_admin_init()
 {
-	global $plugin_page, $pagenow;
-
 	// maybe init settings
-	BP_Links_Settings::init( 'buddypress-links-admin-settings' );
+	BP_Links_Settings::init( 'buddypress-links-admin-settings', bp_links_admin_settings_section() );
 }
 add_action( 'admin_init', 'bp_links_admin_init', 9 );
 
 /**
  * Admin styles action
  */
-function bp_links_admin_menu_css() {
+function bp_links_admin_menu_css()
+{
 	wp_enqueue_style( 'bp-links-admin-style', BP_LINKS_ADMIN_THEME_URL . '/style.css' );
 }
 add_action( 'admin_print_styles', 'bp_links_admin_menu_css' );
@@ -24,41 +23,118 @@ add_action( 'admin_print_styles', 'bp_links_admin_menu_css' );
  * Admin menus action
  */
 function bp_links_add_admin_menu() {
-	add_menu_page( __( 'BuddyPress Links', 'buddypress-links'), __( 'BP Links', 'buddypress-links' ), BP_LINKS_CAPABILITY, 'buddypress-links-admin', 'bp_links_admin_index', BP_LINKS_ADMIN_THEME_URL . '/images/logo_16.png' );
-	add_submenu_page( 'buddypress-links-admin', __( 'General Info', 'buddypress-links'), __( 'General Info', 'buddypress-links' ), BP_LINKS_CAPABILITY, 'buddypress-links-admin', 'bp_links_admin_index' );
-	add_submenu_page( 'buddypress-links-admin', __( 'Edit Settings', 'buddypress-links'), __( 'Edit Settings', 'buddypress-links' ), BP_LINKS_CAPABILITY, 'buddypress-links-admin-settings', 'bp_links_admin_manage_settings' );
-	add_submenu_page( 'buddypress-links-admin', __( 'Edit Categories', 'buddypress-links'), __( 'Edit Categories', 'buddypress-links' ), BP_LINKS_CAPABILITY, 'buddypress-links-admin-cats', 'bp_links_admin_manage_categories' );
-	add_submenu_page( 'buddypress-links-admin', __( 'Manage Links', 'buddypress-links'), __( 'Manage Links', 'buddypress-links' ), BP_LINKS_CAPABILITY, 'buddypress-links-admin-links', 'bp_links_admin_manage_links' );
+	add_menu_page( __( 'BuddyPress Links', 'buddypress-links'), __( 'BP Links', 'buddypress-links' ), BP_LINKS_CAPABILITY, 'buddypress-links-admin', 'bp_links_admin_index', 'dashicons-share' );
+	add_submenu_page( 'buddypress-links-admin', __( 'Support', 'buddypress-links'), __( 'Support', 'buddypress-links' ), BP_LINKS_CAPABILITY, 'buddypress-links-admin', 'bp_links_admin_index' );
+	add_submenu_page( 'buddypress-links-admin', __( 'Settings', 'buddypress-links'), __( 'Settings', 'buddypress-links' ), BP_LINKS_CAPABILITY, 'buddypress-links-admin-settings', 'bp_links_admin_manage_settings' );
+	add_submenu_page( 'buddypress-links-admin', __( 'Categories', 'buddypress-links'), __( 'Categories', 'buddypress-links' ), BP_LINKS_CAPABILITY, 'buddypress-links-admin-cats', 'bp_links_admin_manage_categories' );
+	add_submenu_page( 'buddypress-links-admin', __( 'Manager', 'buddypress-links'), __( 'Manager', 'buddypress-links' ), BP_LINKS_CAPABILITY, 'buddypress-links-admin-links', 'bp_links_admin_manage_links' );
 }
 add_action( 'admin_menu', 'bp_links_add_admin_menu', 12 );
 
 /**
+ * Return the settings section that should be displayed.
+ *
+ * @return string
+ */
+function bp_links_admin_settings_section()
+{
+	// set a default
+	$section = 'global';
+
+	// try to get tab parameter from request
+	if ( true === isset( $_REQUEST['buddypress_links_tab'] ) ) {
+		// use that one
+		$section = trim( $_REQUEST['buddypress_links_tab'] );
+	}
+
+	return $section;
+}
+
+/**
+ * Output the settings tabs.
+ *
+ * @param string $active_tab Slug of the tab that is active.
+ */
+function bp_links_admin_settings_tabs( $active_tab = null )
+{
+	// handle empty tab
+	if ( true === empty( $active_tab ) ) {
+		// set it
+		$active_tab = bp_links_admin_settings_section();
+	}
+
+	$idle_class = 'nav-tab';
+	$active_class = $idle_class . ' nav-tab-active';
+
+	$tabs = apply_filters(
+		'bp_links_admin_settings_tabs',
+		array(
+			10 => array(
+				'tab' => 'global',
+				'name' => __( 'Global', 'buddypress-links' )
+			),
+			20 => array(
+				'tab' => 'directory',
+				'name' => __( 'Directory', 'buddypress-links' )
+			),
+			30 => array(
+				'tab' => 'content',
+				'name' => __( 'Content', 'buddypress-links' )
+			),
+			40 => array(
+				'tab' => 'voting',
+				'name' => __( 'Voting', 'buddypress-links' )
+			),
+			50 => array(
+				'tab' => 'profile',
+				'name' => __( 'Profile', 'buddypress-links' )
+			),
+			60 => array(
+				'tab' => 'groups',
+				'name' => __( 'Groups', 'buddypress' )
+			)
+		)
+	);
+
+	// sort result by keys in case tabs were added by filter
+	ksort( $tabs );
+
+	// Loop through tabs and build navigation
+	foreach ( $tabs as $tab_data ) {
+		// determine tab class
+		$tab_class = ( $tab_data['tab'] === $active_tab ) ? $active_class : $idle_class;
+		// determine tab args
+		$tab_args = array( 'page' => 'buddypress-links-admin-settings', 'buddypress_links_tab' => $tab_data['tab'] );
+		// format the href url
+		$tab_url = add_query_arg( $tab_args, 'admin.php' );
+		// render this tab ?>
+		<a href="<?php echo esc_url( $tab_url ); ?>" class="<?php esc_attr_e( $tab_class ); ?>"><?php esc_html_e( $tab_data['name'] ); ?></a><?php
+	}
+}
+
+/**
  * Admin index action
  */
-function bp_links_admin_index () {
+function bp_links_admin_index()
+{
 	require_once BP_LINKS_ADMIN_THEME_DIR . '/index.php';
 }
 
 /**
  * Admin manage settings action
- *
- * @return boolean
  */
-function bp_links_admin_manage_settings() {
-
+function bp_links_admin_manage_settings()
+{
 	require_once BP_LINKS_ADMIN_THEME_DIR . '/settings.php';
-
-	return true;
 }
 
 /**
  * Admin manage all links action
- * 
- * @return boolean
  */
-function bp_links_admin_manage_links() {
-
+function bp_links_admin_manage_links()
+{
 	if ( isset( $_POST['links_admin_delete']) && isset( $_POST['alllinks'] ) ) {
+
 		if ( !check_admin_referer('bp-links-admin') )
 			return false;
 
@@ -79,8 +155,6 @@ function bp_links_admin_manage_links() {
 	}
 
 	require_once BP_LINKS_ADMIN_THEME_DIR . '/link-manager.php';
-
-	return true;
 }
 
 /**
@@ -88,8 +162,8 @@ function bp_links_admin_manage_links() {
  *
  * @return boolean
  */
-function bp_links_admin_manage_categories() {
-
+function bp_links_admin_manage_categories()
+{
 	if ( isset( $_GET['category_id'] ) || isset( $_POST['category_id'] )) {
 		return bp_links_admin_edit_category();
 	} else {
@@ -102,8 +176,8 @@ function bp_links_admin_manage_categories() {
  *
  * @return boolean
  */
-function bp_links_admin_list_categories() {
-
+function bp_links_admin_list_categories()
+{
 	if ( isset( $_POST['categories_admin_delete']) && isset( $_POST['allcategories'] ) ) {
 
 		if ( !check_admin_referer('bp-links-categories-admin') ) {

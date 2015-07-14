@@ -47,5 +47,3 @@
 <?php do_action('bp_links_admin_edit_category_form_after', $category); ?>
 </form>
 </div>
-
-<?php include 'sidebar.php'; ?>

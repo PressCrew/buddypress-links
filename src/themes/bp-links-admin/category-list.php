@@ -112,5 +112,3 @@
 		</p>
 	</form>
 </div>
-
-<?php include 'sidebar.php'; ?>

@@ -2,14 +2,6 @@
  * Admin Styles
  */
 
-/* Icons */
-div#icon-bp-links.icon16 {
-	background: url('images/logo_16.png') no-repeat;
-}
-div#icon-bp-links.icon32 {
-	background: url('images/logo_32.png') no-repeat;
-}
-
 /* Menu */
 span.buddypress-links-admin-menu-header {
 	font-weight: bold;
@@ -23,14 +15,18 @@ span.buddypress-links-admin-menu-item {
 /* Content */
 
 div.buddypress-links-admin-sidebar {
-	margin: 0 0 0 580px;
-	padding: 45px 20px 20px 20px;
-	width: 250px;
+	padding: 0 30px;
+	width: 400px;
+}
+
+div.buddypress-links-admin-sidebar {
+	float: left;
+	margin-top: 20px;
 }
 
 div.buddypress-links-admin-sidebar > div {
 	margin-bottom: 20px;
-	padding: 5px 10px 10px 10px;
+	padding: 5px 20px 10px 20px;
 	background-color: #f9f9f9;
 	border: solid 1px #dfdfdf;
 	border-radius: 5px;
@@ -53,11 +49,10 @@ div.buddypress-links-admin-sidebar ul {
 	margin-left: 25px;
 }
 
-div.buddypress-links-admin-general,
-div.buddypress-links-admin-settings,
-div.buddypress-links-admin-cats {
+div.buddypress-links-admin-content {
 	float: left;
-	width: 550px;
+	margin-top: 20px;
+	max-width: 800px;
 }
 
 div.buddypress-links-admin-general > h3 {
