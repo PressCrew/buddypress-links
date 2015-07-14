@@ -884,6 +884,10 @@ final class BP_Links_Embed_Service_Fotoglif
 /**
  * YouTube video embedding service
  *
+ * Known URL formats:
+ *   1) https://www.youtube.com/watch?v=qjzLuddjIUI
+ *   2) https://youtu.be/qjzLuddjIUI
+ *
  * @package BP_Links
  * @author Marshall Sorenson
  */
@@ -1004,7 +1008,7 @@ final class BP_Links_Embed_Service_YouTube
 
 	public function from_url_pattern()
 	{
-		return '/^https?:\/\/(www\.)?youtube.com\/watch/';
+		return '#^https?:\/\/(www\.)?(youtube\.com\/watch|youtu\.be\/)#';
 	}
 
 	//
@@ -1022,13 +1026,26 @@ final class BP_Links_Embed_Service_YouTube
 
 	private function check_url( $url )
 	{
-		return preg_match( '/^https?:\/\/(www\.)?youtube\.com\/watch.+$/', $url );
+		return preg_match( '#^https?:\/\/(www\.)?(youtube\.com\/watch|youtu\.be\/).+$#', $url );
 	}
 
 	private function parse_url( $url )
 	{
 		// parse the url
 		$url_parsed = parse_url( $url );
+
+		// is it the vanity url?
+		if (
+			false === empty( $url_parsed['host'] ) &&
+			false ===empty( $url_parsed['path'] ) &&
+			'youtu.be' === $url_parsed['host']
+		) {
+			// yep, split the path up
+			$path_elements = array_filter( explode( '/', $url_parsed['path'] ) );
+			// the first path element is the video hash
+			$this->data()->video_hash = current( $path_elements );
+			return true;
+		}
 
 		// make sure we got something
 		if ( !empty( $url_parsed['query'] ) ) {
