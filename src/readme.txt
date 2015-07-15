@@ -115,6 +115,11 @@ The links data from the 0.2.x branch is compatible with 0.3.x and higher, except
 
 == Upgrade Notice ==
 
+= 0.9.4 =
+
+The MetaCafe API is completely defunct. No new attempts to fetch data will be made, although existing links
+should still display fine. New links to MetaCafe will fall back to page fetching.
+
 = 0.9 =
 
 Several templates were modified.
