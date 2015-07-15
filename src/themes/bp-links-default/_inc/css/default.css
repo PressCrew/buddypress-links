@@ -54,6 +54,10 @@ div.item-avatar a.link-play {
 	#buddypress ul#link-list li div.item-desc span.domain {
 		color: gray;
 	}
+	#buddypress ul#link-list div.item-avatar {
+		width: auto;
+		height: auto;
+	}
 	#buddypress ul#link-list li img.avatar {
 		float: none;
 		position: relative;
