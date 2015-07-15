@@ -1361,6 +1361,8 @@ final class BP_Links_Embed_Service_Flickr
 /**
  * MetaCafe video embedding service
  *
+ * Fetching new content has been disabled as of 0.9.4 since the API is more or less defunct now.
+ *
  * @link http://help.metacafe.com/?page_id=181
  * @package BP_Links
  * @author Marshall Sorenson
@@ -1376,15 +1378,8 @@ final class BP_Links_Embed_Service_MetaCafe
 
 	final public function from_url( $url )
 	{
-		if ( $this->check_url( $url ) ) {
-			if ( $this->parse_url( $url ) === true ) {
-				return $this->from_xml( $this->api_xml_fetch() );
-			} else {
-				throw new BP_Links_Embed_User_Exception( $this->err_embed_url() );
-			}
-		} else {
-			return false;
-		}
+		// don't try to fetch content anymore
+		return false;
 	}
 
 	final public function from_xml( $xml )
