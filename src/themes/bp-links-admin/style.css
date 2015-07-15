@@ -13,9 +13,52 @@ div.buddypress-links-admin-content {
 div.buddypress-links-admin-content > h3 {
 	margin-top: 30px;
 }
+div.buddypress-links-admin-content > h3.dashicons-before {
+	line-height: 140%;
+}
+div.buddypress-links-admin-content > h3.dashicons-before::before {
+	margin-right: 5px;
+}
 
-div.buddypress-links-admin-content table.widefat {
-	width: 400px;
+div.buddypress-links-admin-content .dashicons-before::before {
+	text-shadow: 1px 1px 3px lightgray;
+}
+div.buddypress-links-admin-content .dashicons-tag::before {
+	color: chocolate;
+}
+div.buddypress-links-admin-content .dashicons-groups::before {
+	color: purple;
+}
+div.buddypress-links-admin-content .dashicons-businessman::before {
+	color: #00b9eb;
+}
+div.buddypress-links-admin-content .dashicons-yes::before {
+	color: green;
+}
+div.buddypress-links-admin-content .dashicons-no::before {
+	color: darkred;
+}
+
+div.buddypress-links-admin-sidebar .dashicons-before::before {
+	padding-top: 5px;
+	text-shadow: 1px 1px 3px lightgray;
+}
+div.buddypress-links-admin-sidebar .dashicons-heart::before {
+	color: darkred;
+}
+div.buddypress-links-admin-sidebar .dashicons-megaphone::before {
+	color: orange;
+}
+div.buddypress-links-admin-sidebar .dashicons-twitter::before {
+	color: #33bcff;
+}
+
+div.buddypress-links-admin-content > h4,
+div.buddypress-links-admin-content > h5,
+div.buddypress-links-admin-content > p,
+div.buddypress-links-admin-content > ol,
+div.buddypress-links-admin-content > ul {
+	margin-left: 30px;
 }
 
 div.buddypress-links-admin-content ul li {
