@@ -893,7 +893,7 @@ final class BP_Links_Embed_Service_Fotoglif
  */
 final class BP_Links_Embed_Service_YouTube
 	extends BP_Links_Embed_Service
-		implements BP_Links_Embed_From_Url, BP_Links_Embed_From_Xml, BP_Links_Embed_Has_Html
+		implements BP_Links_Embed_From_Url, BP_Links_Embed_From_Json, BP_Links_Embed_Has_Html
 {
 	// thumb constants
 	const YT_TH_DEFAULT = 0;
@@ -909,7 +909,7 @@ final class BP_Links_Embed_Service_YouTube
 	{
 		if ( $this->check_url( $url ) ) {
 			if ( $this->parse_url( $url ) === true ) {
-				return $this->from_xml( $this->api_xml_fetch() );
+				return $this->from_json( $this->api_oembed_fetch() );
 			} else {
 				throw new BP_Links_Embed_User_Exception( $this->err_embed_url() );
 			}
@@ -918,35 +918,17 @@ final class BP_Links_Embed_Service_YouTube
 		}
 	}
 
-	final public function from_xml( $xml )
+	final public function from_json( $json )
 	{
-		// load xml string into a SimpleXML object
-		libxml_use_internal_errors(true);
-		$sxml = simplexml_load_string( $xml );
+		// decode the json string
+		$result = json_decode( $json );
 
-		if ( $sxml instanceof SimpleXMLElement ) {
+		if ( $result instanceof stdClass ) {
 
-			// set title and content
-			$this->data()->api_title = $this->deep_clean_string( (string) $sxml->title );
-			$this->data()->api_content = $this->deep_clean_string( (string) $sxml->content );
-
-			// find alternate link
-			foreach ( $sxml->link as $link ) {
-				if ( 'alternate' == (string) $link['rel'] ) {
-					$this->data()->api_link_alt = (string) $link['href'];
-					break;
-				}
-			}
-
-			// make sure we have an alternate link
-			if ( empty( $this->data()->api_link_alt ) === false ) {
-				// set video hash if missing
-				if ( empty( $this->data()->video_hash ) ) {
-					$this->parse_url( $this->data()->api_link_alt );
-				}
-			} else {
-				throw new BP_Links_Embed_User_Exception( $this->err_api_fetch() );
-			}
+			// set data items
+			$this->data()->oembed_title = $this->deep_clean_string( (string) $result->title );
+			$this->data()->oembed_thumbnail_url = $this->deep_clean_string( (string) $result->thumbnail_url );
+			$this->data()->oembed_html = $this->deep_clean_string( (string) $result->html );
 
 			return true;
 
@@ -958,17 +940,36 @@ final class BP_Links_Embed_Service_YouTube
 
 	final public function url()
 	{
-		return $this->data()->api_link_alt;
+		// have oembed url?
+		if ( true === isset( $this->data()->oembed_url ) ) {
+			// yep use it
+			return $this->data()->oembed_url;
+		// back compat
+		} else {
+			// return old YT link
+			return $this->data()->api_link_alt;
+		}
 	}
 
 	final public function title()
 	{
-		return $this->data()->api_title;
+		// have oembed title?
+		if ( true === isset( $this->data()->oembed_title ) ) {
+			// yep, use it
+			return $this->data()->oembed_title;
+		// back compat
+		} else {
+			// return old YT title
+			return $this->data()->api_title;
+		}
 	}
 
 	final public function description()
 	{
-		return $this->data()->api_content;
+		// only old YT api provided description
+		if ( true === isset( $this->data()->api_content ) ) {
+			return $this->data()->api_content;
+		}
 	}
 
 	final public function image_url()
@@ -988,17 +989,24 @@ final class BP_Links_Embed_Service_YouTube
 
 	final public function html()
 	{
-		return sprintf(
-			'<object width="640" height="385" style="height: 385px;">' .
-			'<param name="movie" value="%1$s"></param>' .
-			'<param name="allowFullScreen" value="true"></param>' .
-			'<param name="allowscriptaccess" value="always"></param>' .
-			'<embed src="%1$s" type="application/x-shockwave-flash" ' .
-				'allowscriptaccess="always" allowfullscreen="true" ' .
-				'width="640" height="385" style="height: 385px;"></embed>' .
-			'</object>',
-			esc_url( $this->yt_player_url() )
-		);
+		// have oembed html?
+		if ( true === isset( $this->data()->oembed_html ) ) {
+			// yep, use it
+			return $this->data()->oembed_html;
+		} else {
+			// try to launch old player
+			return sprintf(
+				'<object width="640" height="385" style="height: 385px;">' .
+				'<param name="movie" value="%1$s"></param>' .
+				'<param name="allowFullScreen" value="true"></param>' .
+				'<param name="allowscriptaccess" value="always"></param>' .
+				'<embed src="%1$s" type="application/x-shockwave-flash" ' .
+					'allowscriptaccess="always" allowfullscreen="true" ' .
+					'width="640" height="385" style="height: 385px;"></embed>' .
+				'</object>',
+				esc_url( $this->yt_player_url() )
+			);
+		}
 	}
 
 	public function service_name()
@@ -1031,60 +1039,53 @@ final class BP_Links_Embed_Service_YouTube
 
 	private function parse_url( $url )
 	{
+		// store url
+		$this->data()->oembed_url = (string) $url;
+		
 		// parse the url
 		$url_parsed = parse_url( $url );
 
 		// is it the vanity url?
 		if (
 			false === empty( $url_parsed['host'] ) &&
-			false ===empty( $url_parsed['path'] ) &&
+			false === empty( $url_parsed['path'] ) &&
 			'youtu.be' === $url_parsed['host']
 		) {
+
 			// yep, split the path up
 			$path_elements = array_filter( explode( '/', $url_parsed['path'] ) );
 			// the first path element is the video hash
 			$this->data()->video_hash = current( $path_elements );
+			// success
 			return true;
-		}
 
-		// make sure we got something
-		if ( !empty( $url_parsed['query'] ) ) {
+		} elseif ( false === empty( $url_parsed['query'] ) ) {
 
 			// parse the query string
 			parse_str( $url_parsed['query'], $qs_vars );
 
 			// get the video hash
-			if ( !empty( $qs_vars['v'] ) ) {
+			if ( false === empty( $qs_vars['v'] ) ) {
+				// found it!
 				$this->data()->video_hash = $qs_vars['v'];
+				// success
 				return true;
 			}
 		}
 
+		// failed to parse url
 		return false;
 	}
 
-	private function api_xml_url()
+	private function api_oembed_url()
 	{
-		return sprintf( 'http://gdata.youtube.com/feeds/api/videos/%s', $this->data()->video_hash );
+		return 'http://www.youtube.com/oembed?format=json&url=' . urlencode( $this->data()->oembed_url );
 	}
 
-	private function api_xml_fetch()
+	private function api_oembed_fetch()
 	{
-		// get ATOM feed data for this video
-		return $this->api_fetch( $this->api_xml_url() );
-	}
-
-	private function api_xml_thumbs( SimpleXMLElement $sxml )
-	{
-		// get nodes in media: namespace for media information
-		$media = $sxml->children('http://search.yahoo.com/mrss/');
-
-		// do we have thumbs to look at?
-		if ( $media instanceof SimpleXMLElement && $media->group->thumbnail instanceof SimpleXMLElement ) {
-			return $media->group->thumbnail;
-		} else {
-			return false;
-		}
+		// get oembed JSON data for this video
+		return $this->api_fetch( $this->api_oembed_url() );
 	}
 
 	private function yt_player_url()
@@ -1094,9 +1095,20 @@ final class BP_Links_Embed_Service_YouTube
 
 	private function yt_thumb_url( $num = self::YT_TH_DEFAULT )
 	{
-		if ( is_numeric( $num ) && $num >= self::YT_TH_DEFAULT && $num <= self::YT_TH_SMALL_3 ) {
+		// oembed thumbnail set?
+		if ( true === isset( $this->data()->oembed_thumbnail_url ) ) {
+
+			// yes, use it
+			return $this->data()->oembed_thumbnail_url;
+
+		// back compat with old YT data?
+		} elseif ( is_numeric( $num ) && $num >= self::YT_TH_DEFAULT && $num <= self::YT_TH_SMALL_3 ) {
+
+			// return old style image url
 			return sprintf( 'http://img.youtube.com/vi/%s/%d.jpg', $this->data()->video_hash, $num );
+
 		} else {
+			// fatal
 			throw new BP_Links_Embed_Fatal_Exception( 'YouTube thumbnail number must 0, 1, 2, or 3.' );
 		}
 	}
