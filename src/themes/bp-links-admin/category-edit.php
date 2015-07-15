@@ -4,7 +4,7 @@
  */
 ?>
 
-<div class="wrap nosubsub buddypress-links-admin-cats">
+<div class="wrap">
 
 	<?php screen_icon( 'bp-links' ); ?>
 	
@@ -47,5 +47,3 @@
 <?php do_action('bp_links_admin_edit_category_form_after', $category); ?>
 </form>
 </div>
-
-<?php include 'sidebar.php'; ?>

@@ -10,18 +10,24 @@
 	</div>
 <?php } ?>
 
-<div class="wrap buddypress-links-admin-settings" style="position: relative">
+<div class="wrap" style="position: relative">
 
-	<?php screen_icon( 'bp-links' ); ?>
+	<h2 class="nav-tab-wrapper">
+		<?php bp_links_admin_settings_tabs(); ?>
+	</h2>
+	
+	<div class="buddypress-links-admin-content">
 
-	<h2><?php _e( 'Edit Settings', 'buddypress-links' ) ?></h2>
+		<?php BP_Links_Settings::instance()->settings() ?>
 
-	<?php BP_Links_Settings::instance()->settings() ?>
-
-	<p>
-		<strong>&dagger;</strong> -
-		<em><a href="http://shop.presscrew.com/shop/buddypress-links/" target="_blank"><?php _e( 'Setting applies to pro extension only', 'buddypress-links' ) ?></a></em>
-	</p>
+		<p>
+			<strong>&dagger;</strong> -
+			<em><a href="http://shop.presscrew.com/shop/buddypress-links/" target="_blank"><?php _e( 'Setting applies to pro extension only', 'buddypress-links' ) ?></a></em>
+		</p>
+	
+	</div>
+	
+	<?php include 'sidebar.php'; ?>
 	
 </div>
 
@@ -31,4 +37,3 @@
 	});
 </script>
 
-<?php include 'sidebar.php'; ?>

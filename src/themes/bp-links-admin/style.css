@@ -2,35 +2,85 @@
  * Admin Styles
  */
 
-/* Icons */
-div#icon-bp-links.icon16 {
-	background: url('images/logo_16.png') no-repeat;
-}
-div#icon-bp-links.icon32 {
-	background: url('images/logo_32.png') no-repeat;
-}
-
-/* Menu */
-span.buddypress-links-admin-menu-header {
-	font-weight: bold;
-	border-top: 1px solid gray;
-	padding-top: 3px;
-}
-span.buddypress-links-admin-menu-item {
-	padding-left: 10px;
-}
-
 /* Content */
 
+div.buddypress-links-admin-content {
+	float: left;
+	margin-top: 20px;
+	max-width: 800px;
+}
+
+div.buddypress-links-admin-content > h3 {
+	margin-top: 30px;
+}
+div.buddypress-links-admin-content > h3.dashicons-before {
+	line-height: 140%;
+}
+div.buddypress-links-admin-content > h3.dashicons-before::before {
+	margin-right: 5px;
+}
+
+div.buddypress-links-admin-content .dashicons-before::before {
+	text-shadow: 1px 1px 3px lightgray;
+}
+div.buddypress-links-admin-content .dashicons-tag::before {
+	color: chocolate;
+}
+div.buddypress-links-admin-content .dashicons-groups::before {
+	color: purple;
+}
+div.buddypress-links-admin-content .dashicons-businessman::before {
+	color: #00b9eb;
+}
+div.buddypress-links-admin-content .dashicons-yes::before {
+	color: green;
+}
+div.buddypress-links-admin-content .dashicons-no::before {
+	color: darkred;
+}
+
+div.buddypress-links-admin-sidebar .dashicons-before::before {
+	padding-top: 5px;
+	text-shadow: 1px 1px 3px lightgray;
+}
+div.buddypress-links-admin-sidebar .dashicons-heart::before {
+	color: darkred;
+}
+div.buddypress-links-admin-sidebar .dashicons-megaphone::before {
+	color: orange;
+}
+div.buddypress-links-admin-sidebar .dashicons-twitter::before {
+	color: #33bcff;
+}
+
+div.buddypress-links-admin-content > h4,
+div.buddypress-links-admin-content > h5,
+div.buddypress-links-admin-content > p,
+div.buddypress-links-admin-content > ol,
+div.buddypress-links-admin-content > ul {
+	margin-left: 30px;
+}
+
+div.buddypress-links-admin-content ul li {
+	margin-left: 30px;
+	list-style: disc;
+}
+
+/* Sidebar */
+
 div.buddypress-links-admin-sidebar {
-	margin: 0 0 0 580px;
-	padding: 45px 20px 20px 20px;
-	width: 250px;
+	padding: 0 30px;
+	width: 400px;
+}
+
+div.buddypress-links-admin-sidebar {
+	float: left;
+	margin-top: 20px;
 }
 
 div.buddypress-links-admin-sidebar > div {
 	margin-bottom: 20px;
-	padding: 5px 10px 10px 10px;
+	padding: 5px 20px 10px 20px;
 	background-color: #f9f9f9;
 	border: solid 1px #dfdfdf;
 	border-radius: 5px;
@@ -51,37 +101,4 @@ div.buddypress-links-admin-sidebar > div {
 div.buddypress-links-admin-sidebar ul {
 	list-style: circle;
 	margin-left: 25px;
-}
-
-div.buddypress-links-admin-general,
-div.buddypress-links-admin-settings,
-div.buddypress-links-admin-cats {
-	float: left;
-	width: 550px;
-}
-
-div.buddypress-links-admin-general > h3 {
-	margin-top: 25px;
-}
-
-div.buddypress-links-admin-general table.widefat {
-	width: 400px;
-}
-
-div.buddypress-links-admin-general ul li {
-	margin-left: 30px;
-	list-style: disc;
-}
-
-div.buddypress-links-admin-settings table.form-table th {
-	width: 150px;
-	font-weight: bold;
-}
-
-div.buddypress-links-admin-cats table.widefat{
-	width: 100%;
-}
-
-div.buddypress-links-admin-manage ul {
-	list-style: disc outside none;
 }
