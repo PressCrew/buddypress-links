@@ -1328,17 +1328,17 @@ final class BP_Links_Embed_Service_Flickr
 	private function html_video()
 	{
 		return sprintf(
-			'<object type="application/x-shockwave-flash" width="400" height="300"
-				data="http://www.flickr.com/apps/video/stewart.swf?v=71377"
+			'<object type="application/x-shockwave-flash" width="500" height="281"
+				data="https://www.flickr.com/apps/video/stewart.swf?v=1535363810"
 				classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">
-				<param name="flashvars" value="photo_secret=%2$s&photo_id=%1$s&flickr_show_info_box=true"></param>
-				<param name="movie" value="http://www.flickr.com/apps/video/stewart.swf?v=71377"></param>
-				<param name="bgcolor" value="#000000"></param>
-				<param name="allowFullScreen" value="true"></param>
-				<embed type="application/x-shockwave-flash" height="300" width="400"
-					src="http://www.flickr.com/apps/video/stewart.swf?v=71377"
+				<param name="flashvars" value="intl_lang=en-us&photo_secret=%2$s&photo_id=%1$s&flickr_show_info_box=true"></param>
+				<param name="movie" value="https://www.flickr.com/apps/video/stewart.swf?v=1535363810"></param>
+				<param name="bgcolor" value="#000000"></param> <param name="allowFullScreen" value="true"></param>
+				<embed type="application/x-shockwave-flash"
+					src="https://www.flickr.com/apps/video/stewart.swf?v=1535363810"
 					bgcolor="#000000" allowfullscreen="true"
-					flashvars="photo_secret=%2$s&photo_id=%1$s&flickr_show_info_box=true">
+					flashvars="intl_lang=en-us&photo_secret=%2$s&photo_id=%1$s&flickr_show_info_box=true"
+					height="281" width="500">
 				</embed>
 			</object>',
 			esc_attr( $this->data()->api_id ), // arg 1
