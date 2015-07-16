@@ -1348,7 +1348,7 @@ final class BP_Links_Embed_Service_Flickr
 
 	private function api_rest_url( $method, $format = 'rest' )
 	{
-		return sprintf( 'http://www.flickr.com/services/rest/?method=%1$s&photo_id=%2$s&format=%3$s&api_key=%4$s&nojsoncallback=1', $method, $this->data()->photo_id, $format, self::FLICKR_API_KEY );
+		return sprintf( 'https://api.flickr.com/services/rest/?method=%1$s&photo_id=%2$s&format=%3$s&api_key=%4$s&nojsoncallback=1', $method, $this->data()->photo_id, $format, self::FLICKR_API_KEY );
 	}
 
 	private function api_json_fetch( $method )
