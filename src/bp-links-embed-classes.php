@@ -199,17 +199,6 @@ interface BP_Links_Embed_From_Json
 }
 
 /**
- * Services that only exist as an alternative for the avatar should implement this interface
- *
- * @package BP_Links
- * @author Marshall Sorenson
- */
-interface BP_Links_Embed_Avatar_Only
-{
-	/* no required methods yet */
-}
-
-/**
  * Services that support displaying their original content with HTML must adhere to this interface
  *
  * @package BP_Links
@@ -598,8 +587,6 @@ final class BP_Links_Embed
 		if ( empty( self::$instance ) ) {
 			self::$instance = new BP_Links_Embed();
 			// register natively supported services
-			self::$instance->register_service( new BP_Links_Embed_Service_PicApp() );
-			self::$instance->register_service( new BP_Links_Embed_Service_Fotoglif() );
 			self::$instance->register_service( new BP_Links_Embed_Service_YouTube() );
 			self::$instance->register_service( new BP_Links_Embed_Service_Flickr() );
 			self::$instance->register_service( new BP_Links_Embed_Service_MetaCafe() );
@@ -977,15 +964,6 @@ abstract class BP_Links_Embed_Service
 		}
 		
 		return false;
-	}
-
-	/**
-	 * Provide backwards compatibility for versions before 0.2.1
-	 *
-	 * @return boolean
-	 */
-	final public function avatar_only() {
-		return ( $this instanceof BP_Links_Embed_Avatar_Only );
 	}
 
 	//

@@ -1107,17 +1107,6 @@ function bp_link_avatar_form_embed_html() {
 		return apply_filters( 'bp_get_link_avatar_form_embed_html', $html );
 	}
 
-function bp_link_avatar_form_embed_html_display() {
-	echo bp_get_link_avatar_form_embed_html_display();
-}
-	function bp_get_link_avatar_form_embed_html_display() {
-		if ( bp_links_current_link_embed_enabled() ) {
-			return ( bp_links_current_link_embed_service()->avatar_only() ) ? 1 : 0;
-		} else {
-			return 1;
-		}
-	}
-
 function bp_link_hidden_fields() {
 	if ( isset( $_REQUEST['s'] ) ) {
 		echo '<input type="hidden" id="search_terms" value="' . attribute_escape( $_REQUEST['s'] ) . '" name="search_terms" />';

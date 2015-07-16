@@ -32,16 +32,6 @@ if ( !defined( 'BP_LINKS_CAPABILITY' ) )
 if ( !defined( 'BP_LINKS_CUSTOM_THEME' ) )
 	define( 'BP_LINKS_CUSTOM_THEME', false );
 
-//
-// If you have a Fotoglif account you may want to change this so
-// you get credit for any revenue generated from embedded images.
-//
-// If you leave this like it is, I will get the credit, which is an
-// easy way for you to support the continued development of this plugin :)
-if ( !defined( 'BP_LINKS_EMBED_FOTOGLIF_PUBID' ) )
-	define( 'BP_LINKS_EMBED_FOTOGLIF_PUBID', 'ncnz5fx9z1h9' );
-
-
 ////////////////////////////////
 // Important Internal Constants
 // *** DO NOT MODIFY THESE ***

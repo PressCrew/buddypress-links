@@ -17,15 +17,6 @@ div.item-avatar a.link-play {
 	filter: alpha(opacity=75);
 }
 
-#content img.avatar-embed, ul#link-list img.avatar-embed {
-	max-width: 150px;
-	max-height: 150px;
-}
-#content img.avatar-embed-picapp, ul#link-list img.avatar-embed-picapp {
-	/* picapp avatars are maxed at 140x140 so we must fatten up the border */
-	border-width: 8px;
-}
-
 /**** Navigation *******/
 
 .buddypress.groups ul li#links-order-select {

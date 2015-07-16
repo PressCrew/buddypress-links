@@ -26,21 +26,6 @@
 			<input type="hidden" name="action" id="action" value="bp_avatar_upload" />
 		</p>
 
-		<?php if ( bp_get_link_avatar_form_embed_html_display() ): ?>
-		<div>
-			<p>
-				<?php printf( '-- %1$s --', __( 'OR', 'buddypress-links' ) ) ?>
-			</p>
-			<div>
-				<?php printf( __( 'Paste Image Embed Code (%1$s and %2$s are supported)', 'buddypress-links' ), '<a href="http://www.picapp.com/" target="_blank">PicApp</a>', '<a href="http://www.fotoglif.com/" target="_blank">Fotoglif</a>' ) ?>
-			</div>
-			<textarea name="embed-html" id="embed-html" cols="50" rows="4"><?php bp_link_avatar_form_embed_html() ?></textarea>
-			<div>
-				<input type="submit" name="embed-submit" id="embed-submit" value="<?php _e( 'Embed Image', 'buddypress-links' ) ?>" />
-			</div>
-		</div>
-		<?php endif; ?>
-
 		<?php wp_nonce_field( 'bp_avatar_upload' ) ?>
 
 	<?php elseif ( 'crop-image' == bp_get_avatar_admin_step() ) : ?>

@@ -197,8 +197,6 @@ class BP_Links_Link {
 
 	// embed service constants
 	const EMBED_SERVICE_NONE = null;
-	const EMBED_SERVICE_PICAPP = '1';
-	const EMBED_SERVICE_FOTOGLIF = '2';
 
 	// embed status constants
 	const EMBED_STATUS_PARTIAL = -1;
@@ -602,24 +600,7 @@ class BP_Links_Link {
 	function embed() {
 		if ( !$this->_embed_service_obj instanceof BP_Links_Embed_Service && empty( $this->embed_data ) === false ) {
 			// handle backwards compatibility with deprecated storage method (arrays)
-			switch ( (string) $this->embed_service ) {
-				case self::EMBED_SERVICE_PICAPP:
-					$embed_data = unserialize( $this->embed_data );
-					if ( !empty( $embed_data ) ) {
-						$this->_embed_service_obj = new BP_Links_Embed_Service_PicApp();
-						$this->_embed_service_obj->from_deprecated_data( $embed_data  );
-					}
-					break;
-				case self::EMBED_SERVICE_FOTOGLIF:
-					$embed_data = unserialize( $this->embed_data );
-					if ( !empty( $embed_data ) ) {
-						$this->_embed_service_obj = new BP_Links_Embed_Service_Fotoglif();
-						$this->_embed_service_obj->from_deprecated_data( $embed_data );
-					}
-					break;
-				default:
-					$this->_embed_service_obj = BP_Links_Embed::LoadService( $this->embed_data );
-			}
+			$this->_embed_service_obj = BP_Links_Embed::LoadService( $this->embed_data );
 		}
 		return $this->_embed_service_obj;
 	}

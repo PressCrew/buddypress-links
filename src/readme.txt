@@ -47,7 +47,6 @@ Members can:
 * Upload an image "avatar" to show with a link
 * Auto embed rich media from URLs (YouTube, Flickr, and metacafe are supported)
 * Automatic thumbnail picker available as of 0.2.1
-* Embed a PicApp.com or Fotoglif.com image and use as the avatar
 * Vote on other member's links
 * Comment on other member's links
 * @mentions support

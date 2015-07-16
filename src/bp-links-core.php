@@ -1804,9 +1804,6 @@ function bp_links_fetch_avatar( $args = '', $link = false ) {
 
 			if ( !empty( $image_thumb_url ) ) {
 				
-				// append class avatar-embed
-				$class .= ' avatar-embed';
-
 				// check for additional avatar class
 				if ( $link->embed()->avatar_class() ) {
 					$class .= ' ' . $link->embed()->avatar_class();
@@ -2136,23 +2133,6 @@ function bp_links_update_linkmeta( $link_id, $meta_key, $meta_value ) {
 }
 
 /*** Link Cleanup Functions ****************************************************/
-
-/**
- * Reset embed fields if avatar is deleted
- *
- * @param array $args
- * @return boolean
- */
-function bp_links_delete_existing_avatar( $args ) {
-	if ( 'link' == $args['object'] ) {
-		$link = new BP_Links_Link( $args['item_id'] );
-		if ( $link->embed_status_enabled() && $link->embed()->avatar_only() === true ) {
-			return $link->embed_remove(true);
-		}
-	}
-	return true;
-}
-add_action( 'bp_core_delete_existing_avatar', 'bp_links_delete_existing_avatar' );
 
 function bp_links_remove_data_for_user( $user_id ) {
 	// remove all links for deleted user

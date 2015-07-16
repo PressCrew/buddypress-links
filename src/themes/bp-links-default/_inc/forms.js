@@ -284,12 +284,4 @@ jQuery(document).ready( function() {
 		}
 	);
 
-	// disable right click for avatars that are based on embeded images to comply with their TOS
-	jQuery("img.avatar-embed").bind("contextmenu",
-		function(e){
-			e.preventDefault();
-			return;
-		}
-	);
-	
 });
