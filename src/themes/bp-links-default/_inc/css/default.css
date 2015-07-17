@@ -288,6 +288,7 @@ div.item-avatar a.link-play {
 
 #buddypress div.link-home div#item-header div.item-avatar {
 	width: 154px;
+	height: auto;
 	position: relative;
 	z-index: 1;
 	float: left;
