@@ -301,6 +301,9 @@ div.item-avatar a.link-play {
 		margin: 0;
 		padding: 0;
 	}
+	#buddypress div.link-home div#item-header div.item-avatar a {
+		border: none;
+	}
 	#buddypress div.link-home div#item-header div.item-avatar a.link-play-video {
 		background: url(../images/play_video_48.png) no-repeat 50% 50%;
 	}
