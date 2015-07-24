@@ -1,14 +1,14 @@
 === Plugin Name ===
 Contributors: MrMaz
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8591311
-Tags: buddypress, social, networking, links, rich media, embed, youtube, flickr, metacafe
+Tags: buddypress, social, networking, links, rich media, embed, youtube, flickr
 Requires at least: 4.0
-Tested up to: 4.1
-Stable tag: 0.9.4-dev
+Tested up to: 4.2.3
+Stable tag: 0.9.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-BuddyPress Links is a drop-in link, image, video and other rich media sharing component for BuddyPress 1.8 and higher
+BuddyPress Links is a drop-in link, image, video and other rich media sharing component for BuddyPress 2.0 and higher
 
 == Description ==
 
@@ -21,7 +21,11 @@ members to quickly and easily share links, images, videos, and other rich conten
 All links that are shared by your community (with privacy mode set to public) are displayed
 in a central directory where your members can filter, vote, and comment on them.
 
-> *If you are anxious to try it out, go to the fully functional demo at http://demo.presscrew.com/*
+**Our demo is back online since July 24, 2015!**
+
+If you are anxious to try it out, go to the fully functional demo: http://demo.presscrew.com/
+
+#### Deep Integration
 
 Links is fully integrated with these BuddyPress core components:
 
@@ -45,8 +49,8 @@ Members can:
 * Assign links to a category
 * Control the visibility of their links (public, friends only, and hidden)
 * Upload an image "avatar" to show with a link
-* Auto embed rich media from URLs (YouTube, Flickr, and metacafe are supported)
-* Automatic thumbnail picker available as of 0.2.1
+* Auto embed rich media from URLs (YouTube, Flickr, etc...)
+* Automatic thumbnail picker
 * Vote on other member's links
 * Comment on other member's links
 * @mentions support
@@ -86,6 +90,7 @@ Other features include:
 
 == Installation ==
 
+* BuddyPress Links 0.9.4 requires WordPress 4.0 or higher with BuddyPress 2.0 or higher installed.
 * BuddyPress Links 0.9.x requires WordPress 3.6 or higher with BuddyPress 1.8 or higher installed.
 * BuddyPress Links 0.8.x requires WordPress 3.5 or higher with BuddyPress 1.6 or higher installed.
 * BuddyPress Links 0.7.x requires WordPress 3.4 or higher with BuddyPress 1.6 or higher installed.
@@ -95,19 +100,19 @@ Other features include:
 * BuddyPress Links 0.3.x requires WordPress 2.9.1 or higher with BuddyPress 1.2.x installed.
 * BuddyPress Links 0.2.x requires WordPress 2.8.4 or higher with BuddyPress 1.1.x installed.
 
-####Plugin:
+#### Plugin:
 
 1. Upload everything into the "/wp-content/plugins" directory of your installation.
 1. Activate BuddyPress Links in the "Plugins" admin panel using the "Activate" link.
-1. DO NOT COPY/MOVE THEME FILES TO YOUR CHILD THEME. This is no longer required as of 0.3
+1. Go to Dashboard &gt; BuddyPress Links &gt; Support for remaining setup steps.
 
-####Upgrading from an earlier version:
+#### Upgrading from an earlier version:
 
 1. BACK UP ALL OF YOUR DATA.
 1. The wire has been deprecated as of 0.3. ALL LINKS WIRE POSTS WILL BE LOST!
 1. This version can use data created by previous versions, assuming you are porting your site to the new BP 1.2 default theme!
 
-####Warning!
+#### Warning!
 
 The 0.3.x and higher branches are not backwards compatible with the BuddyPress 1.1.x branch, or compatible with the 1.2.x classic theme.
 The links data from the 0.2.x branch is compatible with 0.3.x and higher, except that all links wire posts will be lost.
@@ -137,19 +142,33 @@ No changes that affect data were made, however it is always a good idea to back 
 
 == Changelog ==
 
+= 0.9.4 =
+
+* Story
+  * [BPL-10] - Improve admin interfaces
+
+* Task
+  * [BPL-26] - MetaCafe API is no longer reliable, fall back to page fetching
+  * [BPL-27] - Update Flickr API URL and embed code to latest
+  * [BPL-28] - Remove PicApp and Fotoglif fetching, both sites are defunct
+
+* Bug
+  * [BPL-24] - Database tables not being created on activation
+  * [BPL-25] - YouTube videos not being fetched properly
+
 = 0.9.3 =
 
-** Bug
-    * [BPL-21] - Navigation issues related to bp-legacy templates
-    * [BPL-22] - Form templates are sometimes being included twice
-    * [BPL-23] - Improve CSS compat with bp-legacy templates
+* Bug
+  * [BPL-21] - Navigation issues related to bp-legacy templates
+  * [BPL-22] - Form templates are sometimes being included twice
+  * [BPL-23] - Improve CSS compat with bp-legacy templates
 
 = 0.9.2 =
 
-** Bug
-    * [BPL-2] - Broken sidebar
-    * [BPL-3] - Issue with multi-network installation tables
-    * [BPL-4] - Pro settings are frozen with BP 2.2
+* Bug
+  * [BPL-2] - Broken sidebar
+  * [BPL-3] - Issue with multi-network installation tables
+  * [BPL-4] - Pro settings are frozen with BP 2.2
 
 = 0.9.1 =
 
@@ -357,9 +376,9 @@ No changes that affect data were made, however it is always a good idea to back 
 
 = What is the license? =
 
-Released under the GNU GENERAL PUBLIC LICENSE 3.0 (http://www.gnu.org/licenses/gpl.txt)
+Released under the GNU GENERAL PUBLIC LICENSE 2.0 or later (http://www.gnu.org/licenses/gpl-2.0.html)
 
-All original code is Copyright (c) 2009 Marshall Sorenson. All rights reserved.
+All original code is Copyright (c) 2009-2015 Marshall Sorenson. All rights reserved.
 
 = How do I customize the default templates? =
 
@@ -383,18 +402,10 @@ To find out which template files are required to exist, do a recursive search fo
 
 = Where can I get support? =
 
-The support forum for the 0.4 branch can be found here: http://buddypress.org/forums/topic/buddypress-links-04x-releases-and-support
+WordPress.org https://wordpress.org/support/plugin/buddypress-links/
 
-= Where can I find documentation? =
-
-Coming soon
+Please search the forums first!!!
 
 = Where can I report a bug? =
 
-Look for MrMaz in #buddypress-dev
-
-Or on buddypress.org http://buddypress.org/community/members/MrMaz/
-
-Or on his website http://marshallsorenson.com/
-
-Please search the forums first!!!
+GitHub.com https://github.com/PressCrew/buddypress-links/issues
