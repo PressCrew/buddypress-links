@@ -28,12 +28,16 @@
 		</span>
 		<ul>
 			<li>
+				<a href="https://shop.presscrew.com/product/themes/infinity-engine/" target="_blank"><?php _e( 'Infinity Engine', 'buddypress-links' ); ?></a>
+				<div><?php _e( 'FREE theme with deep compatibility of BuddyPress and bbPress.', 'buddypress-links' ); ?></div>
+			</li>
+			<li>
 				<a href="http://shop.presscrew.com/product/plugins/buddypress-links/" target="_blank"><?php _e( 'BuddyPress Links Pro', 'buddypress-links' ); ?></a>
 				<div><?php _e( 'Adds powerful features and gives you access to premium support.', 'buddypress-links' ); ?></div>
 			</li>
 			<li>
-				<a href="http://wordpress.org/extend/plugins/buddypress-groupomatic/" target="_blank"><?php _e( 'Group-O-Matic', 'buddypress-links' ); ?></a>
-				<div><?php _e( 'FREE plugin for dramatically boosting group memberships.', 'buddypress-links' ); ?></div>
+				<a href="https://shop.presscrew.com/product/plugins/buddypress-groupomatic/" target="_blank"><?php _e( 'Group-O-Matic Pro', 'buddypress-links' ); ?></a>
+				<div><?php _e( 'Advanced BuddyPress plugin for dramatically boosting group memberships.', 'buddypress-links' ); ?></div>
 			</li>
 		</ul>
 	</div>
